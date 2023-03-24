@@ -1,0 +1,113 @@
+<script>
+    function printDiv(divName) {
+        var printContents = document.getElementById(divName).innerHTML;
+        var originalContents = document.body.innerHTML;
+
+        document.body.innerHTML = printContents;
+
+        window.print();
+
+        document.body.innerHTML = originalContents;
+
+    }
+</script>
+<!DOCTYPE html>
+<html>
+<header>
+    <nav>
+        <a href=""><img alt="miaow" src="favicon.png" height="40"></a>
+
+        <small>WorksheetTitle
+        </small>
+
+        <ul>
+            <li><a href="./index.html"> Home </a></li>
+        </ul>
+    </nav>
+</header>
+<div id='worksheet'>
+    <form>
+        <!-- START OFWORKSHEET-->
+<!DOCTYPE html>
+    <html>
+        <head>
+      
+            <title>WorksheetTitle</title>
+        </head>
+        <body>
+            <!-- R-click and Change All Instances of WorksheetTitle -->
+            <h1>WorksheetTitle</h1>
+
+            <p>Some words go here.</p>
+            <li>And</li>
+            <li>The</li>
+            <li>List</li>
+            <li>Too!</li>
+            <br>
+            <b>Answer box:</b> <input>
+            
+
+
+        </body>
+
+        </html>
+
+
+        <!-- END OF WORKSHEET-->
+        </center>
+    </form>
+</div>
+<center>
+
+    <a><b onclick="printDiv('worksheet')">Print the worksheet 🖨️</b></a>
+
+</center>
+<br>
+
+<html>
+
+<body>
+    <footer>
+        <br>
+        <br>
+        <p>
+            <center>
+                <i> © 2023 <a href="https://mbruges.com" target="_self">Max Bruges</a> </i> <br>
+                <i>Found this useful? <a href='https://ko-fi.com/L4L6JR137' target='_blank'>
+                        Send me coffee ☕️</i>
+                </a>
+            </center>
+        </p>
+    </footer>
+</body>
+
+</html>
+</div>
+
+</html>
+<link rel="stylesheet" href="style.css">
+<style>
+    h1,
+    h2,
+    h3,
+    p,
+    ol,
+    b,
+    li {
+        inline-size: auto;
+        margin-left: 10%;
+        margin-right: 10%;
+    }
+
+    strong {
+        pad: 10%;
+    }
+
+    form {
+        background-color: white;
+        display: inline-block;
+    }
+
+    body {
+        text-align: center;
+    }
