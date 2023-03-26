@@ -1,0 +1,47 @@
+<head>
+    <link rel="icon" href="favicon.png">
+    <link rel="stylesheet" href="style.css">
+
+    <meta charset="utf-8">
+    <meta name="description" content="Word of the Day">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title> Word of the Day</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script>
+        $(function () {
+            $('#contentDiv').load('/wotd.html #worksheet');
+
+        });
+    </script>
+    </head>
+</head>
+<header>
+    </html>
+    <nav>
+        <b>📚 English Department</b> 
+        <b>Word of the Day <span id="date"></span></b>
+        
+            <script>
+                var today = new Date();
+                var date = today.getDate();
+                var month = today.getMonth() + 1; // JavaScript starts counting months from 0
+                var year = today.getFullYear();
+                var dateString = date + '/' + month + '/' + year;
+
+                document.getElementById("date").innerHTML = dateString;
+            </script>
+        </b>
+    </nav>
+</header>
+
+<center>
+<body>
+    <div id="title"></div>
+    <div id="contentDiv"></div>
+</body>
+<br>
+<p>⚠️ Problem with page? ⚠️</p>
+<a href="mailto:mbruges@alsson.com?subject=Issue with Page" target="_blank"><p>Email Mr. Max</p></a>
+</center>
+
