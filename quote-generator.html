@@ -6,10 +6,10 @@
     <link rel="stylesheet" href="/style.css">
 
     <meta charset="utf-8">
-    <meta name="description" content="Archive of resources">
+    <meta name="description" content="Random Quote Generator">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>MB - Resources</title>
+    <title>MB - Quote Generator</title>
 </head>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-XQK1PEK9QX"></script>
@@ -17,7 +17,13 @@
     window.dataLayer = window.dataLayer || [];
     function gtag() { dataLayer.push(arguments); }
     gtag('js', new Date());
+
     gtag('config', 'G-XQK1PEK9QX');
+</script>
+
+<!--Quote generator script-->
+<script>
+import data from './data.json' assert {type: 'json'};
 </script>
 <body>
     <header>
@@ -27,22 +33,18 @@
                 <li><a href="/index.html"> Home </a></li>
             </ul>
     </nav>
+        
+    <h1>Quotation Generator</h1>
 
-        <!-- CONTENT STARS HERE. Copy and change file to HTML to use -->
+    <p>This experiment will give you a random three-line quotation from one of the characters in the chosen text.</p>
+    <p>Choose from the drop-downs, then hit the <i>Generate Quote!</i> button.</p>
+    
 
-        <h1>TITLE</h1>
-        <section>
-            <article>
-                <p>There's nothing here yet. Check back later.</p>
-                <br>
-                <img alt="under construction" src="/images/building.svg" height = 200>
-            </article>
-        </section>
-
-
-
+    
+    <a href=""> <b>🎭 Generate Quote!</b></a>
 
     </header>
+
     <footer>
         <br>
         <br>

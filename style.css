@@ -143,7 +143,7 @@ nav {
     display: flex;
     font-weight: bold;
     justify-content: space-between;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.2rem;
 }
 
 nav ul {
@@ -221,6 +221,7 @@ h4,
 h5,
 h6 {
     line-height: var(--line-height);
+        margin-bottom: 2%;
 }
 
 mark {
