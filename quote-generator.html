@@ -1,3 +1,19 @@
+<!--
+
+Intention here is to make a program that is able to:
+    DONE - Take an inputted character name
+    - Scan through the JSON [macbeth.json] and find that character's entry
+    - Return a three lines next to each other
+
+I'm doing this to practice my scripting in HTML, my usage of JSON, and to practice using input from users to display content.
+
+I'm going to START by making the inputs. Then work out the script.
+
+Inputs now work.
+Now to get script working.
+-->
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,23 +24,30 @@
     <meta charset="utf-8">
     <meta name="description" content="Random Quote Generator">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 
     <title>MB - Quote Generator</title>
 </head>
 <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-XQK1PEK9QX"></script>
-<script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() { dataLayer.push(arguments); }
-    gtag('js', new Date());
+    <script 
+    async src="https://www.googletagmanager.com/gtag/js?id=G-XQK1PEK9QX">
+    </script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
 
-    gtag('config', 'G-XQK1PEK9QX');
-</script>
-
+        gtag('config', 'G-XQK1PEK9QX');
+    </script>
 <!--Quote generator script-->
-<script>
-import data from './data.json' assert {type: 'json'};
-</script>
+
+<script const macbethPlay = "macbethPlay.json"
+let firstLine = macbethPlay.
+> </script>
+
+
+<!--END  script-->
+
 <body>
     <header>
     <nav>
@@ -38,11 +61,25 @@ import data from './data.json' assert {type: 'json'};
 
     <p>This experiment will give you a random three-line quotation from one of the characters in the chosen text.</p>
     <p>Choose from the drop-downs, then hit the <i>Generate Quote!</i> button.</p>
-    
 
-    
+    <select id="character"> == $0
+        <option value="Macbeth">Macbeth
+        </option>
+        <option value="Duncan">Duncan
+        </option>
+        <option value="Banquo">Banquo
+        </option>
+        <option value="Lady Macbeth">Lady Macbeth
+        </option>
+    </select>
     <a href=""> <b>🎭 Generate Quote!</b></a>
-
+    <br>
+<form>
+<blockquote>
+    <p> 🗡️ </p>
+    <i> Quote appears here</i>
+</blockquote>
+</form>
     </header>
 
     <footer>
