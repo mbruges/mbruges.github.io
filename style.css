@@ -65,6 +65,12 @@ main {
     padding: 1rem 1rem;
 }
 
+footer {
+    margin-left: 5%;
+    margin-right: 5%;
+    text-align: center;
+}
+
 hr {
     background-color: var(--color-bg-secondary);
     border: none;
