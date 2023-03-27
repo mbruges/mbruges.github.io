@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link rel="icon" href="/favicon.svg">
+  <link rel="stylesheet" href="/style.css">
+
+  <meta charset="utf-8">
+  <meta name="description" content="Slideshow">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>MB - Resources</title>
+</head>
+
+<div id="slideshow">
+  <body>
+  <style>
+    body {
+      background-color: #fbf5cc;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      border-width: 20;
+      border-color: #4559f2;
+    }
+  
+    nav {
+      background-color: #fbf5cc;
+      display: block;
+      padding: 0em 0;
+      text-align: center;
+      width: 100%;
+    }
+  
+    nav a {
+      color: #fff;
+      margin: 0 1em;
+      text-decoration: none;
+    }
+  
+    .scrolling-box {
+      background-color: #eaeaea;
+      display: block;
+      height: 794px;
+      width: 1123px;
+      overflow-y: scroll;
+      scroll-behavior: smooth;
+      text-align: center;
+      
+    }
+  
+    section {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+    }
+
+    ::-webkit-scrollbar {
+width: 5px;
+height: 1px;
+}
+
+::-webkit-scrollbar-track {
+border: 1px solid #596cf2;
+border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb {
+background: #596cf2;  
+border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+background: #4559f2;  
+}
+  </style>
+<nav>
+    <a href="#1"><b>Slide 1</b></a>
+    <a href="#2"><b>Slide 2</b></a>
+    <a href="#3"><b>Slide 3</b></a>
+</nav>
+
+<div class="scrolling-box">
+    <section id="1"><h1>This is the first slide</h1>
+    <p></p>
+    <img alt="enter the library" src="/images/library.svg" height="400" width="auto">
+    <p>And here's some writing to go with it</p>
+    <br>
+    </section>
+    <section id="2"><h1>This is the second slide</h1>
+    <p></p>
+    <img alt="enter the library" src="/images/knowledge.svg" height="400" width="auto">
+    <p>And here's some writing to go with it</p>
+    <br></section>
+    <section id="3">
+      <h1>This is the third slide</h1>
+      <p></p>
+      <img alt="enter the library" src="/images/books.svg" height="400" width="auto">
+      <p>And here's some writing to go with it</p>
+      <br>
+    </section>
+</div>
+</div>
+</body>
