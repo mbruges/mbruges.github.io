@@ -67,6 +67,8 @@ main {
 
 footer {
     text-align: center;
+    font-size: small;
+    line-height: 70%;
 }
 
 hr {
