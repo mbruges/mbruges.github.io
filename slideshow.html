@@ -8,15 +8,26 @@
   <meta charset="utf-8">
   <meta name="description" content="Slideshow">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<script>
+  $('body').bind("mousewheel", function () {
+    return false
+  });
+</script>
   <title>MB - Resources</title>
 </head>
 
 <div id="slideshow">
   <body>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script>
+      $('body').bind("mousewheel", function () {
+        return false
+      });
+    </script>
   <style>
     body {
-      background-color: #fbf5cc;
+      background-color: black;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -26,28 +37,37 @@
     }
   
     nav {
-      background-color: #fbf5cc;
+      background-color:black;
       display: block;
       padding: 0em 0;
       text-align: center;
       width: 100%;
+      margin: 0px;
+      padding: 0px;
     }
   
     nav a {
       color: #fff;
-      margin: 0 1em;
+      margin: 0 0em;
       text-decoration: none;
     }
   
     .scrolling-box {
       background-color: #eaeaea;
       display: block;
-      height: 794px;
-      width: 1123px;
+      height: 800px;
+      width: 1200px;
       overflow-y: scroll;
       scroll-behavior: smooth;
       text-align: center;
       
+    }
+    a i {
+      padding: 10px;
+      margin: 5px;
+      font-size: medium;
+      background-color:#fbf5cc;
+      color:
     }
   
     section {
@@ -56,32 +76,40 @@
       justify-content: center;
       height: 100%;
     }
+/*<!-- HR element needs fixing, doesn't reach edge -->*/
 
+    hr {
+  /*position:fixed;*/
+  border: none;
+  clear:both;
+  display:block;
+  padding: 0px;
+  margin: 0px;
+  background-color:black;
+  height: 45px;
+  align-self: center;
+}
     ::-webkit-scrollbar {
-width: 5px;
-height: 1px;
+width: 0px;
+height: 0px;
+background-color: #fbf5cc;
 }
 
 ::-webkit-scrollbar-track {
-border: 1px solid #596cf2;
-border-radius: 2px;
+border: 0px solid #596cf2;
+border-radius: 0px;
 }
 
 ::-webkit-scrollbar-thumb {
 background: #596cf2;  
-border-radius: 10px;
+border-radius: 50px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
 background: #4559f2;  
 }
   </style>
-<nav>
-    <a href="#1"><b>Slide 1</b></a>
-    <a href="#2"><b>Slide 2</b></a>
-    <a href="#3"><b>Slide 3</b></a>
-</nav>
-
+  <br>
 <div class="scrolling-box">
     <section id="1"><h1>This is the first slide</h1>
     <p></p>
@@ -89,11 +117,13 @@ background: #4559f2;
     <p>And here's some writing to go with it</p>
     <br>
     </section>
+  <hr>
     <section id="2"><h1>This is the second slide</h1>
     <p></p>
     <img alt="enter the library" src="/images/knowledge.svg" height="400" width="auto">
     <p>And here's some writing to go with it</p>
     <br></section>
+    <hr>
     <section id="3">
       <h1>This is the third slide</h1>
       <p></p>
@@ -102,5 +132,13 @@ background: #4559f2;
       <br>
     </section>
 </div>
+<nav>
+  <a href="#1"><i>Slide 1</i></a>
+  <a href="#2"><i>Slide 2</i></a>
+  <a href="#3"><i>Slide 3</i></a>
+</nav>
+
 </div>
 </body>
+
+
