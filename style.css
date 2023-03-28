@@ -544,7 +544,7 @@ challenge {
 .scrolling-box {
     background-color: whitesmoke;
     display: block;
-    height: 85.5vh;
+    height: 82.5vh;
     width: 90vw;
     overflow-y: scroll;
     scroll-behavior: auto;
