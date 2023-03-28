@@ -1,55 +1,59 @@
-<!-- Perhaps use keydown for navigation? https://developer.mozilla.org/en-US/docs/Web/API/Element/keydown_event
+<!-- 
+  Variables, EDIT ALL OCCURENCES HERE:
+  *title*
+  *createddate*
+  *learningobjective*
+  *challengetask1*
+
+
+Notes:
+Perhaps use keydown for navigation? https://developer.mozilla.org/en-US/docs/Web/API/Element/keydown_event
 
 -->
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <link rel="icon" href="/favicon.svg">
   <link rel="stylesheet" href="/style.css">
 
   <meta charset="utf-8">
-  <meta name="description" content="Slideshow">
+  <meta name="description" content="Slideshow - *title* - *createddate*">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
-      overscroll-behavior-y: none;
+
+      overscroll-behavior-y:none;
       background-color: black;
       display: flex;
       align-items: center;
       justify-content: center;
       flex-direction: column;
-      border-width: 20;
+      border-width: 1;
       border-color: #4559f2;
+      font-size: 20px;
     }
   
     nav {
       background-color: black;
-      width: 88%;
+      width: 90%;
       height: 2.5vh;
     }
   
-    nav a,
-    h3,
-    h4,
-    h5 {
+    nav a, h4, h5 {
       color: #fbf5cc;
       padding: 1px;
       margin: 2px;
+      border-radius: 20px;
     }
-  
-    .scrolling-box {
-      background-color: whitesmoke;
-      display: block;
-      height: 85.5vh;
-      width: 90vw;
-      overflow-y: scroll;
-      scroll-behavior: auto;
-      text-align: center;
-      scroll-snap-type: y mandatory;
+    
+    h1 {
+      padding: 1%;
+      margin-top: 30px;
+      margin-bottom: 0;
+      font-size: 40px;
     }
-  
+
     section {
       display: flex;
       align-items: center;
@@ -58,12 +62,14 @@
     }
   
     footer {
+      color: #fbf5cc;
       height: 3vh;
       margin: 0px;
       padding: 0vh;
       text-align: center;
-    }
-  
+      border-radius: 20px;
+    }  
+    
     footer a i {
       padding: 10px;
       margin: 5px;
@@ -71,6 +77,7 @@
       font-size: medium;
       background-color: #fbf5cc;
       text-align: right;
+      border-radius: 20px;
     }
   
     hr {
@@ -87,15 +94,18 @@
     .slide {
       scroll-snap-align: start;
     }
-  
+    aside {
+      font-size: larger;
+      background-color: #ccd2f5;
+    }
      
-        ::-webkit-scrollbar {
+::-webkit-scrollbar {
           width: 0px;
           height: 0px;
           background-color: #fbf5cc;
         }
     
-        ::-webkit-scrollbar-track {
+::-webkit-scrollbar-track {
           border: 0px solid #596cf2;
           border-radius: 0px;
         }
@@ -110,13 +120,13 @@
         }*/
   </style>
   
-  <title>MB - Slideshow</title>
+  <title>MB - Slideshow - *title*</title>
 </head>
 
 <body>
 <nav>
   <a href="/index.html"><h4>Home</h4></a>
-  <h4>Slideshow Title</h4>
+  <h4>*title*</h4>
   <h4><span id="date"></span><script>
     var today = new Date();
     var date = today.getDate();
@@ -129,37 +139,79 @@
 </nav>
 
 <div id="slideshow">
- 
-  <br>
+
 <div class="scrolling-box">
-    <section class="slide" id="1"><h1>This is the first slide</h1>
+<!--SLIDE 1-->
+  <section class="slide" id="1">
+    <u><h1>*title*</h1></u>
+    <p><h3><i>LO: *learningobjective*</i></h3></p>
+
+    <img alt="Slide1" src="/images/library.svg" height="300" width="auto">
+    <asidespacer15></asidespacer15>
+    <aside>
+      <p><b>DO NOW:</b></p>
+      <p>*donow*</p>
+    
+    </aside>
+    
     <p></p>
-    <img alt="enter the library" src="/images/library.svg" height="400" width="auto">
-    <p>And here's some writing to go with it</p>
-    <br>
-    </section>
-  <hr>
-    <section class="slide" id="2"><h1>This is the second slide</h1>
+    <challenge><b>CHALLENGE: </b> *challengetask1* </challenge>
     <p></p>
-    <img alt="enter the library" src="/images/knowledge.svg" height="400" width="auto">
-    <p>And here's some writing to go with it</p>
-    <br></section>
-    <hr>
-    <section class="slide" id="3">
-      <h1>This is the third slide</h1>
+
+  </section>
+<hr>
+
+<!--SLIDE 2-->
+<section class="slide" id="2">
+    <h1>This is the second slide</h1>
       <p></p>
-      <img alt="enter the library" src="/images/books.svg" height="400" width="auto">
+      <img alt="enter the library" src="/images/knowledge.svg" height="300" width="auto">
       <p>And here's some writing to go with it</p>
       <br>
-    </section>
+  
+  </section>
+<hr>
+
+<!--SLIDE 3-->
+<section class="slide" id="3">
+      <h1>This is the third slide</h1>
+      <p></p>
+      <img alt="enter the library" src="/images/books.svg" height="300" width="auto">
+      <p>And here's some writing to go with it</p>
+      <br>
+  </section>
+<hr>
+
+<!--SLIDE 4-->
+<section class="slide" id="4">
+      <h1>PLENARY</h1>
+      <p></p>
+      <img alt="plenary" src="/images/podcast.svg" height="300" width="auto">
+      <p>And here's some writing to go with it</p>
+      <br>
+  </section>
+
 </div>
 </div>
+
 <footer>
-  <a  ><b>   </b></a>
+  <a><small>Click to jump to:</small></a>
   <a href="#1"><b>Slide 1</b></a>
   <a href="#2"><b>Slide 2</b></a>
   <a href="#3"><b>Slide 3</b></a>
+  <a href="#4"><b>Slide 4</b></a>
   <a href="#" class="scroll-down" address="true"><i>NEXT SLIDE</i></a>
+  
+  <p></p>
+  <small> 
+    <style> small {
+  color: #999;
+  font-size: 8px;}
+  small a {
+  color: #999;
+  font-size: 8px;}
+  </style>
+  © <a href ="mbruges.com">Max Bruges</a> 2023</small>
 </footer>
 </body>
 </html>
