@@ -10,6 +10,8 @@ I'm doing this to practice my scripting in HTML, my usage of JSON, and to practi
 I'm going to START by making the inputs. Then work out the script.
 
 Inputs now work.
+Code currently generates a random number.
+And also logs the character selected as id = "character"
 Now to get script working.
 -->
 
@@ -41,10 +43,6 @@ Now to get script working.
     </script>
 <!--Quote generator script-->
 
-<script const macbethPlay = "macbethPlay.json"
-let firstLine = macbethPlay.
-> </script>
-
 
 <!--END  script-->
 
@@ -62,22 +60,24 @@ let firstLine = macbethPlay.
     <p>This experiment will give you a random three-line quotation from one of the characters in the chosen text.</p>
     <p>Choose from the drop-downs, then hit the <i>Generate Quote!</i> button.</p>
 
-    <select id="character"> == $0
+    <select id="characterSelect"
+    onchange="document.getElementById('character').innerHTML = this.value;">
         <option value="Macbeth">Macbeth
         </option>
         <option value="Duncan">Duncan
         </option>
         <option value="Banquo">Banquo
         </option>
-        <option value="Lady Macbeth">Lady Macbeth
+        <option value= "Lady Macbeth">Lady Macbeth
         </option>
     </select>
-    <a href=""> <b>🎭 Generate Quote!</b></a>
-    <br>
+
+    <button onclick="document.getElementById('randomNumber').innerHTML = Math.floor(Math.random() * 100) + 1;">🎭 Generate Quote!</button>
+<br>
+    
 <form>
 <blockquote>
-    <p> 🗡️ </p>
-    <i> Quote appears here</i>
+    <i id="randomNumber"> </i>
 </blockquote>
 </form>
     </header>
