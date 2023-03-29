@@ -60,15 +60,15 @@ body {
 footer,
 header,
 main {
-    margin: 1 auto;
+    margin: 0 auto;
     max-width: var(--width-content);
-    padding: 1rem 2rem;
+    padding: 1rem 1rem;
 }
 
 footer {
     text-align: center;
     font-size: small;
-    line-height: 90%;
+    line-height: 70%;
 }
 
 hr {
@@ -223,7 +223,7 @@ h4,
 h5,
 h6 {
     line-height: var(--line-height);
-        margin-bottom: 2%;
+    margin-bottom: 2%;
 }
 
 mark {
@@ -398,7 +398,7 @@ textarea {
     max-width: var(--width-card-wide);
     align-items: center;
     margin-left: auto;
-     margin-right: auto;
+    margin-right: auto;
 }
 
 input[type="checkbox"],
@@ -519,45 +519,13 @@ blockquote footer {
     padding: 1.5rem 0;
 }
 
-/* Custom elements, added/designed by MBruges */
-
-asidespacer15 {
-
-    width: 15vh;
-    height: 15vh;
-}
-
-challenge {
-    color: firebrick;
-    font-size: larger;
-    font-weight: 400;
-    background-color: rgb(251, 204, 213);
-    padding: 15px;
-    margin: 2px;
-    margin-bottom: 15px;
-    border-radius: var(--border-radius);
-    border-width: 5px;
-    border-style: solid;
-    border-color: firebrick;
-}
-
-.scrolling-box {
-    background-color: whitesmoke;
-    display: block;
-    height: 82.5vh;
-    width: 90vw;
-    overflow-y: scroll;
-    scroll-behavior: auto;
-    text-align: center;
-    scroll-snap-type: y mandatory;
-}
-
 tooltip {
     position: relative;
     display: inline-block;
 }
 
-tooltip, tooltiptext {
+tooltip,
+tooltiptext {
     visibility: hidden;
     width: 120px;
     background-color: var(--color-shadow);
@@ -567,8 +535,10 @@ tooltip, tooltiptext {
     padding: 5px 0;
     border-radius: 6px;
     position: absolute;
-    z-index: 1;}
+    z-index: 1;
+}
 
-tooltip:hover, tooltiptext {
+tooltip:hover,
+tooltiptext {
     visibility: visible;
 }

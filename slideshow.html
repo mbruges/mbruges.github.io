@@ -117,6 +117,37 @@ Perhaps use keydown for navigation? https://developer.mozilla.org/en-US/docs/Web
         ::-webkit-scrollbar-thumb:hover {
           background: #4559f2;
         }*/
+
+      asidespacer15 {
+
+    width: 15vh;
+    height: 15vh;
+}
+
+challenge {
+    color: firebrick;
+    font-size: larger;
+    font-weight: 400;
+    background-color: rgb(251, 204, 213);
+    padding: 15px;
+    margin: 2px;
+    margin-bottom: 15px;
+    border-radius: var(--border-radius);
+    border-width: 5px;
+    border-style: solid;
+    border-color: firebrick;
+}
+
+.scrolling-box {
+    background-color: whitesmoke;
+    display: block;
+    height: 82.5vh;
+    width: 90vw;
+    overflow-y: scroll;
+    scroll-behavior: auto;
+    text-align: center;
+    scroll-snap-type: y mandatory;
+}
   </style>
   
   <title>MB - Slideshow - *title*</title>
@@ -124,7 +155,7 @@ Perhaps use keydown for navigation? https://developer.mozilla.org/en-US/docs/Web
 
 <body>
 <nav>
-  <a href="/index.html"><h4>Home</h4></a>
+  <a href="/index.html"><h4>Home &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h4></a>
   <h4>*title*</h4>
   <h4><span id="date"></span><script>
     var today = new Date();
