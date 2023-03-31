@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="icon" href="/favicon.svg">
+    <link rel="stylesheet" href="/style.css">
+
+    <meta charset="utf-8">
+    <meta name="description" content="Random Quote Generator">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+
+    <title>MB - Code Playground </title>
+</head>
+<!--Quote generator script-->
+
+
+<!--END  script-->
+
+    <header>
+        <nav>
+            <a href="/index.html"><img alt="miaow" src="/favicon.svg" height="40" width="40"></a>
+            <ul>
+                <li><a href="/index.html"> Home </a></li>
+            </ul>
+        </nav>
+        <h1>Code Playground</h1>
+        <p> This is where I am practice using Javascript.<br> The <code>coding</code> is very mucky.</p>
+<div id="caesarCipher">
+    <h2>🏛️ Caesar Cipher 🔐</h2>
+
+    <b>Encode or decode?</b><select id="eVd"
+        onchange="document.getElementById('caesarButton').innerHTML = this.value"><br>
+        <option value=" "> </option>
+        <option value="ENCODE"> Encode </option>
+        <option value="DECODE"> Decode </option>
+    </select>
+
+    <b>Enter message here:</b>
+    <h2><input type="text" id="caesarInput"></h2>
+
+    <b>Select key:</b><select id="caesarKey"><br>
+        <option value="1"> 1 </option>
+        <option value="2"> 2 </option>
+        <option value="3"> 3 </option>
+        <option value="4"> 4 </option>
+        <option value="5"> 5 </option>
+        <option value="6"> 6 </option>
+        <option value="7"> 7 </option>
+        <option value="8"> 8 </option>
+        <option value="9"> 9 </option>
+        <option value="10"> 10 </option>
+        <option value="11"> 11 </option>
+        <option value="12"> 12 </option>
+        <option value="13"> 13 </option>
+    </select>
+    <button id="caesarButton" onclick="caesarDecode()">Select encode or decode</button>
+
+    <script>
+        function caesarDecode() {
+            var string = document.getElementById("caesarInput").value;
+            string = string.toUpperCase()
+            var key = document.getElementById("caesarKey").value;
+            var eVd = document.getElementById("eVd").value;
+            if (string.length == 0) {
+                document.getElementById("caesarOutput").innerHTML = "Please enter a string, and select ENCODE or DECODE from the dropdown.";
+            };
+            if (eVd == "DECODE") {
+                var decodedString = ""
+                const alphabetArray = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
+                //First, we establish the encoded version of the alphabet:
+                const cipherAlphabet = []
+                for (let j = key; j < alphabetArray.length; j++) {
+                    cipherAlphabet.push(alphabetArray[j])
+                }
+                for (let j = 0; j < (alphabetArray.length - key); j++) {
+                    cipherAlphabet.push(alphabetArray[j])
+                }
+                //Now, we use that encoded alphabet to decode the message.
+                for (let index = 0; index < string.length; index++) {
+                    let character = string[index];
+                    //This quick if is there to pass non-characters straight through to the decoded string.
+                    if (alphabetArray.indexOf(character) == -1) {
+                        decodedString += character; continue
+                    }
+                    //Now we decode the characters
+                    else {
+                        let arrayPoint = cipherAlphabet.indexOf(character)
+                        let decodedCharacter = alphabetArray[arrayPoint];
+                        decodedString += decodedCharacter
+                    }
+                }
+                document.getElementById("caesarOutput").innerHTML = decodedString
+            }
+            if (eVd == "ENCODE") {
+                var encodedString = ""
+                const alphabetArray = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
+                //First, we establish the encoded version of the alphabet:
+                const cipherAlphabet = []
+                for (let j = key; j < alphabetArray.length; j++) {
+                    cipherAlphabet.push(alphabetArray[j])
+                }
+                for (let j = 0; j < (alphabetArray.length - key); j++) {
+                    cipherAlphabet.push(alphabetArray[j])
+                }
+                //Now, we use that encoded alphabet to decode the message.
+                for (let index = 0; index < string.length; index++) {
+                    let character = string[index];
+                    //This quick if is there to pass non-characters straight through to the encoded string.
+                    if (alphabetArray.indexOf(character) == -1) {
+                        encodedString += character; continue
+                    }
+                    //Now we encode the characters
+                    else {
+                        let arrayPoint = alphabetArray.indexOf(character)
+                        let encodedCharacter = cipherAlphabet[arrayPoint];
+                        encodedString += encodedCharacter
+                    }
+                }
+                document.getElementById("caesarOutput").innerHTML = encodedString
+            }
+        }
+
+    </script>
+
+    <h4>Decoded message:<br>
+        <style>
+            h4 code {
+                font-size: 20px;
+            }
+        </style>
+        <br>
+        <code>
+        <b id="caesarOutput">YOUR MESSAGE WILL APPEAR HERE</b>
+    </code><br>
+        <script>
+            function copyToClipboard() {
+                var testText = "HELLO THERE"
+                window.clipboardData.setText(testText)
+            }
+        </script>
+        <button onclick='copyToClipboard()'>Copy to Clipboard📋</button>
+
+    </h4>
+</div>
+<hr>
+
+<body>
+<div id = TextEcho>
+    <!--Simple text field input example-->
+    <!-- Here's the input.
+
+    We identify it by type (text, in this case) and allocate it an id ("textInput") -->
+    <h2>Text Echo</h2>
+    <p></p>
+    <h2>
+    <input type="text" id="textInput"><br>
+
+
+    <!-- This a button which, when submitted, will run the function 'display textEcho' when clicked. The 'onclick' bit indicates that the behaviour only takes place when the button is clicked.
+
+    Not that the button is appearing BEFORE we define the script; that's because HTMl loads everything all at once, so order doesn't really matter.-->
+
+    <button onclick="echoText()">Submit</button>
+    </h2>
+
+    <!-- Here's the actual script itself. Once inside the <script. wrapper, it functions exactly like normal Javascript.-->
+    <script>
+        function echoText() {
+        //First, we call and set the variable textEcho, and allocate it the value of whatever is in the element ID'd as 'textInput'.
+        
+        //If we wanted it to take a different, value, we'd put a different ID in the getElementById parentheses.
+            var textEcho = document.getElementById("textInput").value;
+        //Now, we tell the function to allocate a new value to the element ID's as "output". We're going to allocate it the value of the variable 'textEcho'
+            document.getElementById("textEcho").innerHTML = textEcho;
+        }
+
+    </script>
+    <p></p>
+    <h4>Output will go here:
+    <p></p>
+    <aside>
+    <b id="textEcho"></b>
+    </article>
+    </h4>   
+</div>
+<hr>
+<div id="lengthCounter">
+    <!-- first script attempt -->
+    <h2>String Length Counter</h2>
+    <p></p>
+    <h2>
+        <!-- And here's the input section-->
+        <input type="text" id="counterInput"><br>
+        <button onclick="counter()">Count it!</button>
+    </h2>
+    <script>
+            function counter() {
+                var string = document.getElementById("counterInput").value;
+                var length = string.length;
+                document.getElementById("counterOutput").innerHTML = length;
+            }
+    </script>
+    <h4>String length =<code id="counterOutput"></code>
+    </h4>
+</div>
+<hr>
+<!-- 2nd script attempt -->
+<div id="textReverser">
+    <h2>🔄 Text Reverser 🔄</h2>
+    <p></p>
+    <!-- Now to make my script. This is going to return the text entered, but reversed. I'll write the input first-->
+    <h2>
+        <!-- And here's the input section-->
+        <input type="text" id="reverseInput"><br>
+        <button onclick="reverse()">Reverse it!</button>
+
+    </h2>
+    <!-- Now, the script:-->
+    <script>
+        function reverse() {
+            //Normally 'string' would be defined in the function brackets, but instead we allocate it as follows:
+            var string = document.getElementById("reverseInput").value;
+            //Then, everything is just the same as it is in the normal code!
+            var reversedString = "";
+            for (let index = (string.length)-1; index > -1; index--) {
+                let addon = string[index];
+                reversedString = reversedString + addon
+            }
+            //This is basically the equivalent of 'return'
+            document.getElementById("reverseOutput").innerHTML = reversedString;
+        }
+    </script>
+    <h4>Output will go here:
+        <aside>
+            <b id="reverseOutput"></b>
+        </aside>
+        </h4>
+</div>
+<hr>
+<!-- This doesn't work yet
+<div id="clickcounter">
+    <script>
+        var clickcounter = 0; // initialize value to zero
+        function incrementCounter() {
+            var currentValue = parseInt(document.getElementById('myButton').value);// get the button value as an integer and store it in a variable called 'currentValue'
+            if (clickcscounter < currentValue) { // check that counter is less than or equal to the stored value of the clicked button, which should be 1 at this point since there are no other buttons yet. If not, increase counter by one before storing its new value as an integer in a variable called 'currentValue'
+                document.getElementById('myButton').value = currentValue + 1; // store incremented value back into the button with updated text and set it to be equal or greater than any other buttons that may exist at this point, which should not happen since there are no others yet (unless someone else comes along later)
+            } else {// if counter is already one then do nothing}
+            }; // end function declaration
+           document.getElementById('clickCount').innerHTML = parseInt(document.getElementById('myButton').value);
+        }
+
+        var currentDiv = document.getElementById('my-id'); // get reference to div element with id "my-id"
+        console.log(curentDiv)
+
+    </script>
+<h2>🖱️Click Counter🎚️</h2>
+<h3>
+<button id="myButton" onclick="incrementCounter()">Click me</button>
+<p></p>
+<b id="clickCount"></b>
+</h3>
+
+</div>
+-->
+</section>
+</header>
+<footer>
+    <br>
+    <br>
+    <p>
+        <center>
+            <i> © 2023 <a href="https://mbruges.com" target="_self">Max Bruges</a> </i> <br>
+            <i>Found this useful? <a href='https://ko-fi.com/L4L6JR137' target='_blank'>
+                    Send me coffee ☕️</i>
+            </a>
+        </center>
+    </p>
+</footer>
+</body>
+</html>
