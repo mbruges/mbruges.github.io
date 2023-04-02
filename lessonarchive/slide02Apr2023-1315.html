@@ -1,0 +1,228 @@
+<!-- 
+  This prototype just takes pre-designed <section> input from AI.
+
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="icon" href="/favicon.svg">
+  <link rel="stylesheet" href="/style.css">
+
+  <meta charset="utf-8">
+  <meta name="description" content="Slideshow - TITLE">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+
+      overscroll-behavior-y:none;
+      background-color: black;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      border-width: 1;
+      border-color: #4559f2;
+      font-size: 20px;
+    }
+  
+    nav {
+      background-color: black;
+      width: 90%;
+      height: 4vh;
+    }
+  
+    nav a, h4, h5 {
+      color: #fbf5cc;
+      padding: 1px;
+      margin: 2px;
+      border-radius: 20px;
+    }
+    
+    h1 {
+      padding: 1%;
+      margin-top: 30px;
+      margin-bottom: 0;
+      font-size: 30px;
+    }
+
+    section {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+    }
+  
+    footer {
+      color: #fbf5cc;
+      height: 1vh;
+      margin: 0px;
+      padding: 1px;
+      text-align: center;
+      border-radius: 20px;
+    } 
+
+    footer a i {
+      padding: 10px;
+      margin: 1px;
+      font-size: medium;
+      background-color: #fbf5cc;
+      text-align: right;
+      border-radius: 20px;
+    }
+  
+    hr {
+      border: none;
+      clear: both;
+      display: block;
+      padding: 0px;
+      margin: 0px;
+      background-color: black;
+      height: 45px;
+      align-self: center;
+    }
+  
+    .slide {
+      scroll-snap-align: start;
+    }
+    aside {
+      font-size: larger;
+      background-color: #ccd2f5;
+    }
+     
+::-webkit-scrollbar {
+          width: 0px;
+          height: 0px;
+          background-color: #fbf5cc;
+        }
+    
+::-webkit-scrollbar-track {
+          border: 0px solid #596cf2;
+          border-radius: 0px;
+        }
+    /*
+        ::-webkit-scrollbar-thumb {
+          background: #596cf2;
+          border-radius: 50px;
+        }
+    
+        ::-webkit-scrollbar-thumb:hover {
+          background: #4559f2;
+        } */
+
+      asidespacer15 {
+
+    width: 15vh;
+    height: 15vh;
+}
+
+challenge {
+    color: firebrick;
+    font-size: larger;
+    font-weight: 400;
+    background-color: rgb(251, 204, 213);
+    padding: 15px;
+    margin: 2px;
+    margin-bottom: 15px;
+    border-radius: var(--border-radius);
+    border-width: 5px;
+    border-style: solid;
+    border-color: firebrick;
+}
+
+.scrolling-box {
+    background-color: whitesmoke;
+    display: block;
+    height: 84vh;
+    width: 90vw;
+    overflow-y: scroll;
+    scroll-behavior: auto;
+    text-align: center;
+    scroll-snap-type: y mandatory;
+}
+  </style>
+  
+  <title>MB - Slideshow - xxtitlexx</title>
+
+  <script>
+   var sections = document.getElementsByTagName("section");
+   var index = 0;
+
+    function scrollToNextSlide() {
+      if (index < sections.length) {
+        sections[index].scrollIntoView({ behavior: "smooth" });
+        index++;
+      }
+    }
+  </script>
+</head>
+
+<body>
+<nav>
+  <h4><a href="/index.html">Home </a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h4>
+  <h4>TITLE</h4>
+  <h4><span id="date"></span><script>
+    var today = new Date();
+    var date = today.getDate();
+    var month = today.getMonth() + 1;
+    var year = today.getFullYear();
+    var dateString = date + '/' + month + '/' + year;
+
+    document.getElementById("date").innerHTML = dateString;
+  </script></h4>
+</nav>
+
+<div id="slideshow">
+
+<div class="scrolling-box">
+
+  <!--INPUT STARTS-->
+
+<section class="slide" id="1">
+    <h1>Macbeth: A Tale of Ambition</h1>
+    <h2>Is the lust for power worth the cost of one's soul?</h2>
+</section>
+<section class="slide" id="1">
+  <h1>Exploring the Fury of Volcanoes</h1>
+  <h2>What happens when a volcano erupts?</h2>
+  <p>Do Now: Write down everything you know about volcanoes. Share one interesting fact with a classmate.</p>
+  <img src="image1.png" alt="A volcano erupting" width="500" height="350">
+</section>
+<section class="slide" id="2">
+  <h2>Key Terms:</h2>
+  <ul>
+    <li>Magma - Molten rock beneath the Earth's surface</li>
+    <li>Lava - Magma that has erupted onto the Earth's surface</li>
+    <li>Pyroclastic flow - A fast-moving current of hot gas and volcanic matter that flows from an erupting volcano</li>
+    <li>Crater - The depression at the summit of a volcano where eruptions occur</li>
+    <li>Caldera - A large crater caused by the collapse of the top of a volcano</li>
+  </ul>
+  <img src="image2.png" alt="Volcanic eruption">
+</section>
+
+<!--INPUT ENDS-->
+
+</div>
+</div>
+
+<footer>
+  <small>Click to jump to:</small>
+  <a href="#1"><b>Slide 1</b></a>
+  <a href="#2"><b>Slide 2</b></a>
+  <a href="#3"><b>Slide 3</b></a>
+  <a href="#4"><b>Slide 4</b></a>
+  <button><a onclick="scrollToNextSlide()"><i id="scrollToNextSlide">Click for next slide</i></a></button>
+  <small>Use ⬆⬇ to scroll</small>
+  <i>Current slide:<span id="currentslide"></span></i>
+  <small><br>
+    <style> small {
+  color: #999;
+  font-size: 8px;}
+  small a {
+  color: #999;
+  font-size: 8px;}
+  </style>
+  © <a href ="mbruges.com">Max Bruges</a> 2023</small>
+</footer>
+</body>
+</html>

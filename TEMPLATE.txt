@@ -6,31 +6,25 @@
     <link rel="stylesheet" href="/style.css">
 
     <meta charset="utf-8">
-    <meta name="description" content="Archive of resources">
+    <meta name="description" content="New page">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>MB - Resources</title>
+    <title>MB - NEWPAGE</title>
 </head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-XQK1PEK9QX"></script>
-<script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() { dataLayer.push(arguments); }
-    gtag('js', new Date());
-    gtag('config', 'G-XQK1PEK9QX');
-</script>
+
 <body>
-    <header>
     <nav>
             <a href="/index.html"><img alt="miaow" src="/favicon.svg" height="40" width="40"></a>
             <ul>
                 <li><a href="/index.html"> Home </a></li>
             </ul>
     </nav>
-
         <!-- CONTENT STARS HERE. Copy and change file to HTML to use -->
 
-        <h1>TITLE</h1>
+<header>
+        <h1>NEWPAGE</h1>
+        <h2>Description</h2>
+    </header>
         <section>
             <article>
                 <p>There's nothing here yet. Check back later.</p>
@@ -39,23 +33,19 @@
             </article>
         </section>
 
-
-
-
     </header>
-    <footer>
-        <br>
-        <br>
-        <p>
-            <center>
-                <i> © 2023 Max Bruges - Made by me, with help from <a href="https://andybrewer.github.io/mvp/"
-                        target="_blank">MVP.css </a>, <a href="https://undraw.co/" target="_blank">unDraw </a> and
-                    Agatha</i>. 🐈‍⬛<br> <a href='https://ko-fi.com/L4L6JR137' target='_blank'>
+
+  <footer>
+                <p>© 2023 - <i> Made by <a href="https://www.linkedin.com/in/max-bruges-12988268/" target="_blank">me
+                </a>, with help from <a href="https://andybrewer.github.io/mvp/"
+                        target="_blank">MVP.css
+                    </a>, <a href="https://undraw.co/" target="_blank">unDraw
+                    </a> and Agatha</i>  🐈‍⬛
+                <a href='https://ko-fi.com/L4L6JR137' target='_blank'>
                     <p>Found this useful? Send me coffee ☕️</p>
-                </a>
-            </center>
-        </p>
+                </a></p>
     </footer>
+
 </body>
 
 </html>

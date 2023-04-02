@@ -1,16 +1,5 @@
 <!-- 
-  Variables, EDIT ALL OCCURENCES HERE:
-  CREATED: xxcreateddatexx
-  TITLE: xxtitlexx
-  LO: xxloxx
-  DO NOW: xxdonowxx
-  CHALLENGE1: xxchallengetask1xx
-  PLENARY: xxplenarytaskxx
-
-
-
-Notes:
-Perhaps use keydown for navigation? https://developer.mozilla.org/en-US/docs/Web/API/Element/keydown_event
+  This prototype just takes pre-designed <section> input from AI.
 
 -->
 
@@ -21,7 +10,7 @@ Perhaps use keydown for navigation? https://developer.mozilla.org/en-US/docs/Web
   <link rel="stylesheet" href="/style.css">
 
   <meta charset="utf-8">
-  <meta name="description" content="Slideshow - xxtitlexx - xxcreateddatexx">
+  <meta name="description" content="Slideshow - TITLE">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
@@ -159,7 +148,6 @@ Perhaps use keydown for navigation? https://developer.mozilla.org/en-US/docs/Web
       scroll-snap-type: y mandatory;
     }
   </style>
-  
   <title>MB - Slideshow - xxtitlexx</title>
 
   <script>
@@ -204,7 +192,7 @@ This code first selects the current section being viewed by the user using the:i
 <body>
 <nav>
   <h4><a href="/index.html">Home </a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h4>
-  <h4>xxtitlexx</h4>
+  <h4>TITLE</h4>
   <h4><span id="date"></span><script>
     var today = new Date();
     var date = today.getDate();
@@ -219,60 +207,12 @@ This code first selects the current section being viewed by the user using the:i
 <div id="slideshow">
 
 <div class="scrolling-box">
-<!--SLIDE 1-->
-  <section class="slide" id="1">
-    <u><h1>xxtitlexx</h1></u>
-    <p><h3><i>LO: xxloxx</i></h3></p>
 
-    <img alt="Slide1" src="/images/library.svg" height="300" width="auto">
-    <asidespacer15></asidespacer15>
-    <aside>
-      <p><b>DO NOW:</b></p>
-      <p>xxdonowxx</p>
-    
-    </aside>
-    
-    <p></p>
-    <challenge><b>CHALLENGE: </b> xxchallengetask1xx </challenge>
-    <p></p>
+  <!--INPUT STARTS-->
 
-  </section>
-<hr>
 
-<!--SLIDE 2-->
-<section class="slide" id="2">
-    <h1>This is the second slide</h1>
-      <p></p>
-      <img alt="enter the library" src="/images/knowledge.svg" height="300" width="auto">
-      <p>And here's some writing to go with it</p>
-      <br>
-  
-  </section>
-<hr>
 
-<!--SLIDE 3-->
-<section class="slide" id="3">
-      <h1>This is the third slide</h1>
-      <p></p>
-      <img alt="enter the library" src="/images/books.svg" height="300" width="auto">
-      <p>And here's some writing to go with it</p>
-      <br>
-  </section>
-<hr>
-
-<!--SLIDE 4-->
-<section class="slide" id="4">
-      <h1>PLENARY</h1>
-      <p></p>
-      <img alt="plenary" src="/images/podcast.svg" height="300" width="auto">
-      <aside>
-        <H3>PLENARY TASK<br>
-        xxplenarytaskxx
-        </H3>
-      </aside>
-      <p>And here's some writing to go with it</p>
-      <br>
-  </section>
+<!--INPUT ENDS-->
 
 </div>
 </div>

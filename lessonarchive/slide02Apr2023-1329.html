@@ -1,0 +1,245 @@
+<!-- 
+  This prototype just takes pre-designed <section> input from AI.
+
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="icon" href="/favicon.svg">
+  <link rel="stylesheet" href="/style.css">
+
+  <meta charset="utf-8">
+  <meta name="description" content="Slideshow - TITLE">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+
+      overscroll-behavior-y:none;
+      background-color: black;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: left;
+      flex-direction: column;
+      border-width: 1;
+      border-color: #4559f2;
+      font-size: 20px;
+    }
+  
+    nav {
+      background-color: black;
+      width: 90%;
+      height: 4vh;
+    }
+  
+    nav a, h4, h5 {
+      color: #fbf5cc;
+      padding: 1px;
+      margin: 2px;
+      border-radius: 20px;
+    }
+    
+    h1 {
+      padding: 2%;
+      margin-top: 30px;
+      margin-bottom: 0;
+      font-size: 30px;
+    }
+
+    section {
+      display: flex;
+      align-items: left;
+      text-align: left;
+      margin: 5%;
+      justify-content: center;
+      height: 100%;
+    }
+  
+    footer {
+      color: #fbf5cc;
+      height: 1vh;
+      margin: 0px;
+      padding: 1px;
+      text-align: center;
+      border-radius: 20px;
+    } 
+
+    footer a i {
+      padding: 10px;
+      margin: 1px;
+      font-size: medium;
+      background-color: #fbf5cc;
+      text-align: right;
+      border-radius: 20px;
+    }
+  
+    hr {
+      border: none;
+      clear: both;
+      display: block;
+      padding: 0px;
+      margin: 0px;
+      background-color: black;
+      height: 45px;
+      align-self: center;
+    }
+  
+    .slide {
+      scroll-snap-align: start;
+    }
+    aside {
+      font-size: larger;
+      background-color: #ccd2f5;
+    }
+     
+::-webkit-scrollbar {
+          width: 0px;
+          height: 0px;
+          background-color: #fbf5cc;
+        }
+    
+::-webkit-scrollbar-track {
+          border: 0px solid #596cf2;
+          border-radius: 0px;
+        }
+    /*
+        ::-webkit-scrollbar-thumb {
+          background: #596cf2;
+          border-radius: 50px;
+        }
+    
+        ::-webkit-scrollbar-thumb:hover {
+          background: #4559f2;
+        } */
+
+      asidespacer15 {
+
+    width: 15vh;
+    height: 15vh;
+}
+
+challenge {
+    color: firebrick;
+    font-size: larger;
+    font-weight: 400;
+    background-color: rgb(251, 204, 213);
+    padding: 15px;
+    margin: 2px;
+    margin-bottom: 15px;
+    border-radius: var(--border-radius);
+    border-width: 5px;
+    border-style: solid;
+    border-color: firebrick;
+}
+
+.scrolling-box {
+    background-color: whitesmoke;
+    display: block;
+    height: 82vh;
+    width: 90vw;
+    overflow-y: scroll;
+    scroll-behavior: auto;
+    text-align: center;
+    scroll-snap-type: y mandatory;
+}
+  </style>
+  
+  <title>MB - Slideshow - Agatha's Treats</title>
+
+  <script>
+   var sections = document.getElementsByTagName("section");
+   var index = 0;
+
+    function scrollToNextSlide() {
+      if (index < sections.length) {
+        sections[index].scrollIntoView({ behavior: "smooth" });
+        index++;
+      }
+    }
+  </script>
+</head>
+
+<body>
+<nav>
+  <h4><a href="/index.html">Home </a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h4>
+  <h4>TITLE</h4>
+  <h4><span id="date"></span><script>
+    var today = new Date();
+    var date = today.getDate();
+    var month = today.getMonth() + 1;
+    var year = today.getFullYear();
+    var dateString = date + '/' + month + '/' + year;
+
+    document.getElementById("date").innerHTML = dateString;
+  </script></h4>
+</nav>
+
+<div id="slideshow">
+
+<div class="scrolling-box">
+
+  <!--INPUT STARTS-->
+
+<section class="slide" id="1">
+  <h1>Why Agatha Should Be Allowed More Cat Treats</h1>
+  <img src="/images/cat1.svg" alt="Cat with Treats" />
+  <p>Hi, I'm Agatha - a housecat who loves treats more than anything. I'm here to present to you the reasons why I should be allowed more treats.</p>
+  <p>🐾🐟🍗😸</p>
+</section>
+<section class=slide id=2>
+  <h2>Why Agatha Should Be Allowed More Cat Treats</h2>
+  <ul>
+    <li>As a senior cat, Agatha needs extra nutrition to maintain her health and energy levels. More treats will provide the necessary calories and vitamins.</li>
+    <li>Agatha is an excellent mouser and guard cat, keeping the house free of pests and alerting us to any potential threats. This hard work deserves to be rewarded.</li>
+    <li>Giving Agatha more treats will strengthen our bond and show her that she is loved and appreciated.</li>
+    <li>Agatha's behavior and tricks have improved with positive reinforcement, and extra treats are an easy and effective way to encourage good habits.</li>
+  </ul>
+  <img src="placeholder/image2.png" alt="agatha with treats" />
+</section>
+<section class="slide" id="3">
+
+<h2>Why Agatha Should Be Allowed More Cat Treats</h2>
+
+<h3>FAQ</h3>
+
+<ul>
+  <li><strong>Q:</strong> Won't giving Agatha more treats make her unhealthy?</li>
+  <li><strong>A:</strong> It's all about moderation. As long as treats are given in moderation and as a supplement to a balanced diet, there shouldn't be any negative health effects.</li>
+  <br>
+  <li><strong>Q:</strong> What if Agatha gets sick from too many treats?</li>
+  <li><strong>A:</strong> As long as treats are given in moderation, the chance of Agatha getting sick from them is very low. If she does show any signs of illness, we can adjust her diet accordingly.</li>
+  <br>
+  <li><strong>Q:</strong> Isn't it too expensive to give Agatha more treats?</li>
+  <li><strong>A:</strong> Treats don't have to be expensive. There are affordable options available that are still high quality and healthy for Agatha.</li>
+</ul>
+
+<img src="image3.png" alt="Picture of Agatha with a treat" style="max-width:100%;height:auto;">
+
+</section>
+
+<!--INPUT ENDS-->
+
+</div>
+</div>
+
+<footer>
+  <small>Click to jump to:</small>
+  <a href="#1"><b>Slide 1</b></a>
+  <a href="#2"><b>Slide 2</b></a>
+  <a href="#3"><b>Slide 3</b></a>
+  <a href="#4"><b>Slide 4</b></a>
+  <button><a onclick="scrollToNextSlide()"><i id="scrollToNextSlide">Click for next slide</i></a></button>
+  <small>Use ⬆⬇ to scroll</small>
+  <small><br>
+    <style> small {
+  color: #999;
+  font-size: 8px;}
+  small a {
+  color: #999;
+  font-size: 8px;}
+  </style>
+  © <a href ="mbruges.com">Max Bruges</a> 2023</small>
+</footer>
+</body>
+</html>
