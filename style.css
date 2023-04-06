@@ -214,6 +214,18 @@ details {
 details summary {
     font-weight: bold;
     cursor: pointer;
+    /*
+        border-radius: var(--border-radius);
+            display: inline-block;
+            font-size: medium;
+            font-weight: bold;
+            line-height: var(--line-height);
+            margin: 0.5rem 0;
+            padding: 1rem 2rem;
+            background-color: var(--color-link);
+                border: 2px solid var(--color-link);
+                color: var(--color-bg);
+                */
 }
 
 h1,
