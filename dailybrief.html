@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="icon" href="/favicon.svg">
+    <link rel="stylesheet" href="/style.css">
+    <meta charset="utf-8">
+    <meta name="description" content="MB - TITLE // Maker // Learner">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MB - Daily Brief</title>
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script>
+        $(function () {
+            $('#agenda').load('/url.html #contenttodisplay');
+        });
+        $(function () {
+            $('#todo').load('/url.html #contenttodisplay');
+        });
+        $(function () {
+            $('#message').load('/dailymessage.html #message');
+        });
+        $(function () {
+            $('#photo').load('/url.html #contenttodisplay');
+        });
+        $(function () {
+                $('#wotd').load('/wotd.html #worksheet');
+            });
+    </script>
+    <style>
+        section {
+            justify-content: center;
+        }
+        section aside {
+            border: 1px;
+            box-shadow: none;
+            margin: 5px;
+            padding: 5%;
+            width: 27vw}
+
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <a href=""><img alt="miaow" src="/favicon.svg" height="40" width="40"></a>
+        
+            <h3>Daily Brief 🗓️ <i><span id="date"></span></i>
+                <script>
+                    var today = new Date();
+                    var date = today.getDate();
+                    var month = today.getMonth() + 1; // JavaScript starts counting months from 0
+                    var year = today.getFullYear();
+                    var dateString = date + '/' + month + '/' + year;
+
+                    document.getElementById("date").innerHTML = dateString;
+                </script>
+            </h3>
+        
+            <ul>
+                <li><a href="/index.html"> Home </a></li>
+            </ul>
+        </nav>
+    </header>
+
+        <!--
+
+CONTENT STARS HERE. Copy and change file to HTML to use
+
+-->
+    
+        <section>
+            
+            <aside>
+                <div id="agenda"></div>
+            </aside>
+            <aside>
+                <div id="message"></div>
+            </aside>
+            <aside>
+            <img id="photo" alt="photo" src="/images/books.svg" height=100% width=auto></aside>
+        </section>
+        <aside>
+            <div id="wotd"></div>
+        </aside>
+    
+
+    <footer>
+        <p>© 2023 - <i> Made by <a href="https://www.linkedin.com/in/max-bruges-12988268/" target="_blank">me
+                </a>, with help from <a href="https://andybrewer.github.io/mvp/" target="_blank">MVP.css
+                </a>, <a href="https://undraw.co/" target="_blank">unDraw
+                </a> and Agatha</i> 🐈‍⬛
+            <a href='https://ko-fi.com/L4L6JR137' target='_blank'>
+                <p>Found this useful? Send me coffee ☕️</p>
+            </a>
+        </p>
+    </footer>
+
+</body>
+
+</html>

@@ -4,10 +4,18 @@
 <head>
     <link rel="icon" href="/favicon.svg">
     <link rel="stylesheet" href="/style.css">
+
     <meta charset="utf-8">
-    <meta name="description" content="MB - TITLE // Maker // Learner">
+    <meta name="description" content="MB - Teacher // Maker // Learner">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MB - TITLE</title>
+
+    <title>MB - Text Editor</title>
+    <meta charset="utf-8">
+    <title>Text editor</title>
+    <script src="https://cdn.ckeditor.com/ckeditor5/37.0.1/classic/ckeditor.js"></script>
+</head>
+<!-- Google tag (gtag.js) -->
+
 <body>
     <header>
         <nav>
@@ -22,22 +30,29 @@
 CONTENT STARS HERE. Copy and change file to HTML to use
 
 -->
-
-<header>
-        <h1>NEWPAGE</h1>
-        <h2>Description</h2>
-    </header>
+    <h1>The Editor</h1>
+    <p> A simple WYSIWYG editor.</p>
+    <p> Type away!</p>
         <section>
             <article>
-                <p>There's nothing here yet. Check back later.</p>
-                <br>
-                <img alt="under construction" src="/images/building.svg" height = 200>
+            <body>
+                <div id="editor">
+                    <p>Write here!</p>
+                </div>
+                <script>
+                    ClassicEditor
+                        .create(document.querySelector('#editor'))
+                        .catch(error => {
+                            console.error(error);
+                        });
+                </script>
+            </body>
             </article>
+            </html>
         </section>
-
     </header>
 
- <footer>
+    <footer>
         <p>© 2023 - <i> Made by <a href="https://www.linkedin.com/in/max-bruges-12988268/" target="_blank">me
                 </a>, with help from <a href="https://andybrewer.github.io/mvp/" target="_blank">MVP.css
                 </a>, <a href="https://undraw.co/" target="_blank">unDraw
