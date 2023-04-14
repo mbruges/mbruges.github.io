@@ -73,18 +73,28 @@ Perhaps use keydown for navigation? https://developer.mozilla.org/en-US/docs/Web
       color: #fbf5cc;
       height: 1vh;
       margin: 0px;
-      padding: 1px;
+      padding: 0px;
       text-align: center;
       border-radius: 20px;
     }
   
     footer a i {
-      padding: 10px;
+      padding:10px;
       margin: 1px;
       font-size: medium;
       background-color: #fbf5cc;
       text-align: right;
-      border-radius: 20px;
+      border-radius: 10px;
+    }
+
+    footer button {
+      padding: 1px;
+      margin: 1px
+    }
+
+    footer a b {
+      padding: 10px;
+
     }
   
     hr {
@@ -161,44 +171,6 @@ Perhaps use keydown for navigation? https://developer.mozilla.org/en-US/docs/Web
   </style>
   
   <title>MB - Slideshow - xxtitlexx</title>
-
-  <script>
-
-    /*
-This version works very basically, simply moving the slide on but does not reset with any manual scrolling.
-
-   var sections = document.getElementsByTagName("section");
-   var index = 0;
-
-    function scrollToNextSlide() {
-      if (index < sections.length) {
-        sections[index].scrollIntoView({ behavior: "smooth" });
-        index++;
-      }
-    }
-    */
-/*
-Assuming that each < section > tag has a unique identifier, we can use the document.querySelector() method to select the current section being viewed by the user.We can then loop through all the < section > tags and compare their identifiers to that of the current section to determine its index.
-
-This code first selects the current section being viewed by the user using the:in -view pseudo - selector.It then selects all the < section > tags on the page.We then loop through all the sections and compare their identifiers to that of the current section using the id property.Once we find a match, we set the index variable to the position of the current section in the loop and break out of the loop.Finally, we have the index variable containing the index of the current section.
-
-    var currentSection = document.querySelector('section:in-view')
-    document.getElementById("currentslide").innerHTML = currentSection; // selects the current section in view
-      
-  function displayCurrentSlide() {
-    var currentSection = document.querySelector('section:in-view'); // selects the current section in view
-    var sections = document.querySelectorAll('section'); // selects all the sections on the page
-    var index = '';
-
-    for (var i = 0; i < sections.length; i++) {
-      if (sections[i].id === currentSection.id) {
-        index = i; // sets the index to the position of the current section in the loop
-        break;
-      }
-      document.getElementById("currentslide").innerHTML = index;}
-    }*/
-
-  </script>
 </head>
 
 <body>
@@ -283,9 +255,9 @@ This code first selects the current section being viewed by the user using the:i
   <a href="#2"><b>Slide 2</b></a>
   <a href="#3"><b>Slide 3</b></a>
   <a href="#4"><b>Slide 4</b></a>
-  <button><a onclick="displayCurrentSlide()"><i id="scrollToNextSlide">Click for next slide</i></a></button>
+  <!-- <button><a onclick="displayCurrentSlide()"><i id="scrollToNextSlide">Click for next slide</i></a></button> -->
   <small>Use ⬆⬇ to scroll</small>
-  <i>Current slide:<span id="currentslide"></span></i>
+
   <small><br>
     <style> small {
   color: #999;
