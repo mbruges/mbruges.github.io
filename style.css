@@ -531,26 +531,31 @@ blockquote footer {
     padding: 1.5rem 0;
 }
 
-tooltip {
+.tooltip {
     position: relative;
-    display: inline-block;
+    white-space: pre-line;
 }
 
-tooltip,
-tooltiptext {
-    visibility: hidden;
-    width: 120px;
-    background-color: var(--color-shadow);
-    color: var(--color-text);
-    text-align: center;
-    font-family: var(--font-family);
-    padding: 5px 0;
-    border-radius: 6px;
+.tooltipdata {
+    white-space: pre-line;
+    pointer-events: all;
+}
+
+.tooltipdata:hover::after {
+    content: attr(data-tooltip);
     position: absolute;
+    top: 100%;
+    left: 60%;
+    font-size: medium;
+    font-style: italic;
+    font-weight: 250;
+    min-width: 280px;
+    border-radius: var(--border-radius);
+    border: 2px var(--color-secondary) solid;
+    padding: 8px;
+    color: black;
+    background-color: var(--color-shadow);
     z-index: 1;
-}
-
-tooltip:hover,
-tooltiptext {
-    visibility: visible;
+    white-space: pre-line;
+    text-align: justify;
 }
