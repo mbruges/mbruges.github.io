@@ -511,6 +511,12 @@ table tr:nth-child(even) {
     background-color: var(--color-accent);
 }
 
+iframe {
+    border: 0px;
+    
+
+}
+
 /* Quotes */
 blockquote {
     display: block;

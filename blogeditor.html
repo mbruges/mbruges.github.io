@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="icon" href="/favicon.svg">
+    <link rel="stylesheet" href="/style.css">
+    <meta charset="utf-8">
+    <meta name="description" content="MB - TITLE // Maker // Learner">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MB - TITLE</title>
+
+<body>
+    <header>
+        <nav>
+            <a href="/index.html"><img alt="miaow" src="/favicon.svg" height="40" width="40"></a>
+            <small>Blog Editor</small>
+            <ul>
+                <li><a href="/index.html"> Home </a></li>
+            </ul>
+        </nav>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script src="https://cdn.tiny.cloud/1/dbnbi6orha2sxeg04pxfgma2whm1dffrfgla7rx52iyqo2fp/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+
+    <script>
+        tinymce.init({
+            selector: 'textarea',
+            plugins: 'autocorrect autosave editimage image link linkchecker lists media   searchreplace template tinymcespellchecker typography  wordcount',
+            toolbar: 'undo redo | styles |  strikethrough align link image | bullist numlist outdent indent | spellcheckdialog  typography',
+            height: 890,
+            typography_langs: ['en-UK'],
+            typography_default_lang: 'en-UK',
+            advcode_inline: true,
+            style_formats: [
+                { title: 'Title', block: 'h1' },
+                { title: 'Subheading', block: 'h2' },
+                { title: 'Paragraph', block: 'p' },
+                { title: 'Blockquote', block: 'blockquote' },
+                { title: 'Image formats' },
+                { title: 'Medium', selector: 'img', classes: 'medium' },
+            ],
+            object_resizing: false,
+            valid_classes: {
+                'img': 'medium',
+                'div': 'related-content'
+            },
+            image_caption: true,
+            noneditable_class: 'related-content',
+            templates: [
+                {
+                    title: 'Related content',
+                    description: 'This template inserts a related content block',
+                    content: '<div class="related-content"><h3>Related content</h3><p><strong>{$rel_lede}</strong> {$rel_body}</p></div>'
+                }
+            ],
+            template_replace_values: {
+                rel_lede: 'Lorem ipsum',
+                rel_body: 'dolor sit amet...',
+            },
+            template_preview_replace_values: {
+                rel_lede: 'Lorem ipsum',
+                rel_body: 'dolor sit amet...',
+            },
+            content_style: `
+         body {
+          font-family: 'Roboto', sans-serif;
+          color: #222;
+        }
+        img {
+          height: auto;
+          margin: auto;
+          padding: 10px;
+          display: block;
+        }
+        img.medium {
+          max-width: 25%;
+        }
+        a {
+          color: #116B59;
+        }
+        .related-content {
+          padding: 0 10px;
+          margin: 0 0 15px 15px;
+          background: #eee;
+          width: 200px;
+          float: right;
+        }
+      `
+        });
+    </script>
+
+</head>
+
+<body>
+    <textarea>
+    <h1>Title...</h1>
+    <p> Some Content</p>
+    <h2>A Subheading</h2>
+  </textarea>
+</body>
+
+</html>
+<link rel="stylesheet" href="/style.css">
