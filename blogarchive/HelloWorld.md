@@ -2,15 +2,15 @@
 
 ### You have to start somewhere.
 
-![](https://images.unsplash.com/photo-1644792863360-40fa85ea52e7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80)
+ ![](https://images.unsplash.com/photo-1644792863360-40fa85ea52e7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80)
 
-As it says on the tin: I’m a teacher. It’s an incredible career, and one I’m proud to be part of.
+As it says [on the tin](http://mbruges.com/index.html): I’m a teacher. It’s an incredible career, and one I’m proud to be part of.
 
 But a niggling feeling started to at the back of my mind a few months ago.
 
 *Teachers don't do much learning.*
 
-That’s perhaps unfair - hardly anyone, really, does much learning past the age of 24 or 25. I don’t mean in the self-knowledge, incremental gains kind of way; I mean in the taking on of a fundamentally new skill or new domain, something you don’t already do.
+That’s perhaps unfair - hardly anyone, really, does much learning [past the age of 25](https://www.tes.com/magazine/analysis/general/why-better-cpd-could-be-answer-teacher-retention). I don’t mean in the self-knowledge, incremental gains kind of way; I mean in the taking on of a fundamentally new skill or new domain, something you don’t already do.
 
 Certainly, we sit through plenty of CPD (of varying quality). But this is often either something we know already, something we've forgotten and need to be (legally) reminded of on a periodic basis, or some system that changes something we were doing already.
 
@@ -22,7 +22,7 @@ But ever a glutton for punishment, I have thrown myself back into the unforgivin
 
 [This website you’re on right now](mbruges.com) - in all its hacked-together glory  - represents the half-ripened fruits of that process.
 
-# Fit your own lightbulbs
+## Fit your own lightbulbs
 
 My first, and over-riding feeling? Satisfaction. My god is it satisfying to get something, to go from clueless to clue-full. In that one brief moment (before you see the Dunning-Kruger pit gaping ahead of you) the fabric of space and time opens up and you are master of the universe. You have, through your own fleshy grey matter, taken something that was meaningless and rendered it meaningful. Where that was darkness, light; where there was fear, understanding.
 
@@ -32,7 +32,7 @@ When interviewing teachers, one of the most best questions you can ask is: what�
 
 Perhaps we can all benefit from living a moment like this ourselves. Fit your own lightbulbs; remember what it feels like.
 
-# Just do it.
+## Just do it.
 
 The best way to learn is to do. One can read, highlight, bulletpoint, mind-map in a beautifully [Pinterest-able notebook](https://www.vox.com/the-goods/22538703/tiktok-productivity-hacks-gen-z), but if you want to form and solidifying those synaptic connections, you need to actually practice. And practice that produces something is even better.
 
@@ -42,4 +42,4 @@ Having faffed around with Javascript and a little Python, there’s a great deal
 
 This site is less a [showcase](https://mbruges.com/scriptpractice.html) or portfolio, and more a sketchbook. There are lots of ideas here in various states of completion. Some are [demos at 99% functionality](https://mbruges.com/wotd.html), some are [projects I've put on ice](https://open.spotify.com/show/1s44mmlysg8G7lLW5QvGb5?si=5889d05e4c8a4171) for the foreseeable, and some are [abominations of half-formed code](https://mbruges.com/scriptpractice.html) that really ought to be put out of their misery.
 
-But each one represents one of those lightbulbs. And even if they only give off a flicker, they’re worth keeping around. 
+But each one represents one of those lightbulbs. And even if they only give off a flicker, they’re worth keeping around. 💡

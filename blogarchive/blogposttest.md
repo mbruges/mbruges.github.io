@@ -19,11 +19,9 @@ And some more text.
 
 [Here’s a link.](https://www.bbc.com)
 
-
 This is really nice.
 
 > What do you think of this?
-
 
 
 1. It's quick
