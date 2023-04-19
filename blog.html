@@ -1,3 +1,19 @@
+<!-- After quite a lot of faffing, the most elegant solution is the following:
+1) Write blogposts in Markdown (using the Rich Markdown Editor extension)
+2) Insert these posts using zeroMD script, which requires:
+
+    <script src="https://cdn.jsdelivr.net/npm/@webcomponents/webcomponentsjs@2/webcomponents-loader.min.js"></script>
+
+    and
+
+    <script type="module" src="https://cdn.jsdelivr.net/gh/zerodevx/zero-md@1/src/zero-md.min.js"></script>
+
+3) Set the required blogpost in a div using the following :
+
+<zero-md src="./blogarchive/POSTTITLE.md"></zero-md>
+
+     -->
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,7 +26,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>MB - Blog</title>
-</head>
+        <script src="https://cdn.jsdelivr.net/npm/@webcomponents/webcomponentsjs@2/webcomponents-loader.min.js"></script>
+    </head>
 <body>
     <header>
     <nav>
@@ -20,13 +37,10 @@
                 <li><a href="/index.html"> Home </a></li>
             </ul>
     </nav>
-        <!--
-
-CONTENT STARS HERE. Copy and change file to HTML to use
-
--->
     </header>
-    <!--
+   
+    <!--  Arc Embed
+
 <div id ="arc">
         <iframe
             src="https://docs.google.com/document/d/e/2PACX-1vSL2DDuI2idLDpHPaKVSpG2TfXFixalyl_S4K7ZayoH7nXH8cQIcJca7JLAywuLeLhoMs_tF9jwQ6bH/pub?embedded=true"
@@ -36,12 +50,109 @@ CONTENT STARS HERE. Copy and change file to HTML to use
             <p></p><small>1 April 2023</small>
         </center>
 </div>
--->
-<div><iframe style="display: block; margin-left: auto; margin-right: auto;"
-        src="https://docs.google.com/document/d/1NE-IR9doHK47GeCtPpO-zB_VkMHQKDiWt0C7inSwmVU/pub?embedded=true"
-        width="90%" height="600"></iframe></div>
 
+-->
+
+<!-- Arc embed 
+<div id="arcBlog">
+
+<iframe width="100%" height="100%" scrolling="yes"
+  src="https://arc.net/p/B55CB09B-D067-4965-AF42-7152CC2F70AE" frameborder="0"></iframe>
+    
+</div>
+-->
+<!-- Google embed
+<hr>
+<div id="googleBlog"><iframe style="display: block; margin-left: auto; margin-right: auto;"
+        src="https://docs.google.com/document/d/1NE-IR9doHK47GeCtPpO-zB_VkMHQKDiWt0C7inSwmVU/pub?embedded=true"
+        width="90%" height="600"></iframe>
+<center>
+    <a
+        href="https://docs.google.com/document/d/e/2PACX-1vSL2DDuI2idLDpHPaKVSpG2TfXFixalyl_S4K7ZayoH7nXH8cQIcJca7JLAywuLeLhoMs_tF9jwQ6bH/pub"><sup>
+            Link 🔗 </sup></a>
+    <p></p><small>1 April 2023</small>
+</center>
+</div>
+
+<hr>
+-->
+
+<div id="mdBlog">
+<script type="module" src="https://cdn.jsdelivr.net/gh/zerodevx/zero-md@1/src/zero-md.min.js"></script>
+<script>
+    AddTargetBlank();
+
+    function AddTargetBlank() {
+        var links = document.querySelectorAll("a");
+        for (var i = 0; i < links.length; i++) {
+            links[i].setAttribute("target", "_blank");
+        }
+    }
+</script>
+<form>
+<zero-md src="./blogarchive/helloworld.md">
+
+<!-- Style template prepended before default styles -->
+<template data-merge="prepend">
+    <style>
+        div {
+            padding-left: 9%;
+            padding-right: 9%;
+            font-family: var(--font-family);
+            line-height: 160%;
+            font-size: 110%;
+        }
+    
+        a {
+            color: var(--color-secondary);
+    
+            display: inline-block;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        h1, h2 {
+            margin-bottom: 6%;
+        }
+
+        h3 {
+            font-style: italic;
+            color: var(--color-text-secondary);
+            font-size: 100%;
+            font-weight: 350;
+        }
+
+        img {
+            border-radius: var(--border-radius);
+            max-height: 50vh;
+            max-width: 80vw;
+            margin-left: auto;
+            margin-right: auto;
+            display: block;
+            
+
+        }
+
+    blockquote {
+  margin: 0;
+  padding: 0 1em;
+  color: var(--color-text-secondary);
+  border-left: .25em solid var(--color-border-default);
+  font-style: italic;
+}
+    </style>
+</template>    
+</zero-md>
+</form>
+</div>
 <!--
+<center>
+<div id="link" value="https://mbruges.com/blog"></div>
+<a onclick="copy()"><sup> Copy link 🔗 </sup></a>-->
+<center><p></p><small>1 April 2023</small></center>
+
+
+<!-- Raw html
 
 <div id="01052023">
     <form>
@@ -84,10 +195,7 @@ CONTENT STARS HERE. Copy and change file to HTML to use
             abominations of half-formed code that really ought to be put out of their misery.</p>
             <p>
             But each one represents one of those lightbulbs. And even if they only give off a flicker, they’re worth keeping around.</p>
-        <center>
-        <a href="https://mbruges.com/blog#01052023"><sup> Link 🔗 </sup></a>
-        <p></p><small>1 April 2023</small>
-        </center>
+       
     </form>
 </div>
 -->
@@ -96,7 +204,7 @@ CONTENT STARS HERE. Copy and change file to HTML to use
                 <p>© 2023 - <i> Made by <a href="https://www.linkedin.com/in/max-bruges-12988268/" target="_blank">me
                 </a>, with help from <a href="https://andybrewer.github.io/mvp/"
                         target="_blank">MVP.css
-                    </a>, <a href="https://undraw.co/" target="_blank">unDraw
+                    </a>, <a href="https://undraw.co/" target="_blank" *>unDraw
                     </a> and Agatha</i>  🐈‍⬛
                 <a href='https://ko-fi.com/L4L6JR137' target='_blank'>
                     <p>Found this useful? Send me coffee ☕️</p>
