@@ -2,7 +2,7 @@
 
 ### You have to start somewhere.
 
-<img title="" src="https://cs6.pikabu.ru/post_img/big/2014/12/11/10/1418320764_1160408895.jpg" alt="" width="384" data-align="center">
+![](https://images.unsplash.com/photo-1644792863360-40fa85ea52e7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80)
 
 As it says on the tin: I’m a teacher. It’s an incredible career, and one I’m proud to be part of.
 
