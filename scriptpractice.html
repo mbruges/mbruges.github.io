@@ -2664,6 +2664,35 @@
         </h4>
 </div>
 <hr>
+
+<div id="CopyButton">
+<h1>Click to Copy</h1>
+
+<script id="copy-button-script">
+    function copy() {
+        var text = "You copied this text";
+        navigator.clipboard.writeText(text).then(function () {
+            console.log('Async: Copying to clipboard was successful!');
+            copyalert();
+        });
+    }
+    function copyalert() {
+            // Get the snackbar DIV
+            var x = document.getElementById("snackbar");
+
+            // Add the "show" class to DIV
+            x.className = "show";
+
+            // After 3 seconds, remove the show class from DIV
+            setTimeout(function () { x.className = x.className.replace("show", ""); }, 3000);
+        }
+</script>
+
+<button onclick="copy()">Copy it!</button>
+<div id="snackbar">Copy successful!</div>
+
+</div>
+
 <!-- This doesn't work yet
 <div id="clickcounter">
     <script>
@@ -2697,9 +2726,8 @@
     <br>
     <p>
         <center>
-            <i> © 2023 <a href="https://mbruges.com" target="_self">Max Bruges</a> </i> <br>
-            <i>Found this useful? <a href='https://ko-fi.com/L4L6JR137' target='_blank'>
-                    Send me coffee ☕️</i>
+            <i>© 2023 <a href="https://mbruges.com" target="_self">Max Bruges</a> </i> <br>
+            <i>Found this useful? <a href='https://ko-fi.com/L4L6JR137' target='_blank'>Send me coffee ☕️</i>
             </a>
         </center>
     </p>

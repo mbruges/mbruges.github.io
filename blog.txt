@@ -1,5 +1,6 @@
 <!-- After quite a lot of faffing, the most elegant solution is the following:
 1) Write blogposts in Markdown (using the Rich Markdown Editor extension)
+
 2) Insert these posts using zeroMD script, which requires:
 
     <script src="https://cdn.jsdelivr.net/npm/@webcomponents/webcomponentsjs@2/webcomponents-loader.min.js"></script>
@@ -47,124 +48,62 @@
         display: block;
     }
 
-    sup a {
+    a sup {
         align-content: center;
         margin-left: auto;
         margin-right: auto;
         text-align: center;
         margin-bottom: 10px;
-        font-size: 12px;
+        font-size: 13px;
+        padding: 10px;
         color: var(--color-bg);
     }
+
+   a button {
+    font-size: small;
+    padding: 8px;
+    margin-top: 1px;
+    }
+
     </style>
     <script type="module" src="https://cdn.jsdelivr.net/gh/zerodevx/zero-md@1/src/zero-md.min.js"></script>
+    <script>
+        function copyalert() {
+                // Get the snackbar DIV
+                var x = document.getElementById("snackbar");
 
+                // Add the "show" class to DIV
+                x.className = "show";
+
+                // After 3 seconds, remove the show class from DIV
+                setTimeout(function () { x.className = x.className.replace("show", ""); }, 3000);
+            }
+    </script>
+    <script id="copy-button-script">
+        function copy(link) {
+            navigator.clipboard.writeText(link); copyalert();
+        };
+    </script>
+<div id="snackbar">Link copied to clipboard 📋</div>
 </head>
 
 <body>
     <header>
     <nav>
             <a href="/index.html"><img alt="miaow" src="/favicon.svg" height="40" width="40"></a>
-            <small>⬇ Click to jump to post ⬇</small>
+            <small>The Blog</small>
             <ul>
                 <li><a href="/index.html"> Home </a></li>
             </ul>
     </nav>
 </header>
 <center>
-<sup><a href="blog.html#180423">18 April</a></sup> 
+<a href="blog.html#180423"><sup>📃 18 April</sup></a>
 &nbsp &nbsp &nbsp
 
 <!--next link-->
 </center>
 <br>
-<!-- Blog posts start here 
-
-Below is the format to follow
-<div id="DDMMYY">
-    <form>
-        <small> ~~~~~~ XXth Month 20XX ~~~~~~ </small>
-        <zero-md id="DDMMYYblog" src="/blogarchive/BLOGPOST.md">
-            <template>
-                <style>
-                    div {
-                        padding-left: 9%;
-                        padding-right: 9%;
-                        font-family: var(--font-family);
-                        line-height: 160%;
-                        font-size: 110%;
-                    }
-
-                    a {
-                        color: var(--color-secondary);
-
-                        display: inline-block;
-                        font-weight: bold;
-                        text-decoration: none;
-                    }
-
-                    h1 {
-                        margin-bottom: 1%;
-                    }
-
-                    h2 {
-                        margin-top: 5%;
-                        margin-bottom: 1%;
-
-                    }
-
-                    h3 {
-                        font-style: italic;
-                        color: var(--color-text-secondary);
-                        font-size: 100%;
-                        font-weight: 350;
-                    }
-
-                    img {
-                        border-radius: var(--border-radius);
-                        max-height: 35vh;
-                        max-width: 79vw;
-                        margin-left: auto;
-                        margin-right: auto;
-                        display: block;
-                    }
-
-                    blockquote {
-                        margin: 0;
-                        padding: 0 1em;
-                        color: var(--color-text-secondary);
-                        border-left: .25em solid var(--color-border-default);
-                        font-style: italic;
-                    }
-
-                    code,
-                    samp {
-                        background-color: var(--color-accent);
-                        border-radius: var(--border-radius);
-                        color: var(--color-text);
-                        display: inline-block;
-                        margin: 0 0.1rem;
-                        padding: 0 0.5rem;
-                        font-size: 120%;
-                    }
-
-                    details {
-                        margin: 1.3rem 0;
-                    }
-
-                    details summary {
-                        font-weight: bold;
-                        cursor: pointer;
-                    }
-                </style>
-            </template>
-        </zero-md>
-        <small> ~~~~~~ END ~~~~~~</small>
-    </form>
-</div>
-<br> <br> <br> <br>
-
--->
 
 <!--INSERTPOST-->
 
@@ -216,11 +155,11 @@ Below is the format to follow
                 display: block;
             }
 
-        blockquote {
+    blockquote {
     margin: 0;
     padding: 0 1em;
     color: var(--color-text-secondary);
-    border-left: .25em solid var(--color-border-default);
+    border-left: 0.3em solid var(--color-accent);
     font-style: italic;
     }
 
@@ -257,13 +196,8 @@ Below is the format to follow
 
 <br>
 
-<!--
-        This is the 'copy link' button which doesn't work yet.
-
 <center>
-<div id="link" value="https://mbruges.com/blog"></div>
-<a onclick="copy()"><sup> Copy link 🔗 </sup></a>-->
-
+<a onclick="copy(`https://mbruges.com/blog.html#180423`)"><button> Copy link 🔗 </button></a>
 
 <footer>
     <p>© 2023 - <i> Made by <a href="https://www.linkedin.com/in/max-bruges-12988268/" target="_blank">me

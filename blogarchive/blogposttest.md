@@ -2,8 +2,8 @@
 
 This is the body
 
-- [ ] This is a quick list
-- [ ] Here's a second
+[ ] This is a quick list
+[ ] Here's a second
 
 Here's the body again
 
@@ -19,10 +19,9 @@ And some more text.
 
 [Here’s a link.](https://www.bbc.com)
 
-This is really nice.
+<details>This is really nice.</details>
 
 > What do you think of this?
-
 
 1. It's quick
 2. It's smart
@@ -33,5 +32,3 @@ And the bullets:
 * Also
 * works
 * well.
-
-
