@@ -69,8 +69,8 @@
     <script type="module" src="https://cdn.jsdelivr.net/gh/zerodevx/zero-md@1/src/zero-md.min.js"></script>
     <script>
         function copyalert() {
-                // Get the snackbar DIV
-                var x = document.getElementById("snackbar");
+                // Get the toastAlert DIV
+                var x = document.getElementById("toastAlert");
 
                 // Add the "show" class to DIV
                 x.className = "show";
@@ -84,7 +84,7 @@
             navigator.clipboard.writeText(link); copyalert();
         };
     </script>
-<div id="snackbar">Link copied to clipboard 📋</div>
+<div id="toastAlert">Link copied to clipboard 📋</div>
 </head>
 
 <body>
@@ -103,6 +103,7 @@
 
 <!--next link-->
 </center>
+
 <br>
 
 <!--INSERTPOST-->
@@ -163,13 +164,6 @@
     font-style: italic;
     }
 
-    pre {
-        background-color: #D1D1D0;
-        overflow: auto;
-        font-family: 'Monaco', monospace;
-        padding: 0 1em;
-    }
-
     code,
     samp {
         background-color: var(--color-accent);
@@ -188,7 +182,7 @@
         font-weight: bold;
         cursor: pointer;}
         </style>
-    </template>    
+    </template> 
     </zero-md>
     <small> ~~~~~~ END ~~~~~~ </small>
     </form>

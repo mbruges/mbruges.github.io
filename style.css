@@ -578,14 +578,13 @@ blockquote footer {
 }
 
 
-/* The snackbar - position it at the bottom and in the middle of the screen */
-#snackbar {
+/* The toastAlert - position it at the bottom and in the middle of the screen */
+#toastAlert {
     visibility: hidden;
     border-radius: var(--border-radius);
     /* Hidden by default. Visible on click */
-    min-width: 250px;
+    min-width: 20vw;
     /* Set a default minimum width */
-    margin-left: -125px;
     /* Divide value of min-width by 2 */
     background-color: #333;
     /* Black background color */
@@ -599,24 +598,25 @@ blockquote footer {
     /* Sit on top of the screen */
     z-index: 1;
     /* Add a z-index if needed */
-    left: 50%;
-    /* Center the snackbar */
-    bottom: 30px;
+    left: 33vw;
+    right: 33vw;
+    /* Center the toastAlert */
+    bottom: 32px;
     font-family: var(--font-family);
     /* 30px from the bottom */
 }
 
-/* Show the snackbar when clicking on a button (class added with JavaScript) */
-#snackbar.show {
+/* Show the toastAlert when clicking on a button (class added with JavaScript) */
+#toastAlert.show {
     visibility: visible;
-    /* Show the snackbar */
-    /* Add animation: Take 0.5 seconds to fade in and out the snackbar.
+    /* Show the toastAlert */
+    /* Add animation: Take 0.5 seconds to fade in and out the toastAlert.
   However, delay the fade out process for 2.5 seconds */
     -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
     animation: fadein 0.5s, fadeout 0.5s 2.5s;
 }
 
-/* Animations to fade the snackbar in and out */
+/* Animations to fade the toastAlert in and out */
 @-webkit-keyframes fadein {
     from {
         bottom: 0;
