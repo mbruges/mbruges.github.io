@@ -43,52 +43,30 @@ This will load the MD file, parse it using Markdown-it, and display the rendered
 
 <head>
     <link rel="icon" href="/favicon.svg">
-    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="blogstyle.css">
     <meta charset="utf-8">
     <meta name="description" content="MB - Teacher // Maker // Learner">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     <title>MB - Blog</title>
     <script src="https://cdn.jsdelivr.net/npm/@webcomponents/webcomponentsjs@2/webcomponents-loader.min.js"></script>
-<script src="https://unpkg.com/markdown-it/dist/markdown-it.min.js"></script>
-    <link rel="stylesheet" href="/style.css">
-    <style>
-        form {
-            border: transparent;
-            border-width: 0px;
-        }
+    <script src="https://unpkg.com/markdown-it/dist/markdown-it.min.js"></script>
+    <script>
+        // Load the MD file
+        fetch('blogarchive/Test-Post.md')
+            .then(response => response.text())
+            .then(md => {
+                // Parse the markdown and render it
+                const mdRenderer = window.markdownit();
+                const html = mdRenderer.render(md);
 
-        form small {
-            font-style: italic;
-            font-family: monospace;
-            align-content: center;
-            margin-left: auto;
-            margin-right: auto;
-            text-align: center;
-            color: var(--color-text-secondary);
-            display: block;
-        }
-
-        a sup {
-            align-content: center;
-            margin-left: auto;
-            margin-right: auto;
-            text-align: center;
-            margin-bottom: 10px;
-            font-size: 13px;
-            padding: 10px;
-            color: var(--color-bg);
-        }
-
-        a button {
-            font-size: small;
-            padding: 8px;
-            margin-top: 1px;
-        }
-    </style>
+                // Display the rendered HTML in the container element
+                document.getElementById('markdown-container').innerHTML = html;
+            });
+    </script>
     <script>
         function copyalert() {
             // Get the toastAlert DIV
@@ -107,19 +85,6 @@ This will load the MD file, parse it using Markdown-it, and display the rendered
         };
     </script>
     <div id="toastAlert">Link copied to clipboard 📋</div>
-<script>
-    // Load the MD file
-    fetch('blogarchive/HelloWorld.md')
-        .then(response => response.text())
-        .then(md => {
-            // Parse the markdown and render it
-            const mdRenderer = window.markdownit();
-            const html = mdRenderer.render(md);
-
-            // Display the rendered HTML in the container element
-            document.getElementById('markdown-container').innerHTML = html;
-        });
-</script>
 </head>
 
 <body>
@@ -143,79 +108,17 @@ This will load the MD file, parse it using Markdown-it, and display the rendered
 
     <!--INSERTPOST-->
 
-    <div id="180423">
         <form>
             <small> ~~~~~~ 18 April 2023 ~~~~~~ </small>
-        <div id="markdown-container"></div>
-         <style>
-            div {
-                padding-left: 9%;
-                padding-right: 9%;
-                font-family: var(--font-family);
-                line-height: 160%;
-                font-size: 110%;
-            }
-        
-            a {
-                color: var(--color-secondary);
-        
-                display: inline-block;
-                font-weight: bold;
-                text-decoration: none;
-            }
-
-            h1 {
-                margin-bottom: 1%;
-            }
-
-            h2 {
-                margin-top: 5%;
-                margin-bottom: 1%;
-            
-            }
-
-            h3 {
-                font-style: italic;
-                color: var(--color-text-secondary);
-                font-size: 100%;
-                font-weight: 350;
-            }
-
-            img {
-                border-radius: var(--border-radius);
-                max-height: 35vh;
-                max-width: 79vw;
-                margin-left: auto;
-                margin-right: auto;
-                display: block;
-            }
-
-    blockquote {
-    margin: 0;
-    padding: 0 1em;
-    color: var(--color-text-secondary);
-    border-left: 0.3em solid var(--color-accent);
-    font-style: italic;
-    }
-
-    code,
-    samp {
-        background-color: var(--color-accent);
-        border-radius: var(--border-radius);
-        color: var(--color-text);
-        display: inline-block;
-        margin: 0 0.1rem;
-        padding: 0 0.5rem;
-    }
-
-    details {
-        margin: 1.3rem 0;
-    }
-
-    details summary {
-        font-weight: bold;
-        cursor: pointer;}
-        </style>
+    <div id="180423">
+        <script>
+            fetch('blogarchive/HelloWorld.md')
+                .then(response => response.text())
+                .then(md => {
+                    const mdRenderer = window.markdownit();
+                    const html = mdRenderer.render(md);
+                    document.getElementById('180423').innerHTML = html; });
+        </script>
             <small> ~~~~~~ END ~~~~~~ </small>
         </form>
     </div>
