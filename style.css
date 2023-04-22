@@ -702,11 +702,12 @@ blockquote footer {
 
   blog img {
       border-radius: var(--border-radius);
-      max-height: 35vh;
-      max-width: 79vw;
+      max-width: 100%;
+      max-height: auto;
       margin-left: auto;
       margin-right: auto;
       display: block;
+      content-visibility: auto;
   }
 
   blog blockquote {
