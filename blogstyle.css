@@ -1,4 +1,4 @@
-  form div {
+  blog {
       padding-left: 9%;
       padding-right: 9%;
       font-family: var(--font-family);
@@ -6,7 +6,7 @@
       font-size: 110%;
   }
 
-  form a {
+  blog a {
       color: var(--color-secondary);
 
       display: inline-block;
@@ -14,24 +14,24 @@
       text-decoration: none;
   }
 
- form h1 {
+ blog h1 {
       margin-bottom: 1%;
   }
 
-  form h2 {
+  blog h2 {
       margin-top: 5%;
       margin-bottom: 1%;
 
   }
 
-  h3 {
+  blog h3 {
       font-style: italic;
       color: var(--color-text-secondary);
       font-size: 100%;
       font-weight: 350;
   }
 
-  img {
+  blog img {
       border-radius: var(--border-radius);
       max-height: 35vh;
       max-width: 79vw;
@@ -40,7 +40,7 @@
       display: block;
   }
 
-  blockquote {
+  blog blockquote {
       margin: 0;
       padding: 0 1em;
       color: var(--color-text-secondary);
@@ -48,7 +48,7 @@
       font-style: italic;
   }
 
-  code,
+  blog code,
   samp {
       background-color: var(--color-accent);
       border-radius: var(--border-radius);
@@ -58,21 +58,12 @@
       padding: 0 0.5rem;
   }
 
-  details {
-      margin: 1.3rem 0;
-  }
-
-  details summary {
-      font-weight: bold;
-      cursor: pointer;
-  }
-
-  form {
+  blog form {
       border: transparent;
       border-width: 0px;
   }
 
-  form small {
+  blog form small {
       font-style: italic;
       font-family: monospace;
       align-content: center;
@@ -81,21 +72,4 @@
       text-align: center;
       color: var(--color-text-secondary);
       display: block;
-  }
-
-  a sup {
-      align-content: center;
-      margin-left: auto;
-      margin-right: auto;
-      text-align: center;
-      margin-bottom: 10px;
-      font-size: 13px;
-      padding: 10px;
-      color: var(--color-bg);
-  }
-
-  a button {
-      font-size: small;
-      padding: 8px;
-      margin-top: 1px;
   }

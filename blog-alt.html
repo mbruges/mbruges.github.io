@@ -1,4 +1,4 @@
-<!--
+<!-- This version of the blog page uses Marked
 To ensure that the MD file is rendered formatted when the page is viewed, you can use a JavaScript library like Markdown-it or Marked.js. These libraries can parse the markdown and convert it into HTML that can be displayed on the page.
 
 Here's an example using Markdown-it:
@@ -33,6 +33,18 @@ Here's an example using Markdown-it:
 </script>
 ```
 
+
+function renderBlog(id, link) {
+fetch('blogarchive/HelloWorld.md')
+.then(response => response.text())
+.then(md => {
+const mdRenderer = window.markdownit();
+const html = mdRenderer.render(md);
+document.getElementById('180423').innerHTML = html;
+});
+}
+
+
 This will load the MD file, parse it using Markdown-it, and display the rendered HTML in the container element. You can also customize the rendering options by passing an object to the `markdownit()` function.
 
 
@@ -44,7 +56,6 @@ This will load the MD file, parse it using Markdown-it, and display the rendered
 <head>
     <link rel="icon" href="/favicon.svg">
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="blogstyle.css">
     <meta charset="utf-8">
     <meta name="description" content="MB - Teacher // Maker // Learner">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -52,43 +63,8 @@ This will load the MD file, parse it using Markdown-it, and display the rendered
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     <title>MB - Blog</title>
-    <script src="https://cdn.jsdelivr.net/npm/@webcomponents/webcomponentsjs@2/webcomponents-loader.min.js"></script>
-    <script src="https://unpkg.com/markdown-it/dist/markdown-it.min.js"></script>
-    <script>
-        // Load the MD file
-        fetch('blogarchive/Test-Post.md')
-            .then(response => response.text())
-            .then(md => {
-                // Parse the markdown and render it
-                const mdRenderer = window.markdownit();
-                const html = mdRenderer.render(md);
-
-                // Display the rendered HTML in the container element
-                document.getElementById('markdown-container').innerHTML = html;
-            });
-    </script>
-    <script>
-        function copyalert() {
-            // Get the toastAlert DIV
-            var x = document.getElementById("toastAlert");
-
-            // Add the "show" class to DIV
-            x.className = "show";
-
-            // After 3 seconds, remove the show class from DIV
-            setTimeout(function () { x.className = x.className.replace("show", ""); }, 3000);
-        }
-    </script>
-    <script id="copy-button-script">
-        function copy(link) {
-            navigator.clipboard.writeText(link); copyalert();
-        };
-    </script>
-    <div id="toastAlert">Link copied to clipboard 📋</div>
 </head>
-
-<body>
-    <header>
+<header>
         <nav>
             <a href="/index.html"><img alt="miaow" src="/favicon.svg" height="40" width="40"></a>
             <small>The Blog</small>
@@ -97,37 +73,91 @@ This will load the MD file, parse it using Markdown-it, and display the rendered
             </ul>
         </nav>
     </header>
-    <center>
-        <a href="blog.html#180423"><sup>📃 18 April</sup></a>
-        &nbsp &nbsp &nbsp
+<body>
+    <script src="https://unpkg.com/markdown-it/dist/markdown-it.min.js">
+    </script>
+<center>
+    <style>a sup {
+      align-content: center;
+      margin-left: auto;
+      margin-right: auto;
+      text-align: center;
+      margin-bottom: 10px;
+      font-size: 13px;
+      padding: 10px;
+      color: var(--color-bg);
+  }
 
-        <!--next link-->
-    </center>
-
-    <br>
-
+  a button {
+      font-size: small;
+      padding: 8px;
+      margin-top: 1px;
+  } </style>
+    <a href="blog.html#180423"><sup>📃 18 April</sup></a>
+    &nbsp &nbsp &nbsp
+    <!--next link-->
+</center>
+<blog>
     <!--INSERTPOST-->
-
-        <form>
+    <br>
+    <form>
+        <small> ~~~~~~ 19 April 2023 ~~~~~~ </small>
+        <div id="190423">
+            <script> fetch("/blogarchive/Test-Post.md")
+                    .then(response => response.text())
+                    .then(md => {
+                        const mdRenderer = window.markdownit();
+                        const html = mdRenderer.render(md);
+                        document.getElementById("190423").innerHTML = html;
+                    });
+            </script>
+        </div>
+        <small> ~~~~~~ END ~~~~~~ </small>
+    </form>
+    <!--INSERTPOST-->
+    <br>
+    <br>
+    <br>
+    <form>
             <small> ~~~~~~ 18 April 2023 ~~~~~~ </small>
-    <div id="180423">
-        <script>
-            fetch('blogarchive/HelloWorld.md')
+            <div id="180423">
+               <script> fetch("/blogarchive/HelloWorld.md")
                 .then(response => response.text())
                 .then(md => {
-                    const mdRenderer = window.markdownit();
-                    const html = mdRenderer.render(md);
-                    document.getElementById('180423').innerHTML = html; });
-        </script>
+                const mdRenderer = window.markdownit();
+                const html = mdRenderer.render(md);
+                document.getElementById("180423").innerHTML = html;
+                });
+                </script>
+            </div>
             <small> ~~~~~~ END ~~~~~~ </small>
-        </form>
-    </div>
+    </form>
+    
 
     <br>
-
+<div id="toastAlert">Link copied to clipboard 📋</div>
     <center>
-        <a onclick="copy(`https://mbruges.com/blog.html#180423`)"><button> Copy link 🔗 </button></a>
+        <script src="https://cdn.jsdelivr.net/npm/@webcomponents/webcomponentsjs@2/webcomponents-loader.min.js"></script>
+        <script id="copyalert">
+            function copyalert() {
+                // Get the toastAlert DIV
+                var x = document.getElementById("toastAlert");
 
+                // Add the "show" class to DIV
+                x.className = "show";
+
+                // After 3 seconds, remove the show class from DIV
+                setTimeout(function () { x.className = x.className.replace("show", ""); }, 3000);
+            }
+        </script>
+        <script id="copy-button-script">
+            function copy(link) {
+                navigator.clipboard.writeText(link); copyalert();
+            };
+        </script>
+        <a onclick="copy(`https://mbruges.com/blog.html#180423`)"><button> Copy link 🔗 </button></a>
+</blog>
+</body>
         <footer>
             <p>© 2023 - <i> Made by <a href="https://www.linkedin.com/in/max-bruges-12988268/" target="_blank">me
                     </a> with help from Agatha</i> 🐈‍⬛
@@ -136,7 +166,4 @@ This will load the MD file, parse it using Markdown-it, and display the rendered
                 </a>
             </p>
         </footer>
-
-</body>
-
 </html>
