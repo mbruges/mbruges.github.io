@@ -2,12 +2,12 @@
 <html lang="en">
 
 <head>
-    <link rel="icon" href="/favicon.svg">
+    <link rel="icon" href="/images/biplane.svg">
     <link rel="stylesheet" href="style.css">
     <meta charset="utf-8">
-    <meta name="description" content="OpenAI Portal - A simple wrapper to access GPT3.5-Turbo using the OpenAI API">
+    <meta name="description" content="An infinite Flambards generator">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MB - OpenAI Portal</title>
+    <title>Flambards Forever</title>
 
 <script id="loader-animation">
     //These are the functions to toggle the loading animation and to hide the request button.
@@ -23,6 +23,14 @@
         let button = document.getElementById('AskGPTbutton');
         button.className = "hidden";
     }
+    function showResponseContainer() {
+            let container = document.getElementById('response-container');
+            container.className = "";
+            container.scrollIntoView();
+        }
+    function hideResponseContainer() {
+        let button = document.getElementById('AskGPTbutton');
+        button.className = "hidden";}
 
 </script>
 <script id="saveToken">
@@ -61,19 +69,42 @@
 </script>
 <script> function AskGPT() {
         console.log("AskGPT running")
+        showResponseContainer();
         var newresponse = "Something went wrong."
         // We start by getting the API token - and returning an error if a token-like value is not found in the APItokenInput box.
         var APItoken = "" + document.getElementById("APItokenInput").value;
         if (APItoken.length < 35) {
-            document.getElementById("AskGPToutput").innerHTML = "Please enter your OpenAI API token"; return;
+            document.getElementById("AskGPToutput").innerHTML = `Please enter your <a href="https://platform.openai.com/docs/quickstart" target="_blank">OpenAI API token</a> above, then try again.`; return;
         }
         //Setting variable 'prompt', 'tokens' and 'role' using the relevant inputs on the page.
-        var prompt = "" + document.getElementById("promptInput").value;
+        var length = document.getElementById('lengthSlider').value;
+        var prompt = `Using everything you know about the 'Flambards' series of books, write a ${length}-word short story about the characters.`
+        
+        //Adding on any specifics that the user requests
+        var additions = document.getElementById("promptInput").value;
+        if (additions.length > 3) { 
+        additions = "Include: " + additions;
+        prompt += additions}
+
+        //This is for the 'advanced' sliders.
+        var tragic = document.getElementById("tragicSlider").value;
+        var rustic = document.getElementById("rusticSlider").value;
+        var romance = document.getElementById("romanceSlider").value;
+        var aero = document.getElementById("aeroSlider").value;
+
+        var advancedPrompt = `Make the story ${tragic}% tragic, ${rustic}% rustic, ${romance}% romantic, and ${aero}% about aeroplanes.`
+
+        prompt += advancedPrompt
+        /*
         //This pair of Ifs will allow the chatbot to respond with guidance on how to use it, if the user presses the 'Ask' button before inputting a proper query.
         if (prompt.length < 2){prompt += "What can I ask you?" 
-        } else if (prompt == "Ask something..."){prompt = "What can I ask you?" }
-        var tokens = document.getElementById("tokensSlider").value;
-        var prevprompt = "" + document.getElementById("role-allocation").value + " and will respond accordingly";
+        } else if (prompt == "Ask something..."){prompt = "What can I ask you?" }*/
+
+        /* tokens limited to 450.
+        
+        var tokens = document.getElementById("tokensSlider").value;*/
+        var tokens = 450
+        var prevprompt = "You are the novelist K. M. Peyton, author of the 'Flambards' series. You will write in her style. Respond in plain text, use <br> for any linebreaks.";
         //Quickly converting the input to an integer, so it works.
         tokens = parseInt(tokens);
         console.log(tokens);
@@ -81,17 +112,21 @@
         //These variables determine the 'chat' history, and can be updated if that functionality is added.
         var role = "";
         var prevresponse = "OK";
-        //Now, we check to see if the number of tokens specified is enough to generate a decent answer (i.e. one that will be at least 16 characters / 4 tokens in length). If it isn't, then a response is given accordingly.
+        
+        /* As the variables are mostly fixed, there's no need to check token sufficiency.
+
         var fullString = "" + prompt + prevprompt + prevresponse;
         console.log(fullString)
         let totalTokens = tokens - Math.ceil(fullString.length / 3);
         if (totalTokens < 4) {
             document.getElementById("AskGPToutput").innerHTML = "Insufficient tokens available to generate decent response. Consider raising the token limit, or shortening your query"; return
         };
-        document.getElementById("AskGPToutput").innerHTML = "Thinking...";
-        showLoader();
         //Having worked out the total tokens available, we tell GPT to limit the response
         prompt = prompt + `. Maximum response length = ${totalTokens * 3} characters. Format your response in HTML`
+        */
+        
+        document.getElementById("AskGPToutput").innerHTML = `<center><br>Writing the next chapter...<br></center>`;
+        showLoader();
         var url = "https://api.openai.com/v1/chat/completions";
         var bearer = 'Bearer ' + APItoken
         fetch(url, {
@@ -124,6 +159,7 @@
             let totaltokensused = parseInt(data.usage.total_tokens);
             console.log("Response is [" + newresponse + "] -- Tokens used in query = " + totaltokensused);
             hideLoader();
+            newresponse = `<center><h2><i>Chapter 94:</i><br>Flambards Forever</h2><center><br> <p>${newresponse}</p> <br> <br> <center><img alt="biplane" src="/images/biplane.svg" height="45" width="45"></center>`;
             document.getElementById("AskGPToutput").innerHTML = newresponse;
 
             //This extra step keeps track of total tokens used, stored in the local cache. It then displays the dollar value of the tokens so far.
@@ -133,11 +169,6 @@
             totaltokensused = parseInt(totaltokensused) + parseInt(localStorage.getItem("TokensToDate")); 
             console.log(`Cache says you've used ${totaltokensused} tokens so far`)   
             localStorage.setItem("TokensToDate", totaltokensused);
-            let dollarSpend = 0;
-            dollarSpend = totaltokensused * 0.000002;
-            //Here we round the dollarSpend to four decimal places.
-            dollarSpend = (Math.floor(dollarSpend*100))/100
-            document.getElementById("spendTrackerDisplay").innerHTML = "$" + dollarSpend
         })
             .catch(error => {
                 hideLoader();
@@ -151,12 +182,30 @@
 <body onload="returnAPItoken()">
     <header>
         <nav>
-            <a href="/index.html"><img alt="miaow" src="/favicon.svg" height="40" width="40"></a>
+            <a href="/index.html"><img alt="biplane" src="/images/biplane.svg" height="40" width="40"></a>
             <ul>
                 <li><a href="/index.html"> Home </a></li>
             </ul>
         </nav>
-    <h1>OpenAI Portal</h1>
+    <h1>Flambards Forever</h1>
+    <img src="/images/biplane.svg"; width="80vw"; display="block";max-height='30vh'>
+<p style="font-size:140%;"><a href="https://global.oup.com/education/content/children/series/flambards/?region=international" target="_blank">True love stories never die.</a> Generate infinite Flambards melodrama, through the power of AI.</p>
+<head>
+<p>Set the sliders to your preferred levels, add any specific ideas or requests in the box below, then press the <b style="background-color: black; color: var(--color-bg); font-weight: 350;">&nbspGenerate&nbsp</b> button.</p>
+<p style="color:grey; font-size: small"><b>Warning:</b> results may be nonsensical, mawkish, and overly concerned with aeroplanes. 'Flambards' remains forever the property of K.M. Peyton; this is but a humble tribute.</p>
+<div id="apikey">
+    <details>
+        <summary style="font-size: smaller; color:grey">API token 🔑</summary><input type="text" id="APItokenInput" style="font-size: small;
+            font-family: monospace; text-align: center; max-width: 330px; background-color:lightgrey"><a
+            onclick="saveToken(), saveAlert()"><sup>Save to cache 💾 </sup></a><br>
+            <small>Your key is only saved in your local browser cache, and can only be accessed by you and the OpenAI API</small>
+    </details>
+    <div id="toastAlert">API token saved locally</div>
+</div>
+
+
+
+
 <script>
     function clearText(){
         if (document.getElementById("promptInput").innerHTML == "Ask something...") {
@@ -164,53 +213,56 @@
         }
     }
 </script>
-    <p><i>Enter your query:</i></p>
-<!-- This is a cunning way to autogrow the inputbox... See here: https://css-tricks.com/the-cleanest-trick-for-autogrowing-textareas/ -->
-    <div class="grow-wrap">
-    <textarea id="promptInput" type="text" value="What sort of things can I ask you?" style="font-family: var(--font-family)" onclick="clearText()" onInput="this.parentNode.dataset.replicatedValue = this.value">Ask something...</textarea></div>
+
+
+    <aside>
+    <i>Tragedy</i>
+    <input type="range" id="tragicSlider" 
+    value="10" min="0" max="100" step="10" >
+    </aside>
+
+    <aside>
+        <i>Rustication</i>
+        <input type="range" id="rusticSlider" 
+        value="10" min="0" max="100" step="10" >
+    </aside>
+
+    <aside>
+        <i>Romance</i>
+        <input type="range" id="romanceSlider" 
+        value="10" min="0" max="100" step="10" >
+    </aside>
+
+    <aside>
+        <i>Aeronautics</i>
+        <input type="range" id="aeroSlider" 
+        value="10" min="0" max="100" step="10" >
+    </aside>
+
+    <aside>
+        <i><b>Length</b></i>
+        <input type="range" id='lengthSlider' value="70" min="20" max="120" step="5">
+    </aside>
+
+
+    <h3>Any specifics to include?</h3>
+    <small> E.g. 'A terrible accident'</small>
     
-    <details><summary style="font-size: small">Enter your API key 🔑</summary><input type="text" id="APItokenInput" style="font-size: small;
-            font-family: monospace; text-align: center; max-width: 330px; background-color:lightgrey"><a onclick="saveToken(), saveAlert()"><sup>Save to cache 💾 </sup></a>
-    </details>
-    <div id="toastAlert">API token saved locally</div>
+    <input style="width: 80vw;text-align: center;" id="promptInput">
+   
 
-    <details><summary style="font-size: small; ">Advanced settings</summary>
-        <br>
-    <i>Total tokens for query: </i><b id="tokentracker"> 100</b>
-    <div>
-        <input type="range" id="tokensSlider" name="tokens" value="100" min="10" max="400" step="10" >
-        <script>
-            //This script updates the token count as the slider is moved
-            var slider = document.getElementById("tokensSlider");
-            var output = document.getElementById("tokentracker");
-            output.innerHTML = slider.value; // Display the default slider value
-            // Update the current slider value (each time you drag the slider handle)
-            slider.oninput = function () {
-                output.innerHTML = this.value;
-            };
-        </script>
-    </div>
 
-    <code>5k tokens = roughly 1¢<br> Spend so far: <b id="spendTrackerDisplay">$0.00</b></code><br><br>
-
-    <script id="spendTracker">
-        function tokenToDollar(tokenVol) {
-            dollarSpend = tokenVol*0.000002;
-            return dollarSpend
-        }
-    </script>
-<i>Specify a role for ChatGPT: </i>
-    <input id="role-allocation" value="You are a helpful assistant" style="width: 80%;">
-    <small> E.g. 'You are a pirate'</small>
-</details>
-
-    <button id="AskGPTbutton" onclick="AskGPT()">Ask the chatbot 🤖</button>
-    <div id="thinking-loader" class="loader.hidden"></div>
+<button id="AskGPTbutton" onclick="AskGPT()">Generate a Flambard 🐴</button>
+<div id="thinking-loader" class="loader.hidden"></div>
 <br>
-    <form id="AskGPToutput" style="background-color: rgb(210, 232, 240);font-family: monospace;font-size:130%;">
-        <i style="text-align: center;margin-left: auto;margin-right: auto;display: block;">Response will appear here</i>
+<div id="response-container" class="hidden">
+    <form class id="AskGPToutput" style="background-color:whitesmoke;font-family:'Times New Roman', Times, serif;font-size:130%;border:3px solid black; border-radius: 0;min-height: 40vh;">
+        <i style="text-align: center;margin-left: auto;margin-right: auto;display: block;"><br><br>Response will appear here</i>
+        <br>
     </form>
     <a id="copyResponseButton" onclick="copy()"><sup> Copy to clipboard 🔗 </sup></a>
+</div>
+
 </header>
 </body>
 <footer>
