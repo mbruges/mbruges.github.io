@@ -67,7 +67,7 @@ main {
 
 footer {
     text-align: center;
-    font-size: small;
+    font-size: x-small;
     height: 8vh;
 }
 
@@ -395,6 +395,49 @@ form {
     text-align: var(--justify-normal);
     background-color: whitesmoke;
     font-family: var(--font-family);
+
+    
+}
+
+.hidden {
+    visibility: hidden;
+    height: 0px;
+    width: 0px;
+}
+
+.loader
+{
+    margin: auto;
+        border: 5px solid #EAF0F6;
+        border-radius: 50%;
+        border-top: 5px solid var(--color-table);
+        width: 30px;
+        height: 30px;
+        animation: spinner 1.5s linear infinite;
+}
+.loader.show {
+    visibility: show;
+}
+
+.loader.hidden {
+    visibility: hidden;
+    width: 1px;
+    height: 1px;
+}
+
+@keyframes spinner {
+
+
+    0% {
+        transform: rotate(0deg);
+    }
+
+
+    100% {
+        transform: rotate(360deg);
+    }
+
+
 }
 
 form header {
