@@ -276,10 +276,9 @@
 <a onclick="copy(`https://mbruges.com/blog.html#180423`)"><button> Copy link 🔗 </button></a>
 
 <footer>
-    <p>© 2023 - <i> Made by <a href="https://www.linkedin.com/in/max-bruges-12988268/" target="_blank">me
+    <p>© 2023 - <i> Made by <a href="/about.html" target="_blank">me
             </a> with help from Agatha</i> 🐈‍⬛
-        <a href='https://ko-fi.com/L4L6JR137' target='_blank'>
-            <p>Found this useful? Send me coffee ☕️</p>
+        <p>Found this useful? <a href='https://ko-fi.com/L4L6JR137' target='_blank'>Send me coffee ☕️</p>
         </a>
     </p>
 </footer>

@@ -399,6 +399,7 @@ form {
     
 }
 
+
 .hidden {
     visibility: hidden;
     height: 0px;
@@ -594,18 +595,31 @@ blockquote footer {
 .tooltip {
     position: relative;
     white-space: pre-line;
+    top: 100%;
+        left: 0;
+        right: 0;
+        margin-left: auto;
+        margin-right: auto;
 }
 
 .tooltipdata {
     white-space: pre-line;
     pointer-events: all;
+    top: 100%;
+        left: 0;
+        right: 0;
+        margin-left: auto;
+        margin-right: auto;
 }
 
 .tooltipdata:hover::after {
     content: attr(data-tooltip);
-    position: absolute;
-    top: 100%;
-    left: 60%;
+    position:absolute;
+    top:100%;
+    left: 0;
+        right: 0;
+        margin-left: auto;
+        margin-right: auto;
     font-size: medium;
     font-style: italic;
     font-weight: 250;
@@ -618,6 +632,7 @@ blockquote footer {
     z-index: 1;
     white-space: pre-line;
     text-align: justify;
+
 }
 
 
@@ -759,6 +774,9 @@ blockquote footer {
       color: var(--color-text-secondary);
       border-left: 0.3em solid var(--color-accent);
       font-style: italic;
+      font-size: 80%;
+      font-display:inherit;
+      text-align: left;
   }
 
   blog code,
