@@ -113,7 +113,7 @@
         function downloadFile() {
             const link = document.createElement("a");
             const content = "" + document.getElementById("AskGPToutput").innerHTML + `<br> <br> <footer style="font-size:6px; color:grey; text-align:center">
-                <small><i>2023 -  Generated on <a href="//mbruges.com/flambards.html" target="_blank">Flambards Forever</a>, using code by <a href="//mbruges.com/index.html" target="_blank">Max Bruges</a> </i> 🐈‍⬛ </small></footer>`;
+                <small><i>2023 -  Generated on <a href="https://mbruges.com/flambards.html" target="_blank">Flambards Forever</a>, using code by <a href="https://mbruges.com/index.html" target="_blank">Max Bruges</a> </i> 🐈‍⬛ </small></footer>`;
             const file = new Blob([content], {type: 'text/plain' });
             link.href = URL.createObjectURL(file);
             let randFileName = document.getElementById("fileNameStore").innerHTML + ".html"
