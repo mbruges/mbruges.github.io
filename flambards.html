@@ -357,17 +357,17 @@
         <input type="range" id='lengthSlider' value="70" min="20" max="120" step="5">
     </aside>
 
+    <aside><code id="urlStore" value="/images/biplane.svg">🧪 Experimental 🧪<br><i style="font-weight: 300;">Add GPT-generated illustration?</i><br>
+            <input onclick="illustrationGenerator()" type="checkbox" id="illustrate" style="margin: 4px 0 0;
+            line-height: normal;
+            width: 20px;
+            height: 20px;"></code>
+    </aside>
+
     <h3>Any specifics to include?</h3>
     <small> E.g. 'A terrible accident'</small>
     
     <input style="width: 80%;text-align: center; margin-left: auto; margin-right: auto;" id="promptInput">
-
-    <aside><code id="urlStore" value="/images/biplane.svg">🧪 Experimental 🧪<br><i style="font-weight: 300;">Add GPT-generated illustration?</i><br>
-        <input onclick="illustrationGenerator()" type="checkbox" id="illustrate" style="margin: 4px 0 0;
-        line-height: normal;
-        width: 20px;
-        height: 20px;"></code>
-    </aside>
 
 <button id="AskGPTbutton" onclick="FlambardsGenerator()">Generate a Flambard 🐴</button>
 
@@ -395,8 +395,10 @@
 </body>
 <footer>
     <p>© 2023 - <i> Made by <a href="/about.html" target="_blank">me
-            </a> and Agatha </i>🐈‍⬛
-        <p>Found this useful? <a href='https://ko-fi.com/L4L6JR137' target='_blank'>Send me coffee ☕️</p>
+            </a> and Agatha </i>🐈‍⬛</p>
+        <p><i>Found this interesting? <a href="mailto:hello@mbruges.com?subject=Hello from the Internet">Drop me a line</a> 
+            or <a href='https://ko-fi.com/L4L6JR137' target='_blank'>
+					send coffee ☕️</i>	
         </a>
     </p>
 </footer>

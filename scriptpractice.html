@@ -26,7 +26,7 @@
             </ul>
         </nav>
         <h1>Code Playground</h1>
-        <p> This is where I am practice using Javascript.<br> The <code>coding</code> is very mucky.</p>
+        <p> This is where I practice using Javascript.<br> The <code>coding</code> is very mucky.</p>
 
 <div id="quoteGenerator">
 <h2>🗡️ Quote Generator 🏴󠁧󠁢󠁳󠁣󠁴󠁿</h2>
@@ -297,24 +297,6 @@
 
 </div>
 
-<div id="download-test">
-    <h2> Create a text file and save it to a local computer using JavaScript. </h2>
-    <p> Enter the file content:- </p>
-    <textarea> </textarea>
-    <br />
-    <button onclick="downloadFile()"> save File </button>
-    <script>
-        const downloadFile = () => {
-            const link = document.createElement("a");
-            const content = document.querySelector("textarea").value;
-            const file = new Blob([content], { type: 'text/plain' });
-            link.href = URL.createObjectURL(file);
-            link.download = "sample.html";
-            link.click();
-            URL.revokeObjectURL(link.href);
-        };
-    </script>
-</div>
 
 
 <!-- This doesn't work yet
@@ -346,14 +328,12 @@
 </section>
 </header>
 <footer>
-    <br>
-    <br>
-    <p>
-        <center>
-            <i>© 2023 <a href="https://mbruges.com" target="_self">Max Bruges</a> </i> <br>
-            <i>Found this useful? <a href='https://ko-fi.com/L4L6JR137' target='_blank'>Send me coffee ☕️</i>
-            </a>
-        </center>
+    <p>© 2023 - <i> Made by <a href="/about.html" target="_blank">me
+            </a> and Agatha </i>🐈‍⬛</p>
+    <p><i>Found this interesting? <a href="mailto:hello@mbruges.com?subject=Hello from the Internet">Drop me a line</a>
+            or <a href='https://ko-fi.com/L4L6JR137' target='_blank'>
+                send coffee ☕️</i>
+        </a>
     </p>
 <script>
     //This is a tidied up version of Macbeth as a JS object. The minor characters have been removed, to make it a bit easier.
