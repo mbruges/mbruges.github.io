@@ -175,7 +175,7 @@
         // We start by getting the API token - and returning an error if a token-like value is not found in the APItokenInput box.
         var APItoken = "" + document.getElementById("APItokenInput").value;
         if (APItoken.length < 35) {
-            document.getElementById("AskGPToutput").innerHTML = `Please enter your <a href="https://platform.openai.com/docs/quickstart" target="_blank">OpenAI API token</a> above, then try again.`; return;
+            document.getElementById("AskGPToutput").innerHTML = `Please enter your <a href="https://platform.openai.com/account/api-keys" target="_blank">OpenAI API token</a> above, then try again.`; return;
         }
         //Setting variable 'prompt', 'tokens' and 'role' using the relevant inputs on the page.
         var length = document.getElementById('lengthSlider').value;
