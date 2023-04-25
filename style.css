@@ -146,6 +146,9 @@ nav {
     font-weight: bold;
     justify-content: space-between;
     margin-bottom: 0.2rem;
+    max-width: 90vw;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 nav ul {
@@ -402,8 +405,8 @@ form {
 
 .hidden {
     visibility: hidden;
-    height: 0px;
-    width: 0px;
+    max-height: 1px;
+    max-width: 1px;
 }
 
 .loader

@@ -3,7 +3,7 @@
 
 <head>
     <link rel="icon" href="/images/biplane.svg">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/style.css">
     <meta charset="utf-8">
     <meta name="description" content="An infinite Flambards generator">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -61,15 +61,113 @@
             return dollarSpend
         }
 </script>
-<script id="copy-button-script">
+<script id="name-generator">
+    function nameGenerator() {
+            const adjs = [
+                "Bucolic", "Pastoral", "Rural", "Tragic", "Beautiful", "Troubled", "Equine", "Serene", "Secluded", "Quaint", "Relaxing", "Picturesque", "Scenic", "Idyllic", "Peaceful", "Natural", "Rustic", "Pristine", "Majestic", "Verdant", "Tranquil", "Calming", "Wild", "Remote", "Silent"]
+            const nouns = [
+                'Acre',
+                'Barn',
+                'Beans',
+                'Dairy',
+                'Farm',
+                'Field',
+                'Garden',
+                'Hay',
+                'Hive',
+                'Hoe',
+                'Horse',
+                'Meadow',
+                'Orchard',
+                'Pasture',
+                'Pigsty',
+                'Plow',
+                'Poultry',
+                'Rake',
+                'Reaper',
+                'Seed',
+                'Shepherd',
+                'Silage',
+                'Silo',
+                'Stable',
+                'Thresher',
+                'Tillage',
+                'Tractor',
+                'Wagon',
+                'Weeds'
+            ]
+            var adjRand = Math.floor(Math.random() * 20);
+            var nounRand = Math.floor(Math.random() * 28);
+            adjRand = "" + adjs[adjRand];
+            nounRand = "" + nouns[nounRand];
+            randName = (`${adjRand}-${nounRand}`);
+            console.log(randName);
+            document.getElementById("fileNameStore").innerHTML = randName;
+        }
+</script>
+<script id="copy-download-scripts">
     function copy() {
         let content = document.getElementById("AskGPToutput").innerHTML;
         navigator.clipboard.writeText(content); copyalert();
     };
+        function downloadFile() {
+            const link = document.createElement("a");
+            const content = "" + document.getElementById("AskGPToutput").innerHTML + `<br> <br> <footer style="font-size:6px; color:grey; text-align:center">
+                <small><i>2023 -  Generated on <a href="//mbruges.com/flambards.html" target="_blank">Flambards Forever</a>, using code by <a href="//mbruges.com/index.html" target="_blank">Max Bruges</a> </i> 🐈‍⬛ </small></footer>`;
+            const file = new Blob([content], {type: 'text/plain' });
+            link.href = URL.createObjectURL(file);
+            let randFileName = document.getElementById("fileNameStore").innerHTML + ".html"
+            link.download = randFileName;
+            link.click();
+            URL.revokeObjectURL(link.href);
+        };
+    </script>
 </script>
-<script> function AskGPT() {
+<script> function illustrationGenerator() {
+            document.getElementById("illustrate").value = "true"
+            var imageURL = ""
+            var APItoken = "" + document.getElementById("APItokenInput").value;
+
+            var prompt = "A watercolor painting of a horse in a field, with a biplane in the sky";
+
+            var quantity = 1;
+
+            var format = "url";
+
+            var size = "256x256";
+            console.log("Generating image");
+            var url = "https://api.openai.com/v1/images/generations";
+            var bearer = 'Bearer ' + APItoken
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Authorization': bearer,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    "prompt": prompt,
+                    "n": quantity,
+                    "size": size,
+                    "response_format": format,
+                })
+            }).then(response => {
+
+                return response.json()
+
+            }).then(data => {
+                console.log(`Image url is: ${data.data[0].url}`);
+                imageURL = data.data[0].url;
+                document.getElementById("urlStore").value = imageURL
+            })
+                .catch(error => {
+                    console.log('Something went wrong. This is the error: ' + error)
+                });
+    }
+</script>
+<script> function FlambardsGenerator() {
         console.log("AskGPT running")
         showResponseContainer();
+        var imageURL = "https://mbruges.com/images/biplane.svg"
         var newresponse = "Something went wrong."
         // We start by getting the API token - and returning an error if a token-like value is not found in the APItokenInput box.
         var APItoken = "" + document.getElementById("APItokenInput").value;
@@ -159,7 +257,20 @@
             let totaltokensused = parseInt(data.usage.total_tokens);
             console.log("Response is [" + newresponse + "] -- Tokens used in query = " + totaltokensused);
             hideLoader();
-            newresponse = `<center><h2><i>Chapter 94:</i><br>Flambards Forever</h2><center><br> <p>${newresponse}</p> <br> <br> <center><img alt="biplane" src="/images/biplane.svg" height="45" width="45"></center>`;
+
+            //Image generator section:
+            let illustrateOpt = document.getElementById("illustrate").value;
+            if (illustrateOpt == "true") {
+            var imageURL = document.getElementById("urlStore").value;
+            imageURL = `<img alt="illustrationGenerated" src="${imageURL}"height="256px" width="256px">`
+            } else var imageURL = `<img alt="illustrationPlaceholder" src="https://mbruges.com/images/biplane.svg" height="50px" width="50px">`;
+            newresponse =
+            `<center><h2><i>Chapter 94:</i>
+            <br>Flambards Forever</h2></center>
+            <br>
+            <p style="width:88%;margin-left:auto;margin-right:auto;">${newresponse}</p> 
+            <br> <br> <center>${imageURL} 
+            `;
             document.getElementById("AskGPToutput").innerHTML = newresponse;
 
             //This extra step keeps track of total tokens used, stored in the local cache. It then displays the dollar value of the tokens so far.
@@ -172,27 +283,29 @@
         })
             .catch(error => {
                 hideLoader();
-                let errormessage = 'Something went wrong. This is the error: ' + error;
+                let errormessage = 'Something went wrong. Give it a few minutes and try again';
                 document.getElementById("AskGPToutput").innerHTML = errormessage;
             });
     }
 </script>
+
 </head>
 
-<body onload="returnAPItoken()">
-    <header>
-        <nav>
-            <a href="/index.html"><img alt="biplane" src="/images/biplane.svg" height="40" width="40"></a>
-            <ul>
-                <li><a href="/index.html"> Home </a></li>
-            </ul>
-        </nav>
+<body onload="returnAPItoken(); nameGenerator()">
+    <nav>
+        <a href="/index.html"><img alt="biplane" src="/favicon.svg" height="40" width="40"></a>
+        <ul>
+            <li><a href="/index.html"> Home </a></li>
+        </ul>
+    </nav>
+    <header style="max-width: 500px;">
+       
     <h1>Flambards Forever</h1>
-    <img src="/images/biplane.svg"; width="80vw"; display="block";max-height='30vh'>
+    <img src="/images/biplane.svg"; width="80vw"; display="block";max-height='26vh'>
 <p style="font-size:140%;"><a href="https://global.oup.com/education/content/children/series/flambards/?region=international" target="_blank">True love stories never die.</a> Generate infinite Flambards melodrama, through the power of AI.</p>
 <head>
 <p>Set the sliders to your preferred levels, add any specific ideas or requests in the box below, then press the <b style="background-color: black; color: var(--color-bg); font-weight: 350;">&nbspGenerate&nbsp</b> button.</p>
-<p style="color:grey; font-size: small"><b>Warning:</b> results may be nonsensical, mawkish, and overly concerned with aeroplanes. 'Flambards' remains forever the property of K.M. Peyton; this is but a humble tribute.</p>
+
 <div id="apikey">
     <details>
         <summary style="font-size: smaller; color:grey">API token 🔑</summary><input type="text" id="APItokenInput" style="font-size: small;
@@ -244,24 +357,39 @@
         <input type="range" id='lengthSlider' value="70" min="20" max="120" step="5">
     </aside>
 
-
     <h3>Any specifics to include?</h3>
     <small> E.g. 'A terrible accident'</small>
     
-    <input style="width: 80vw;text-align: center;" id="promptInput">
-   
+    <input style="width: 80%;text-align: center; margin-left: auto; margin-right: auto;" id="promptInput">
 
+    <aside><code id="urlStore" value="/images/biplane.svg">🧪 Experimental 🧪<br><i style="font-weight: 300;">Add GPT-generated illustration?</i><br>
+        <input onclick="illustrationGenerator()" type="checkbox" id="illustrate" style="margin: 4px 0 0;
+        line-height: normal;
+        width: 20px;
+        height: 20px;"></code>
+    </aside>
 
-<button id="AskGPTbutton" onclick="AskGPT()">Generate a Flambard 🐴</button>
+<button id="AskGPTbutton" onclick="FlambardsGenerator()">Generate a Flambard 🐴</button>
+
 <div id="thinking-loader" class="loader.hidden"></div>
 <br>
+
 <div id="response-container" class="hidden">
     <form class id="AskGPToutput" style="background-color:whitesmoke;font-family:'Times New Roman', Times, serif;font-size:130%;border:3px solid black; border-radius: 0;min-height: 40vh;">
         <i style="text-align: center;margin-left: auto;margin-right: auto;display: block;"><br><br>Response will appear here</i>
         <br>
+    
     </form>
-    <a id="copyResponseButton" onclick="copy()"><sup> Copy to clipboard 🔗 </sup></a>
+    
+    <!--<a id="copyResponseButton" onclick="copy()"><sup> Copy to clipboard hi 🔗 </sup></a>-->
+    <a style="cursor: pointer; text-decoration: none;" id="downloadResponseButton" onclick="downloadFile()"><sup> Download your story 💾 </sup></a><br>
+    <code style="font-size: 1px;" id="fileNameStore"></code>
+
 </div>
+<details style="color:grey; font-size: 70%">
+    <summary style="font-size:100%">Disclaimer</summary> Results may be nonsensical, mawkish, and overly concerned with
+    aeroplanes. <br> 'Flambards' remains forever the property of K.M. Peyton; this is but a humble and loving tribute.
+</details>
 
 </header>
 </body>
