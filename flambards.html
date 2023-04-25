@@ -124,11 +124,13 @@
     </script>
 </script>
 <script> function illustrationGenerator() {
-            document.getElementById("illustrate").value = "true"
             var imageURL = ""
             var APItoken = "" + document.getElementById("APItokenInput").value;
-
-            var prompt = "A watercolor painting of a horse in a field, with a biplane in the sky";
+            var additions = "" + document.getElementById("promptInput").value;
+            if (additions.length > 3) {
+                additions = `Also include ${additions}.`
+            } else {additions = ""}
+            var prompt = `A watercolor painting of a horse in a field, with a biplane in the sky. ${additions}`;
 
             var quantity = 1;
 
@@ -162,6 +164,7 @@
                 .catch(error => {
                     console.log('Something went wrong. This is the error: ' + error)
                 });
+    document.getElementById("illustrate").value = "true"
     }
 </script>
 <script> function FlambardsGenerator() {
@@ -262,8 +265,9 @@
             let illustrateOpt = document.getElementById("illustrate").value;
             if (illustrateOpt == "true") {
             var imageURL = document.getElementById("urlStore").value;
-            imageURL = `<img alt="illustrationGenerated" src="${imageURL}"height="256px" width="256px">`
-            } else var imageURL = `<img alt="illustrationPlaceholder" src="https://mbruges.com/images/biplane.svg" height="50px" width="50px">`;
+            imageURL = `<img style="border-color: black
+            ;border: 3px;border-style:solid;"  alt="illustrationGenerated" src="${imageURL}"height="256px" width="256px">`
+            } else var imageURL = `<img  alt="illustrationPlaceholder" src="https://mbruges.com/images/flambardsPlaceholder.png" height="256px" width="256px">`;
             newresponse =
             `<center><h2><i>Chapter 94:</i>
             <br>Flambards Forever</h2></center>
@@ -283,8 +287,9 @@
         })
             .catch(error => {
                 hideLoader();
-                let errormessage = 'Something went wrong. Give it a few minutes and try again';
-                document.getElementById("AskGPToutput").innerHTML = errormessage;
+                let errormessage = `<center><h1>Tragedy strikes</h1><br><p>Something has gone terribly wrong with the app. Give it a few minutes and try again.</p> <br>  <img style="border-color: black
+            ;border: 3px;border-style:solid;"  alt="illustrationGenerated" src="/images/biplanefire.png"height="150px" width="150px"><details><summary style="font-size:11px">Error message:</summary><code style="font-size:11px"> ${error}</code></details></center> `;
+            document.getElementById("AskGPToutput").innerHTML = errormessage;
             });
     }
 </script>
@@ -366,17 +371,17 @@
         <input type="range" id='lengthSlider' value="70" min="20" max="120" step="5">
     </aside>
 
-    <aside><code id="urlStore" value="/images/biplane.svg">🧪 Experimental 🧪<br><i style="font-weight: 300;">Add GPT-generated illustration?</i><br>
-            <input onclick="illustrationGenerator()" type="checkbox" id="illustrate" style="margin: 4px 0 0;
-            line-height: normal;
-            width: 20px;
-            height: 20px;"></code>
-    </aside>
-
     <h3>Any specifics to include?</h3>
     <small> E.g. 'A terrible accident'</small>
     
     <input style="width: 80%;text-align: center; margin-left: auto; margin-right: auto;" id="promptInput">
+
+    <aside><code id="urlStore" value="/images/biplane.svg">🧪 Experimental 🧪<br><i style="font-weight: 300;">Add GPT-generated illustration?</i><br>
+                <input onclick="illustrationGenerator()" type="checkbox" id="illustrate" style="margin: 4px 0 0;
+                line-height: normal;
+                width: 20px;
+                height: 20px;"></code>
+    </aside>
 
 <button id="AskGPTbutton" onclick="FlambardsGenerator()">Generate a Flambard 🐴</button>
 
