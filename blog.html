@@ -57,10 +57,11 @@ https://pagespeed.web.dev/analysis/https-mbruges-com-blog-alt/i3wmltb25l?form_fa
       margin-left: auto;
       margin-right: auto;
       text-align: center;
-      margin-bottom: 10px;
       font-size: 13px;
-      padding: 10px;
+      padding: 5px;
+      margin-top: 10px;
       color: var(--color-bg);
+      border-radius: 0%;
   }
 
   a button {
@@ -69,7 +70,8 @@ https://pagespeed.web.dev/analysis/https-mbruges-com-blog-alt/i3wmltb25l?form_fa
       margin-top: 1px;
   } </style>
     <!--next link-->
-    <a href="blog.html#180423"><sup>📃 18 April</sup></a>
+    <a href="blog.html#180423"><sup>[18-04] 🖥️ Hello World</sup></a>
+    &nbsp &nbsp <a href="blog.html#260423"><sup>[26-04] 🛳️ Coding on The Titanic</sup></a>
     &nbsp &nbsp &nbsp
 </center>
 <script src="https://cdn.jsdelivr.net/npm/@webcomponents/webcomponentsjs@2/webcomponents-loader.min.js"></script>
@@ -90,8 +92,34 @@ https://pagespeed.web.dev/analysis/https-mbruges-com-blog-alt/i3wmltb25l?form_fa
         navigator.clipboard.writeText(link); copyalert();
     };
 </script>
-<blog>
-    <!--INSERTPOST-->
+
+<!--INSERTPOST-->
+
+<!--INSERTPOST-->
+<blog loading="lazy">
+
+    <br>
+    <form>
+        <small> ~~~~~~ 26 April 2023 ~~~~~~ </small>
+        <div id="260423">
+            <script> fetch("/blogarchive/CodingOnTheTitanic.md")
+                    .then(response => response.text())
+                    .then(md => {
+                        const mdRenderer = window.markdownit();
+                        const html = mdRenderer.render(md);
+                        document.getElementById("260423").innerHTML = html;
+                    });
+            </script>
+        </div>
+        <small> ~~~~~~ END ~~~~~~ </small>
+    </form>
+
+    <center><a onclick="copy(`https://mbruges.com/blog.html#260423`)"><button> Copy link 🔗 </button></a></center>
+</blog>
+<br>
+<br>
+<blog loading="lazy">
+    
     <br>
     <form>
             <small> ~~~~~~ 18 April 2023 ~~~~~~ </small>
@@ -110,6 +138,8 @@ https://pagespeed.web.dev/analysis/https-mbruges-com-blog-alt/i3wmltb25l?form_fa
     
 <center><a onclick="copy(`https://mbruges.com/blog.html#180423`)"><button> Copy link 🔗 </button></a></center>
 </blog>
+
+
 <div id="toastAlert">Link copied to clipboard 📋</div>
 </body>
 <style>

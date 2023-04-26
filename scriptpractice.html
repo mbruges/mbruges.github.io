@@ -296,6 +296,43 @@
 <div id="toastAlert">Copy successful!</div>
 
 </div>
+<hr>
+<h1>Autocomplete</h1>
+
+<div id="autocomplete">
+    <input oninput="countryAutocomplete()"
+    on type="text" name="entryBox" id="autocompleteInput">
+    <p id="autocompleteDisplay"></p>
+
+<script>
+    function countryAutocomplete() {
+            //A script that should return all the elements in an array that match the string
+            console.log("autocomplete is running")
+            var searchString = "" + document.getElementById("autocompleteInput").value
+            var countryListShort = [];
+            var len = searchString.length;
+            if (len < 1) {
+                document.getElementById("autocompleteDisplay").innerHTML = "";
+                return;
+            }
+            const countryList =
+                ["BARBADOS", "SURINAME", "NAMIBIA", "GUINEA", "VANUATU", "SAMOA", "FRANCE", "ANDORRA", "AZERBAIJAN", "MALDIVES", "SAINT LUCIA", "PANAMA", "TIMOR-LESTE", "NORTH MACEDONIA", "DENMARK", "EGYPT", "ESTONIA", "CZECHIA", "BAHAMAS", "URUGUAY", "COMOROS", "COSTA RICA", "TOGO", "SÃO TOMÉ AND PRÍNCIPE", "NETHERLANDS", "AUSTRALIA", "MALAYSIA", "NEPAL", "CUBA", "NORTH KOREA", "MOLDOVA", "ZAMBIA", "DOMINICA", "MARSHALL ISLANDS", "TONGA", "PERU", "CAPE VERDE", "KIRIBATI", "FINLAND", "IVORY COAST", "PAKISTAN", "DJIBOUTI", "MICRONESIA", "SLOVENIA", "KYRGYZSTAN", "SWITZERLAND", "KUWAIT", "SEYCHELLES", "UNITED KINGDOM", "FIJI", "YEMEN", "CENTRAL AFRICAN REPUBLIC", "BELGIUM", "ARGENTINA", "MADAGASCAR", "SOUTH AFRICA", "LATVIA", "ZIMBABWE", "GABON", "ROMANIA", "GERMANY", "BANGLADESH", "JORDAN", "MOZAMBIQUE", "ISRAEL", "ERITREA", "INDONESIA", "JAPAN", "SPAIN", "AFGHANISTAN", "UNITED ARAB EMIRATES", "MALAWI", "TURKEY", "BELARUS", "MONTENEGRO", "BOSNIA AND HERZEGOVINA", "ESWATINI", "LITHUANIA", "TURKMENISTAN", "ETHIOPIA", "HUNGARY", "CHAD", "NIGERIA", "SAN MARINO", "UKRAINE", "HAITI", "BOTSWANA", "PORTUGAL", "GUYANA", "IRELAND", "MAURITIUS", "SAINT KITTS AND NEVIS", "ICELAND", "CHILE", "KAZAKHSTAN", "CHINA", "ARMENIA", "BOLIVIA", "SUDAN", "VIETNAM", "BURUNDI", "CANADA", "COLOMBIA", "LESOTHO", "GUATEMALA", "UZBEKISTAN", "SENEGAL", "GAMBIA", "LIECHTENSTEIN", "TUVALU", "EQUATORIAL GUINEA", "BHUTAN", "PARAGUAY", "GRENADA", "PAPUA NEW GUINEA", "JAMAICA", "REPUBLIC OF THE CONGO", "POLAND", "RUSSIA", "MAURITANIA", "BURKINA FASO", "DR CONGO", "BENIN", "UGANDA", "MONGOLIA", "LAOS", "ALGERIA", "BRUNEI", "KENYA", "SRI LANKA", "DOMINICAN REPUBLIC", "AUSTRIA", "LUXEMBOURG", "GEORGIA", "SLOVAKIA", "NORWAY", "THAILAND", "INDIA", "MOROCCO", "NICARAGUA", "QATAR", "BRAZIL", "NEW ZEALAND", "SINGAPORE", "SYRIA", "BELIZE", "VENEZUELA", "BAHRAIN", "CAMEROON", "CYPRUS", "UNITED STATES", "ANGOLA", "TUNISIA", "MONACO", "RWANDA", "TRINIDAD AND TOBAGO", "MALTA", "MEXICO", "ANTIGUA AND BARBUDA", "SOUTH KOREA", "NIGER", "ALBANIA", "SOMALIA", "LIBERIA", "MYANMAR", "TANZANIA", "IRAQ", "SAINT VINCENT AND THE GRENADINES", "LIBYA", "SIERRA LEONE", "SERBIA", "GHANA", "SOUTH SUDAN", "SWEDEN", "GREECE", "PHILIPPINES", "GUINEA-BISSAU", "SAUDI ARABIA", "PALAU", "BULGARIA", "NAURU", "CAMBODIA", "ITALY", "MALI", "IRAN", "TAJIKISTAN", "OMAN", "EL SALVADOR", "LEBANON", "VATICAN CITY", "ECUADOR", "CROATIA", "SOLOMON ISLANDS", "HONDURAS"];
+            searchString = searchString.toUpperCase()
+            console.log(`Searching for "${searchString}"`)
+            for (let index = 0; index < (countryList.length); index++) {
+                var country = countryList[index];
+                var countryShort = ""
+                for (let charCount = 0; charCount < len; charCount++) {
+                    countryShort += country.charAt(charCount)
+                }
+                if (countryShort == searchString) {
+                    countryListShort.push(country)
+                }
+            }
+            document.getElementById("autocompleteDisplay").innerHTML = `Did you mean: <code> ${countryListShort}</code>`
+        }
+</script>
+</div>
 
 
 

@@ -62,13 +62,13 @@ header,
 main {
     margin: 0px auto;
     max-width: var(--width-content);
-    padding: 1rem 1rem;
+    padding-top: 1.5rem;
 }
 
 footer {
     text-align: center;
     font-size: x-small;
-    height: 8vh;
+    height: 5vh;
 }
 
 hr {
