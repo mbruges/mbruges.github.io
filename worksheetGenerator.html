@@ -263,12 +263,19 @@
 </script>
 
 <body onload="returnAPItoken(); nameGenerator()">
-    <nav>
-        <a href="/index.html"><img alt="favicon" src="/favicon.svg" height="40" width="40"></a>
-        <ul>
-            <li><a href="/index.html"> Home </a></li>
-        </ul>
-    </nav>
+<nav>
+    <div class="dropdown">
+        <a id="catNav" href="/index.html"><img alt="miaow" src="/favicon.svg" height="40" width="40"></a>
+        <div class="dropdown-content">
+            <a href="/experiments.html">Experiments</a>
+            <a href="/resources.html">Resources</a>
+            <a href="/blog.html">Blog</a>
+        </div>
+    </div>
+    <ul>
+        <li><a href="/index.html"> Home </a></li>
+    </ul>
+</nav>
     <header style="padding-left: 5vw;padding-right: 5vw;">
        
     <h1>Worksheet Generator</h1>
