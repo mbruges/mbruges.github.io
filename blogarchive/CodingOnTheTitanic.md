@@ -1,7 +1,7 @@
 # Coding on The Titanic
-*If the robots can do it better, why bother learning at all?*
+*If the robots can do it better, why bother learning at all?* 
 
-![The Titanic goes down](https://live.staticflickr.com/8658/16652891111_f66d108985_z.jpg)
+![The Titanic goes down; women and coders first](https://live.staticflickr.com/8658/16652891111_f66d108985_z.jpg "The Titanic goes down; women and coders first")
 >Less "rearranging the deckchairs" and more "putting on your white tie, sitting down in the flooded dining room and wondering if there'll be scallops to start."
 
 You can't move for the doom-laden coding headlines at the moment: 
@@ -28,15 +28,15 @@ And this is by design! [This is how computing works](https://en.wikipedia.org/wi
 > It's the Academy, except Plato is some anonymous Eastern European computer science student, whose profile pic is Shadow the Hedgehog and whose final post before logging off forever was a withering review of 'You, Me And Dupree'. 
 
 ## Drinking from the hosepipe
-So what's different now? Well: The Bots. 
+So what's different now? Well: The Bots.
 
-Perhaps unsurprisingly - and as a clear vindication of the **Relentless Googling** school of pedagogy - they have been doing *exactly the same thing*. Day in, day out, they've been doom-scrolling. And they've already digested every single one of those haunted forum posts, manically hoovering it all up in the name of training data before *The Man* shuts off the API firehouse. 
+Perhaps unsurprisingly - and as a clear vindication of the 'Relentless Googling' school of pedagogy - they have been doing *exactly the same thing*. Day in, day out, they've been doom-scrolling. And they've already digested every single one of those haunted forum posts, manically hoovering it all up in the name of training data before *The Man* shuts off the [API](https://techcrunch.com/2023/04/18/reddit-will-begin-charging-for-access-to-its-api/) [firehose](https://www.engadget.com/twitter-shut-off-its-free-api-and-its-breaking-a-lot-of-apps-222011637.html). 
 
 Obviously, Bots Are Liars Sometimes. Even the [really expensive ones](https://www.theverge.com/2023/4/19/23689554/google-ai-chatbot-bard-employees-criticism-pathological-liar).  But that's only a problem if you treat it as a search engine, a machine for delivering Truth (and even then: come on, didn't you have the 'Beware of Google' lesson in Year 6 ICT?). 
 
-Instead, treat it as what it is: a hideous amalgamated chimera of every midnight scream into the digital void, and every echo - helpful and unhelpful - that came to The Poster's aid. The Forum is *never* right the first time (not unless your problem is extremely obvious, as people will [politely remind you](https://lmgtfy.app/?q=how+do+i+switch+my+computer+on)): the latent threat of Bricking From Blind Copying gives pause to that. And so neither should we expect The Bot to be an ever-reliable truth-giver. 
+Instead, treat it as what it is: a hideous amalgamated chimera of every midnight scream into the digital void, and every echo - helpful and unhelpful - that came to The Poster's aid. The Forum is *never* right the first time (not unless your problem is extremely obvious, as people will [politely remind you](https://lmgtfy.app/?q=how+do+i+switch+my+computer+on)). It is in the sifting and panning for gold that we really learn, with the latent threat of Bricking From Blind Copying providing just enough jeopardy to give you meaningful pause to reflect. Neither should we expect The Bot, then, to be an ever-reliable truth-giver. 
 
-But what it is capable of - what it *excels* at - is giving you an endless stream of vaguely helpful, possibly correct-sounding suggestions that might get you the solution to your problem. Or better yet, for our purposes: they'll nudge into thinking along the right lines. 
+But what The Bot is capable of - what it excels at - is giving you an endless stream of vaguely helpful, possibly correct-sounding suggestions that might get you the solution to your problem. Or better yet, for our purposes: they'll nudge into thinking along the right lines. 
 
 ## 'Dig your own grave and [save](https://youtu.be/7jYPp9w-0Uk?t=5)!'
 Of course, the bullish case is to say the bots can [already code](https://github.com/features/copilot). And I've no doubt at all that they can do it better than me, even if their errors are more hallucinatory than mine (have *they* got a search history that includes one hundred variations of `why github not syncing please help`? I think *not*).

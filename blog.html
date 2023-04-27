@@ -23,7 +23,7 @@ https://pagespeed.web.dev/analysis/https-mbruges-com-blog-alt/i3wmltb25l?form_fa
     <link rel="icon" href="/favicon.svg">
     <link rel="stylesheet" href="style.css">
     <meta charset="utf-8">
-    <meta name="description" content="MB - Teacher // Maker // Learner">
+    <meta name="description" content="MB - The Blog">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
@@ -51,6 +51,17 @@ https://pagespeed.web.dev/analysis/https-mbruges-com-blog-alt/i3wmltb25l?form_fa
 <body>
     <script src="https://unpkg.com/markdown-it/dist/markdown-it.min.js">
     </script>
+<script>
+    function getMDblog(filename, containerID) {
+            fetch(`/blogarchive/${filename}`)
+                .then(response => response.text())
+                .then(md => {
+                    const mdRenderer = window.markdownit();
+                    const html = mdRenderer.render(md);
+                    document.getElementById(containerID).innerHTML = html;
+                });
+        }
+</script>
 <center>
     <style>a sup {
       align-content: center;
@@ -94,6 +105,17 @@ https://pagespeed.web.dev/analysis/https-mbruges-com-blog-alt/i3wmltb25l?form_fa
 </script>
 
 <!--INSERTPOST-->
+<!--<blog>
+    <form>
+    Now have a function, which streamlines things a little (first arg is path to MD, second is the shortname/element code)
+    
+    Now: how can I use this to ensure it only loads when the element is on the screen?
+    <div id="test">
+        <script>getMDblog('tstpost.md', 'test')</script>
+    </div>
+    </form>
+</blog>
+<br>-->
 
 <!--INSERTPOST-->
 <blog loading="lazy">
@@ -102,13 +124,8 @@ https://pagespeed.web.dev/analysis/https-mbruges-com-blog-alt/i3wmltb25l?form_fa
     <form>
         <small> ~~~~~~ 26 April 2023 ~~~~~~ </small>
         <div id="260423">
-            <script> fetch("/blogarchive/CodingOnTheTitanic.md")
-                    .then(response => response.text())
-                    .then(md => {
-                        const mdRenderer = window.markdownit();
-                        const html = mdRenderer.render(md);
-                        document.getElementById("260423").innerHTML = html;
-                    });
+            <script> 
+            getMDblog('CodingOnTheTitanic.md', '260423')
             </script>
         </div>
         <small> ~~~~~~ END ~~~~~~ </small>
@@ -124,13 +141,8 @@ https://pagespeed.web.dev/analysis/https-mbruges-com-blog-alt/i3wmltb25l?form_fa
     <form>
             <small> ~~~~~~ 18 April 2023 ~~~~~~ </small>
             <div id="180423">
-               <script> fetch("/blogarchive/HelloWorld.md")
-                .then(response => response.text())
-                .then(md => {
-                const mdRenderer = window.markdownit();
-                const html = mdRenderer.render(md);
-                document.getElementById("180423").innerHTML = html;
-                });
+               <script loading="lazy">
+               getMDblog('HelloWorld.md', '180423')
                 </script>
             </div>
             <small> ~~~~~~ END ~~~~~~ </small>
