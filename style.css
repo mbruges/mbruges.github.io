@@ -60,7 +60,7 @@ body {
 footer,
 header,
 main {
-    margin: 0px auto;
+    margin: 0.1px auto;
     max-width: var(--width-content);
     padding-top: 1.5rem;
 }
@@ -68,8 +68,12 @@ main {
 footer {
     text-align: center;
     font-size: x-small;
+    line-height: 30%;
     height: 5vh;
-}
+    padding-bottom: 1em;
+    right: 10%;
+    left: 10%;
+    }
 
 hr {
     background-color: var(--color-bg-secondary);
@@ -115,7 +119,7 @@ section aside:hover {
 article header,
 div header,
 main header {
-    padding-top: 0;
+    padding-top: 1px;
 }
 
 header {
@@ -135,7 +139,7 @@ header nav img {
 }
 
 section header {
-    padding-top: 0;
+    padding-top: 1px;
     width: 100%;
 }
 

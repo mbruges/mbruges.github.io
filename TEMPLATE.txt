@@ -5,7 +5,7 @@
     <link rel="icon" href="/favicon.svg">
     <link rel="stylesheet" href="/style.css">
     <meta charset="utf-8">
-    <meta name="description" content="MB - TITLE // Maker // Learner">
+    <meta name="description" content="MB - TITLE Teacher // Maker // Learner">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MB - TITLE</title>
 <body>
@@ -36,19 +36,14 @@ CONTENT STARS HERE. Copy and change file to HTML to use
         </section>
 
     </header>
-
- <footer>
-        <p>© 2023 - <i> Made by <a href="/about.html" target="_blank">me
-                </a>, with help from <a href="https://andybrewer.github.io/mvp/" target="_blank">MVP.css
-                </a>, <a href="https://undraw.co/" target="_blank">unDraw
-                </a> and Agatha</i> 🐈‍⬛
-            <a href='https://ko-fi.com/L4L6JR137' target='_blank'>
-                <p>Found this useful? Send me coffee ☕️</p>
-            </a>
-        </p>
-    </footer>
-
 </body>
 
+<footer>
+    <p>© 2023 - <i> Made by <a href="/about.html" target="_blank">me
+            </a> and Agatha</i> 🐈‍⬛</p>
+    <p><i>Found this interesting? <a href="mailto:hello@mbruges.com?subject=Hello from the Internet"
+                style="font-style: normal;"> Drop me a line 📮</a>
+    </p>
+</footer>
+
 </html>
-<link rel="stylesheet" href="/style.css">
