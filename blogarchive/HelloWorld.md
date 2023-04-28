@@ -38,6 +38,6 @@ Knowing that anyone with a Wi-Fi connection and a browser can access what you sh
 
 Having faffed around with Javascript and a little Python, there’s a great deal to be said for solidifying the nebulous world of `monospaced type` on a black screen into something more tangible and designed.
 
-This site is less a [showcase](https://mbruges.com/scriptpractice.html) or portfolio, and more a sketchbook. There are lots of ideas here in various states of completion. Some are [demos at 99% functionality](https://mbruges.com/wotd.html), some are [projects I've put on ice](https://open.spotify.com/show/1s44mmlysg8G7lLW5QvGb5?si=5889d05e4c8a4171) for the foreseeable, and some are [abominations of half-formed code](https://mbruges.com/scriptpractice.html) that really ought to be put out of their misery.
+This site is less a [showcase](https://mbruges.com/codeplayground.html) or portfolio, and more a sketchbook. There are lots of ideas here in various states of completion. Some are [demos at 99% functionality](https://mbruges.com/wotd.html), some are [projects I've put on ice](https://open.spotify.com/show/1s44mmlysg8G7lLW5QvGb5?si=5889d05e4c8a4171) for the foreseeable, and some are [abominations of half-formed code](https://mbruges.com/codeplayground.html) that really ought to be put out of their misery.
 
 But each one represents one of those lightbulbs. And even if they only give off a flicker, they’re worth keeping around. 💡

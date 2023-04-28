@@ -164,8 +164,8 @@
         //Inputting these variables to the prompt string.        
         var prompt = `Generate a ${subject} worksheet, on the topic of ${topic}, for students in Year ${year}. Include a brief summary of key terms, a series of four quick recall questions, some more complex tasks and conclude with an open-ended research task. ${additions} `
         
-        var tokens = 200
-        var prevprompt = `You are a teachers assistant at a British school, creating resources.  Always respond in HTML. No <style> needed in code. No other comment needed.`;
+        var tokens = 500
+        var prevprompt = `You are a teaching assistant at a British school, creating resources.  Always respond in HTML. No <style> needed in code. No other comment needed.`;
         //Quickly converting the input to an integer, so it works.
         tokens = parseInt(tokens);
         console.log(tokens);
@@ -265,7 +265,7 @@
 <body onload="returnAPItoken(); nameGenerator()">
 <nav>
     <div class="dropdown">
-        <a id="catNav" href="/index.html"><img alt="miaow" src="/favicon.svg" height="40" width="40"></a>
+        <a id="catNav"><img alt="miaow" src="/favicon.svg" height="40" width="40"></a>
         <div class="dropdown-content">
             <a href="/experiments.html">Experiments</a>
             <a href="/resources.html">Resources</a>
@@ -282,7 +282,7 @@
     <img src="/images/openmoji-color/1F4D1.svg"; width="80vw"; display="block";max-height='26vh'>
 <div style=max-width:400px;margin-left:auto;margin-right:auto>
 
-<p style="font-size:140%;"> Generate worksheets for use in the <br> classroom, through the power of AI.</p>
+<p style="font-size:140%;"> Generate worksheets for use in the classroom, through the power of AI.</p>
 <head>
 <p>Select your options, add any specific ideas or requests in the box below, then press the <b style="background-color: black; color: var(--color-bg); font-weight: 350;">&nbspGenerate&nbsp</b> button.</p>
 

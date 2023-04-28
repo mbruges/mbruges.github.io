@@ -17,11 +17,25 @@
             font-size:larger;
         }
     </style>
+    <script>
+        function viewSource() {
+                ;
+                var source = "<body>";
+                source += document.getElementsByTagName('body')[0].innerHTML;
+                source += "</body>";
+                source = source.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+                source = "<pre>" + source + "</pre>";
+                sourceWindow = window.open('', 'Source of page', 'height=800,width=800,scrollbars=1,resizable=1');
+                sourceWindow.document.write(source);
+                sourceWindow.document.close();
+                if (window.focus) sourceWindow.focus();
+            }  
+    </script>
 </head>
     <header>
     <nav>
         <div class="dropdown">
-            <a id="catNav" href="/index.html"><img alt="miaow" src="/favicon.svg" height="40" width="40"></a>
+            <a id="catNav"><img alt="miaow" src="/favicon.svg" height="40" width="40"></a>
             <div class="dropdown-content">
                 <a href="/experiments.html">Experiments</a>
                 <a href="/resources.html">Resources</a>
@@ -33,7 +47,8 @@
         </ul>
     </nav>
         <h1>Code Playground</h1>
-        <p> This is where I practice using Javascript.<br> The <code>coding</code> is very mucky.</p>
+        <p> This is where I practice using Javascript. </p><code><a onclick="viewSource()"> Click here to see the code</a></code>
+<body>
 
 <div id="quoteGenerator">
 <h2>🗡️ Quote Generator 🏴󠁧󠁢󠁳󠁣󠁴󠁿</h2>
@@ -47,10 +62,11 @@
         console.log(randCharacter);
         var lines = ""
         var line1 = "" + (macbethPlay[randCharacter].text[randLine])
-        var line2 = (macbethPlay[randCharacter].text[randLine + 1]);
-        if (line2 = undefined) {
+        var line2 = parseInt(randLine + 1);
+        line2 = (macbethPlay[randCharacter].text[line2]);
+        if (line2 == undefined) {
             lines = line1
-        } else lines = line1 + "  " + line2;
+        } else lines = line1 + `\n` + line2;
         randCharacter = macbethPlay[randCharacter].label;
         randCharacter = randCharacter.toUpperCase();
         document.getElementById("macbethQuote").innerHTML = randCharacter + ":  " + lines;
@@ -58,7 +74,7 @@
 
 </script>
 <br>
-<code> <b id="macbethQuote">Quote will appear here</b></code>
+<form style="background-color: lightgrey;"> <b id="macbethQuote">Quote will appear here</b></form>
 </div>
 <br>
 <hr
@@ -182,7 +198,6 @@
 </div>
 <hr>
 
-<body>
 <div id = TextEcho>
     <!--Simple text field input example-->
     <!-- Here's the input.
@@ -378,6 +393,8 @@
                 style="font-style: normal;"> Drop me a line 📮</a>
     </p>
 </footer>
+</body>
+
 <script>
     //This is a tidied up version of Macbeth as a JS object. The minor characters have been removed, to make it a bit easier.
     const macbethPlay = [
@@ -2775,5 +2792,4 @@
         }
     ];
 </script>
-</body>
 </html>
