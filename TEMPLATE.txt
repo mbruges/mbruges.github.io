@@ -12,7 +12,7 @@
     <header>
        <nav>
             <div class="dropdown">
-            <a id="catNav" href="/index.html"><img alt="miaow" src="/favicon.svg" height="40" width="40"></a>
+            <a id="catNav"><img alt="miaow" src="/favicon.svg" height="40" width="40"></a>
             <div class="dropdown-content">
                     <a href="/experiments.html">Experiments</a>
                     <a href="/resources.html">Resources</a>
@@ -43,7 +43,6 @@ CONTENT STARS HERE. Copy and change file to HTML to use
         </section>
 
     </header>
-</body>
 
 <footer>
     <p>© 2023 - <i> Made by <a href="/about.html" target="_blank">me
@@ -52,5 +51,5 @@ CONTENT STARS HERE. Copy and change file to HTML to use
                 style="font-style: normal;"> Drop me a line 📮</a>
     </p>
 </footer>
-
+</body>
 </html>

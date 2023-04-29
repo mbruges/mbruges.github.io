@@ -466,9 +466,8 @@ form {
 
 
 /*This was tricky: hidden forms/text were still taking up space on the page because of preinserted linebreaks. This tweaked version forces it to be a single pixel in height/width, and puts the overflow into a scrolling box... effectively making it invisible. */
-
 .hidden {
-    visibility: show;
+    visibility: hidden;
     height: 1px;
     width: 1px;
     font-size: 0px;
