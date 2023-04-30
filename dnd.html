@@ -331,7 +331,7 @@ const secretsArray = [
 
              var url = "https://api.openai.com/v1/chat/completions";
              var bearer = 'Bearer ' + APItoken
-             console.log("asking chatGPT...")
+             console.log("Calling chatGPT via POST...")
              fetch(url, {
                  method: 'POST',
                  headers: {
@@ -344,9 +344,9 @@ const secretsArray = [
                          { "role": "system", "content": "" },
                          { "role": "user", "content": "" },
                          { "role": "assistant", "content": "" },
-                         { "role": "user", "content": `Write a 60-word backstory discussing the history, personality, ideals, bonds and flaws for this D&D character: ${charSummary}. Respond only with the backstory itself, no commentary. Use <br> for linebreaks.`}
+                         { "role": "user", "content": `Write a 70-word backstory discussing the history, personality, ideals, and flaws for this D&D character: ${charSummary}. Respond only with the backstory itself, no commentary. Use <br> for linebreaks.`}
                      ],
-                     "max_tokens": 400,
+                     "max_tokens": 500,
                      "temperature": 1,
                      "top_p": 1,
                      "n": 1,

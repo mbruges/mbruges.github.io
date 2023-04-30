@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta name="description" content="MB - A very simple site for GPT-3.5 requests via the API">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MB - OpenAI Portal</title>
+    <title>MB - GPT Template</title>
     <script id="Ask-GPT">  
     function askGPT () {
         showResponseContainer();
@@ -78,19 +78,7 @@ fetch(url, {
     document.getElementById(`${outputElement}`).innerHTML = newresponse;
     hideLoader();
     showResponseContainer();
-
-    //Token spend tracking:
-        let totaltokensused = parseInt(data.usage.total_tokens);
-        console.log(localStorage.getItem("TokensToDate"))
-        if ((localStorage.getItem("TokensToDate")) == null) {
-            localStorage.setItem("TokensToDate", 0)
-        };
-        totaltokensused = parseInt(totaltokensused) + parseInt(localStorage.getItem("TokensToDate"));
-        console.log(`Cache says you've used ${totaltokensused} tokens so far`)
-        localStorage.setItem("TokensToDate", totaltokensused);
-        tokenToDollar('spendTrackerDisplay');
-    })
-
+})
     .catch(error => {
         console.log('Something went wrong. This is the error: ' + error)
         document.getElementById(`${outputElement}`).innerHTML = ('Something went wrong. This is the error: ' + error);
@@ -152,18 +140,11 @@ fetch(url, {
         setTimeout(function () { alertelement.className = alertelement.className.replace("show", ""); }, 3000);
     }
 
-    function tokenToDollar(outputElement) {
-            if ((localStorage.getItem("TokensToDate")) == null) {
-                localStorage.setItem("TokensToDate", 0)
-            };
-            let dollarSpend = 0;
-            let totaltokensused = localStorage.getItem("TokensToDate")
-            dollarSpend = totaltokensused * 0.000002;
-            //Here we round the dollarSpend to four decimal places.
-            dollarSpend = (Math.floor(dollarSpend * 100)) / 100;
-            console.log(`${totaltokensused} = $${dollarSpend}`)
-            document.getElementById(outputElement).innerHTML = `$${dollarSpend}`
-        }
+    //This simply converts tokens into dollars for a rough spending guide.
+    function tokenToDollar(tokenVol) {
+        dollarSpend = tokenVol * 0.000002;
+        return dollarSpend
+    }
 
     function copy(elementToCopy) {
             let content = document.getElementById(elementToCopy).innerHTML;
@@ -173,7 +154,7 @@ fetch(url, {
 </script>   
 </head>
 
-<body onload="loadThing('api-input','API-key');tokenToDollar('spendTrackerDisplay')">
+<body onload="loadThing('api-input','API-key')">
     <header>
        <nav>
             <div class="dropdown">
@@ -196,10 +177,13 @@ CONTENT STARS HERE. Copy and change file to HTML to use
 -->
 <main style="max-width:90vw;margin-left: auto;margin-right: auto;padding: 10px;">
 <header>
-    <h1>OpenAI Portal</h1>
-        <p>A very simple site for making GPT-3.5 requests via the API</p>
+    <h1>GPT Template</h1>
+        <h2>A very simple site for GPT-3.5 requests via the API</h2>
 </header>
-        
+        <ul style="max-width: 600px;margin-left: auto;margin-right: auto;"><li>All the requisite scripts are in the header and it should function as-is.</li>
+            <li>To build an application on top of this, simply edit the <code>AskGPT()</code> function to  ensure the relevant variables are passed from the relevant divs/inputs.</li>
+            <li> By default, the element with id <code>output-container</code> receives the output.</li></ul>
+    
         <article id="inputs" style="text-align: center; width: 90vw;">
             <div id="apikey">
                     <details>
@@ -207,10 +191,7 @@ CONTENT STARS HERE. Copy and change file to HTML to use
                             style="font-size: 10px;
                             font-family: monospace; text-align: center; max-width: 318px; background-color:lightgrey" placeholder="sk-someth1ng....."><a
                             onclick="saveThing('api-input','API-key')"><sup>Save to cache 💾 </sup></a><br>
-                        <small>Key is saved to your local browser cache. It can only be accessed by you and OpenAI.<br> Total tokens used are also tracked in the cache.</small>
-
-                        <code>Rough spend so far: <b id="spendTrackerDisplay">$0.00</b></code>
-                        </script>
+                        <small>Key is saved to your local browser cache. It can only be accessed by you and OpenAI</small>
                     </details>
                     <div id="toastAlert"></div>
             </div>
@@ -241,7 +222,7 @@ CONTENT STARS HERE. Copy and change file to HTML to use
             </div>
             </details>
             <br>
-        <button id="AskGPTbutton" onclick="askGPT()">Ask the chatbot 🤖</button>
+        <button id="AskGPTbutton" onclick="askGPT()">Ask GPT</button>
         <div id="thinking-loader" class="loader.hidden"></div>
 
 <blog> 
