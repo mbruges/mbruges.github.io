@@ -839,8 +839,8 @@ blockquote footer {
 /* Blog Stylesheet*/
 
   blog div {
-      padding-left: 9%;
-      padding-right: 9%;
+      padding-left: 4%;
+      padding-right: 4%;
       font-family: var(--font-family);
       line-height: 160%;
       font-size: 110%;

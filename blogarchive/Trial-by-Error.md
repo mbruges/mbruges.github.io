@@ -5,11 +5,12 @@
 
 This website is a place *about* learning and a place *for* learning: as the [playground](https://mbruges.com/codeplayground.html) page testifies, this is as much a learning experience for me as it is a resource for anyone else.
 
-Based on my [previous musings](https://mbruges.com/blog.html#260423), I've tried to put the principle into practice. Allow me to introduce my latest experiment in GPT and JS: [What Am I Doing Wrong?](https://mbruges.com/codefixer.html) 
+Based on my [previous musings](https://mbruges.com/blog.html#260423), I've tried to put the principle into practice. Allow me to introduce my latest experiment in GPT and JS:
+*[What Am I Doing Wrong?](https://mbruges.com/codefixer.html)*
 
-![A screenshot of the page in action](/images/waidw-screenshot.png)
+![A screenshot of the page in action](/images/waidw-screenshot.png "I wish I could say I invented this error.")
 
-Simply put: it's a wrapper for ChatGPT that gives you feedback on your code. Philosophically, it's a deliberate nudge away from the "fire and forget" approach to LLMs that we tend towards. Rather than demand "make me a script to do this thing" (which The Bot is perfectly capable of doing!), this puts the impetus on the user to *attempt the problem first*, before seeking the help of the omniscient chatbot overlord.
+Simply put: it's a wrapper for ChatGPT that gives you feedback on your code. Philosophically, it's a deliberate nudge away from the "fire-and-forget" approach to LLMs that their design (and decades of Google habits) tend towards. Rather than demand "make me a script to do this thing" (which The Bot is perfectly capable of doing!), this puts the impetus on the user to *attempt the problem first*, before seeking the help of the omniscient chatbot overlord.
 
 ## Creating is hard, editing is easy
 
@@ -33,7 +34,9 @@ Well: The Bot is clever, but it's not got enough tokens to go full Vygotsky or B
 
 Of course, we don't want to fall into the trap of blind-copying the correction that's been given. I've got a perfectly good ['click to copy' function](https://mbruges.com/codeplayground.html#CopyButton) (thank you very much), and an earlier draft of this site had it implemented: snipping out the code to the clipboard, all set for oven-ready deployment to your failing script.
 
-Taking that little button out is another small nudge towards the pause-reflect-digest that one needs to actually *learn* from a mistake.
+Taking that little button out is another small nudge towards the *pause-reflect-digest* cycle that one needs to actually *learn* from a mistake.
+
+![Me typing SUDO BASH for the first time.](https://lh3.googleusercontent.com/8LZR_zTmF_T8Gp8cPl8Jf8XPQCOGW9U7cx-r_tcLlTiBJUUb2KTyiWLWtcfKcTC1bPHODH7-YWl9dhKKIJAc4pwij2caxbQcPRo7R3S2 "Me typing SUDO BASH for the first time.")
 
 [I've joked before](https://mbruges.com/blog.html#260423) about the dangers of '[bricking](https://www.howtogeek.com/126665/htg-explains-what-does-bricking-a-device-mean/)' - irreparably breaking something by copying what you don't understand - but it's a potent metaphor. Too often, as teachers, we incentivise the "do as I do" approach, and mistake mirrored compliance for actual understanding. In the worst case, our students end up building their knowledge on non-existent foundations, before some unscaffolded, unmodelled assessment suddenly [liquifies](https://www.britannica.com/video/185615/liquefaction-event-soil-particles-earthquake-combination-water) the ground and it all comes tumbling down.
 
