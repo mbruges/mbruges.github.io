@@ -1,4 +1,6 @@
+
 # Hello World
+
 _You have to start somewhere._
  ![A laptop showing 'hello world'](https://images.unsplash.com/photo-1644792863360-40fa85ea52e7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=530&q=80)
 
@@ -30,7 +32,7 @@ When interviewing teachers, one of the most best questions you can ask is: what�
 
 Perhaps we can all benefit from living a moment like this ourselves. Fit your own lightbulbs; remember what it feels like.
 
-## Just do it.
+## Just do it ✔️
 
 The best way to learn is to do. One can read, highlight, bulletpoint, mind-map in a beautifully [Pinterest-able notebook](https://www.vox.com/the-goods/22538703/tiktok-productivity-hacks-gen-z), but if you want to form and solidifying those synaptic connections, you need to actually practice. And practice that produces something is even better.
 

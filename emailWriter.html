@@ -4,17 +4,18 @@
     <link rel="icon" href="/favicon.svg">
     <link rel="stylesheet" href="/style.css">
     <meta charset="utf-8">
-    <meta name="description" content="MB - A very simple site for GPT-3.5 requests via the API">
+    <meta name="description" content="MB - Make your emails less aggressive">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MB - GPT Template</title>
+    <title>MB - EtonAIn</title>
     <script id="Ask-GPT">  
     function askGPT () {
         showResponseContainer();
 //DEFINE the inputs & output here: 
                 var openAiToken = document.getElementById('api-input').value
-                var prompt = document.getElementById('prompt-input').value
+                var prompt = "Rewrite this email for me, in your own words: " + document.getElementById('prompt-input').value
                 var outputElement = 'output-container'
-                var role = document.getElementById('role-input').value
+                var role = "a charming, self-effacing, unfailingly polite old Etonian."
+                //document.getElementById('role-input').value
                 var maxTokens = document.getElementById('max-token-input').value
                 var loadingMessage = `<i>Thinking...</i>`
 
@@ -56,7 +57,7 @@ fetch(url, {
     body: JSON.stringify({
         "model": "gpt-3.5-turbo",
         "messages": [
-            { "role": "system", "content": `Respond to every query as ${role}. Use <li> <br> as necessary. Wrap all code examples in <code>`},
+            { "role": "system", "content": `Respond to every query as ${role}. Must use <br> for all linebreaks. Wrap all code examples in <code>`},
             /* These can be filled with convo history
             { "role": "user", "content": "" },
             { "role": "assistant", "content": "" },*/
@@ -156,8 +157,9 @@ fetch(url, {
         return dollarSpend
     }
 
-    function copy(thingToCopy) {
-            navigator.clipboard.writeText(thingToCopy);
+    function copy(elementToCopy) {
+            let content = document.getElementById(elementToCopy).innerHTML;
+            navigator.clipboard.writeText(content);
             notificationAlert('Copied to clipboard 📋');
         };
 </script>   
@@ -186,15 +188,12 @@ CONTENT STARS HERE. Copy and change file to HTML to use
 -->
 <main style="max-width:90vw;margin-left: auto;margin-right: auto;padding: 10px;">
 <header>
-    <h1>GPT Template</h1>
-        <h2>A very simple site for GPT-3.5 requests via the API</h2>
+    <h1>Email Amender </h1>
+        <h2>Have the AI re-write your emails for you</h2>
 </header>
-        <ul style="max-width: 600px;margin-left: auto;margin-right: auto;"><li>All the requisite scripts are in the header and it should function as-is.</li>
-            <li>To build an application on top of this, simply edit the <code>AskGPT()</code> function to  ensure the relevant variables are passed from the relevant divs/inputs.</li>
-            <li> By default, the element with id <code>output-container</code> receives the output.</li></ul>
     
-        <article id="inputs" style="text-align: center; width: 90vw;">
-            <div id="apikey">
+        <article  id="inputs" style="text-align: center; width: 90vw;">
+            <div cl="apikey">
                     <details>
                         <summary style="font-size: smaller; color:grey">API key 🔑</summary><input type="text" id="api-input"
                             style="font-size: 10px;
@@ -205,11 +204,16 @@ CONTENT STARS HERE. Copy and change file to HTML to use
                     <div id="toastAlert"></div>
             </div>
 
-            <div id="prompt" value="">
+            <div style="margin-left: auto;margin-right: auto;padding: 2px; align-items: center;" class="row">
+                <div class="column">
                     <textarea id="prompt-input" type="text" 
-                            style="font-family: var(--font-family);min-height: 55px;max-width: 500px;" 
+                            style="font-family: var(--font-family);min-height: 230px;width: 35vw;" 
                             placeholder="Enter prompt..."></textarea>
-
+                </div>
+                <div class="column"><button STYLE="padding:3px" id="AskGPTbutton" onclick="askGPT()">Etonize! 💫</button>
+</div>
+                <div class="column"><form id="output-container" style="min-width: 35vw;height: 200px;"></form>
+                </div>
             </div>
 <details><summary>Advanced Settings</summary>
             <div id="setting-tokens">
@@ -231,7 +235,6 @@ CONTENT STARS HERE. Copy and change file to HTML to use
             </div>
             </details>
             <br>
-        <button id="AskGPTbutton" onclick="askGPT()">Ask GPT</button>
         <div id="thinking-loader" class="loader.hidden"></div>
 
 <blog> 

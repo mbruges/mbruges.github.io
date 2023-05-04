@@ -5,7 +5,7 @@
     <link rel="icon" href="/favicon.svg">
     <link rel="stylesheet" href="/style.css">
     <meta charset="utf-8">
-    <meta name="description" content="MB - TITLE Teacher // Maker // Learner">
+    <meta name="description" content="MB - Code Showcase">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MB - TITLE</title>
 <body>
@@ -30,7 +30,7 @@ CONTENT STARS HERE. Copy and change file to HTML to use
 
 -->
 
-<header>
+
         <h1>NEWPAGE</h1>
         <h2>Description</h2>
     </header>
@@ -38,7 +38,7 @@ CONTENT STARS HERE. Copy and change file to HTML to use
             <article>
                 <p>There's nothing here yet. Check back later.</p>
                 <br>
-                <img alt="under construction" src="/images/building.svg" height = 200>
+                <img alt="under construction" src="/images/building.svg" height=200 style="margin-left:auto;margin-right:auto;display: flex;">
             </article>
         </section>
 

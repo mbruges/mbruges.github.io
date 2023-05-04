@@ -52,7 +52,6 @@ body {
     color: var(--color-text);
     font-family: var(--font-family);
     line-height: var(--line-height);
-    margin: 0;
     overflow-x: hidden;
     padding: 0;
 }
@@ -314,8 +313,10 @@ ul li {
 
 p {
     margin: 0.75rem 0;
+    text-align: inherit;
     padding: 0;
-    width: 100%;
+    margin-right: auto;
+    margin-left: auto;
 }
 
 pre {
@@ -330,6 +331,33 @@ pre samp {
     max-width: var(--width-card-wide);
     padding: 0.5rem 2rem;
     white-space: pre-wrap;
+}
+
+/*A special class to minimise the width of text*/
+.readable {
+    max-width: 750px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
+/*A subclass for rendering code in a cool Matrix style 😎 */
+.code {
+    background-color: darkslategrey; 
+    color: greenyellow; 
+    font-size: 16px;
+    font-family: monospace;
+    border-radius: 0;
+    border-style:groove;
+    border-color: white;
+    border-width: 4px;
+    max-width: 500px;
+    height: 30vh;
+}
+
+.code::-webkit-input-placeholder {
+    color: white;
 }
 
 small {
@@ -619,6 +647,12 @@ table thead {
     padding: 0;
 }
 
+table th {
+    background-color: #485cf5;
+    color: white;
+    font-style: italic;
+}
+
 table thead th:first-child {
     border-top-left-radius: var(--border-radius);
 }
@@ -884,6 +918,15 @@ blockquote footer {
       display: block;
   }
 
+  blog button {
+    margin-right: auto;
+    margin-left: auto;
+    align-self: center;
+    text-align: center;
+    display: flex;
+    
+  }
+
   /* Auto-resize input boxes*/
   .grow-wrap {
       /* easy way to plop the elements on top of each other and have them both sized based on the tallest one's height */
@@ -921,3 +964,16 @@ blockquote footer {
       /* Place on top of each other */
       grid-area: 1 / 1 / 2 / 2;
   }
+.row {
+    display: flex;
+}
+
+.column {
+    flex: 50%;
+}
+
+@media screen and (max-width: 600px) {
+    .column {
+        width: 100%;
+    }
+}
