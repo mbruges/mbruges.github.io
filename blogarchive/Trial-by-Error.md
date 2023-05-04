@@ -1,6 +1,6 @@
 # Trial by Error
 
-![Blind Man's Buff has its origins as a medieval trial-by-ordeal. Fact.](https://www.counselmagazine.co.uk/images/uploadedfiles/cc-shutterstock_editorial_8760310a.jpg?sfvrsn=e7119442_1 "Blind Man's Buff has its origins as a medieval trial-by-ordeal. Fact.")
+![A trial by ordeal](https://www.counselmagazine.co.uk/images/uploadedfiles/cc-shutterstock_editorial_8760310a.jpg?sfvrsn=e7119442_1 "The blind-folded man is the learner, the bishop the teacher, and the monks... OFSTED? I don't know")
 > Learning the hard way, failing the right way
 
 This website is a place *about* learning and a place *for* learning: as the [playground](https://mbruges.com/codeplayground.html) page testifies, this is as much a learning experience for me as it is a resource for anyone else.
@@ -13,11 +13,11 @@ Simply put: it's a wrapper for ChatGPT that gives you feedback on your code. Phi
 
 ## Creating is hard, editing is easy
 
-"What am I doing wrong?" (or *WAIDW*, for short) is probably the most powerful question one can ask as a learner. 
+"What am I doing wrong?" (or *WAIDW*, for short) is probably the most powerful question a learner can ask.
 
 It invites effective feedback, sets a clear metric of success, and scaffolds its own response. Telling a student what a 'good one looks like' seems simple, but is extremely tricky to get right: end-products don't often foreground the most important thinking, and copying the model might mean the learner ends up focusing your efforts on what doesn't really matter.
 
-!["Can you pass the unleavened bread?"](https://cdn.britannica.com/04/95904-050-7EB39FC8/Last-Supper-wall-painting-restoration-Leonardo-da-1999.jpg)
+![The Last Supper](https://cdn.britannica.com/04/95904-050-7EB39FC8/Last-Supper-wall-painting-restoration-Leonardo-da-1999.jpg "Can you pass the unleavened bread?")
 > Tracing 'The Last Supper' won't make you a master of perspective overnight - you need to understand the fundamentals
 
 "WAIDW", on the other hand, is simple to answer for anyone with domain knowledge one step above the questioner. If you know more than they do, you can't help but identify the gaps in knowledge, and offer the immediate remedy. Call it Weaponised Mansplaining; the Pedagogy of The Insufferable; the Art of [Ackshually](https://knowyourmeme.com/memes/ackchyually-actually-guy).
