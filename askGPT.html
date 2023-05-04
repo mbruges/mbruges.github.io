@@ -56,7 +56,7 @@ fetch(url, {
     body: JSON.stringify({
         "model": "gpt-3.5-turbo",
         "messages": [
-            { "role": "system", "content": `Respond to every query as ${role}. Use <li> <br> as necessary. Wrap all code examples in <code>`},
+            { "role": "system", "content": `Respond to every query as ${role}. Format in HTML.`},
             /* These can be filled with convo history
             { "role": "user", "content": "" },
             { "role": "assistant", "content": "" },*/
