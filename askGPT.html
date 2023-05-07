@@ -7,6 +7,16 @@
     <meta name="description" content="MB - A very simple site for GPT-3.5 requests via the API">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MB - OpenAI Portal</title>
+    <script src="https://unpkg.com/markdown-it/dist/markdown-it.min.js">
+        </script>
+    <script id="renderMD">
+            function convertMD() {
+                        var md = document.getElementById('output-container').innerHTML
+                        const mdRenderer = window.markdownit();
+                        const html = mdRenderer.render(md);
+                        document.getElementById('output-container').innerHTML = html;
+                    }
+        </script>
     <script id="Ask-GPT">  
     function askGPT () {
         showResponseContainer();
@@ -56,7 +66,7 @@ fetch(url, {
     body: JSON.stringify({
         "model": "gpt-3.5-turbo",
         "messages": [
-            { "role": "system", "content": `Respond to every query as ${role}. Format in HTML.`},
+            { "role": "system", "content": `Respond to every query as ${role}. Format in Markdown.`},
             /* These can be filled with convo history
             { "role": "user", "content": "" },
             { "role": "assistant", "content": "" },*/
@@ -77,6 +87,7 @@ fetch(url, {
     console.log(data.usage.total_tokens)
     document.getElementById(`${outputElement}`).innerHTML = newresponse;
     hideLoader();
+    convertMD();
     showResponseContainer();
 
     //Token spend tracking:
