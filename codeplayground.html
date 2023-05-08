@@ -19,6 +19,14 @@
     </style>
 
     <script>
+
+        function notificationAlert(notificationText) {
+                var alertelement = document.getElementById("toastAlert");
+                alertelement.innerHTML = notificationText
+                alertelement.className = "show";
+                setTimeout(function () { alertelement.className = alertelement.className.replace("show", ""); }, 3000);
+            }
+
         function viewSource() {
                 ;
                 var source = "<body>";
@@ -78,7 +86,37 @@
 <form style="background-color: lightgrey; text-align: center;"  id="macbethQuote">Quote will appear here</form>
 </div>
 <br>
-<hr
+<hr>
+
+<div id="sonnetFinder">
+    <script type = "module">
+        import { getSonnet } from "./wsarchive/sonnets.js";
+        document.getElementById("getSonnet").onclick = function () {
+        let sonnetNumber = document.getElementById('sonnetSelect').value;
+        sonnetNumber = parseInt(sonnetNumber);
+        console.log(sonnetNumber)
+        if (isFinite(sonnetNumber) == false) {
+            sonnetNumber = Math.floor(Math.random()*154)
+            console.log(sonnetNumber + "rand")
+        } else if (sonnetNumber > 154 || sonnetNumber < 1) {
+            notificationAlert("Choose a number between 1 and 154, or leave blank for a random sonnet"); return;
+        }
+        var sonnetText = "" + getSonnet(sonnetNumber)
+        document.getElementById('sonnetContainer').innerHTML = sonnetText
+        document.getElementById('sonnetContainer').className = "show";
+    }
+    </script>
+<h2> Sonnet Finder </h2>
+<p>Enter a number to see one of Shakespeare's sonnets, or click <b>'Get Sonnet'</b> for a random one</p>
+<input id="sonnetSelect" type="number" min="1" max="154" placeholder="Which sonnet?" value="" style="text-align: center; width:130px; padding: 5px;">
+<button id="getSonnet">Get Sonnet</button>
+
+<form id="sonnetContainer" class="hidden" style="line-height: 70%;">
+</form>
+
+
+</div>
+<hr>
 <br>
 <div id="caesarCipher">
     <h2>🏛️ Caesar Cipher 🔐</h2>
