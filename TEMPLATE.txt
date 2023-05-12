@@ -8,6 +8,15 @@
     <meta name="description" content="MB - Code Showcase">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MB - TITLE</title>
+
+    <script id="all-scripts" type="module">
+        import { prettifyCode, askGPT, hideLoader, showLoader, showResponseContainer, hideResponseContainer, saveThing, loadThing, downloadHTML, copy, notificationAlert, tokenToDollar } from "/head-functions.js";
+
+    /* ALL SCRIPTS GO HERE*/
+
+    </script>
+
+<div id="toastAlert"></div>
 </head>
 
 <body>

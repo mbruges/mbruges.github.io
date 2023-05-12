@@ -1,4 +1,26 @@
-function getSonnet (sonnetNumber) {
+const aiSonnets = [
+    ["In love, we find ourselves without a choice,<br> But in its flames, we speak with solemn voice."],
+    ["Oh love, how sweet the moments spent with thee<br> My heart's content, forever yours to be."],
+    ["Let love be not a burden hard to bear, <br> But rather like a feather in the air."],
+    ["So long as men can breathe or eyes can see,<br> My words shall live, and I immortal be."],
+    ["Then parting ways, I leave thee with this thought,<br> May love guide thee, where'er thou art begot."],
+    ["And in thy eyes, the stars of night aglow <br>  Reflect a love that all the world should know."],
+    ["Love's sweet caress shall soothe my weary soul<br>And all my fears in its embrace console."],
+    ["The twilight fades, the day will soon depart<br> But love, as ever, shall remain in heart."],
+    ["Then let us love with all that lies within,<br> And let our hearts forever beat as kin."],
+    ["Love is a flame that doth burn bright<br> Till death shall quench it with its might."],
+    ["And though our days may pass like fleeting mist,<br> Our love endures, more precious than a tryst."],
+    ["So long as men can breathe or eyes can see,<br> So long lives this, and this gives life to thee."],
+    ["And though my heart aches with love's bitter trim,<br> I'll be content to live and die for him."],
+    ["For even death cannot break love's sacred bond,<br> And though we part, our love shall still live on."],
+    ["Thus, as the sun sets on this fleeting day,<br> Let us take heart, and walk the winding way."],
+    ["Thus reader, with this verse, my pen doth rest,<br> In hopes that thou hast found it to be blest."],
+    ["And though our time together will be brief,<br> Eternally in memory, our love shall be a wreath."],
+    ["As love sustains, so doth forever reign,<br> A bond between two hearts in sweet refrain."],
+    ["So long as men can breathe, or eyes can see,<br> So too shall live my words and memory."],
+    ["The sun may fade and night may soon descend, <br> But love eternal doth forever send."],]
+
+function getSonnet (sonnetNumber,couplet) {
     const poems = [
         {
             "title": "Sonnet 1",
@@ -2926,13 +2948,18 @@ function getSonnet (sonnetNumber) {
             ]
         }
     ]
+    var printSonnet = ""
     sonnetNumber = parseInt(sonnetNumber);
     sonnetNumber = sonnetNumber - 1
-    var printSonnet = `<h2> SONNET ${(sonnetNumber+1)} </h2> \n `
+    if (couplet == true) {
+        printSonnet = `${poems[sonnetNumber]["lines"][12]} <br> \n${poems[sonnetNumber]["lines"][13]}`
+    } else {
+    printSonnet = `<h2> SONNET ${(sonnetNumber+1)} </h2> \n `
     for (let index = 0; index < poems[sonnetNumber]["lines"].length; index++) {
         var nextLine = poems[sonnetNumber]["lines"][index]
         printSonnet = printSonnet + "<p>" + nextLine + "</p> \n"
-    }
+    }}
 return printSonnet
 }
-export { getSonnet }
+
+export { getSonnet, aiSonnets }
