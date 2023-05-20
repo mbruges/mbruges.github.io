@@ -382,6 +382,7 @@ a {
     display: inline-block;
     font-weight: bold;
     text-decoration: none;
+    overflow-wrap: break-word;
 }
 
 a:active {
@@ -493,7 +494,7 @@ form {
 }
 
 
-/*This was tricky: hidden forms/text were still taking up space on the page because of preinserted linebreaks. This tweaked version forces it to be a single pixel in height/width, and puts the overflow into a scrolling box... effectively making it invisible. */
+/*This was tricky: hidden forms/text were still taking up space on the page because of pre-inserted linebreaks. This tweaked version forces it to be a single pixel in height/width, and puts the overflow into a scrolling box... effectively making it invisible. */
 .show {
     visibility: visible;
 }
@@ -705,6 +706,8 @@ blockquote footer {
     padding: 1.5rem 0;
 }
 
+/*Call it as <a class="tooltipdata" data-tooltip="what you want to popup">WORD</a>*/
+
 .tooltip {
     position: relative;
     white-space: pre-line;
@@ -736,7 +739,8 @@ blockquote footer {
     font-size: medium;
     font-style: italic;
     font-weight: 250;
-    min-width: 280px;
+    min-width: 200px;
+    text-align: center;
     border-radius: var(--border-radius);
     border: 2px var(--color-secondary) solid;
     padding: 8px;
@@ -744,7 +748,6 @@ blockquote footer {
     background-color: var(--color-shadow);
     z-index: 1;
     white-space: pre-line;
-    text-align: justify;
 
 }
 
@@ -852,6 +855,12 @@ blockquote footer {
       display: inline-block;
       font-weight: bold;
       text-decoration: none;
+      word-wrap: normal;
+     overflow-wrap: break-word;
+  }
+
+  blog p {
+    word-wrap: normal;
   }
 
   blog h1 {
@@ -942,7 +951,7 @@ blockquote footer {
   }
 
   .grow-wrap::after {
-      /* Note the weird space! Needed to preventy jumpy behavior */
+      /* Note the weird space! Needed to prevent jumpy behavior */
       content: attr(data-replicated-value) " ";
 
       /* This is how textarea text behaves */

@@ -1,3 +1,4 @@
+
 # The case for banning Google
 *You're Bard, sunshine: the danger 'new search' poses to the Googling student*
 

@@ -1,6 +1,6 @@
 <!-- This version of the blog page uses Markdown-it.
 
-Library link:  <script src="https://unpkg.com/markdown-it/dist/markdown-it.min.js"></script>
+Library link:  <script src="/markdown-it.min.js"></script>
 
 Container must be defined for where the rendered MD will appear. Eventually, I'll workout how to customise attributes. https://github.com/crookedneighbor/markdown-it-link-attributes 
 
@@ -27,6 +27,17 @@ https://pagespeed.web.dev/analysis/https-mbruges-com-blog-alt/i3wmltb25l?form_fa
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Cache-Control" content="must-revalidate">
     <title>MB - Blog</title>
+
+    <!-- TWITTER CARD-->
+<meta name="twitter:card" content="summary\_large\_image">
+<meta name="twitter:site" content="@MBruges.com">
+<meta name="twitter:creator" content="@max_bruges">
+<meta name="twitter:title" content="The Case for Banning Google">
+<meta name="twitter:description"
+    content="Google's updated ChatGPT rival - Bard - was launched last week. It is fast, free, and extremely capable. And if we are not careful, it will destroy the way students use the Internet.">
+<meta name="twitter:image"
+    content="http://mbruges.com/images/canute.jpeg">
+
 </head>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-XQK1PEK9QX"></script>
@@ -54,7 +65,7 @@ https://pagespeed.web.dev/analysis/https-mbruges-com-blog-alt/i3wmltb25l?form_fa
         </nav>
     </header>
 <body>
-    <script src="https://unpkg.com/markdown-it/dist/markdown-it.min.js">
+    <script src="/markdown-it.min.js">
     </script>
 <script>
     function getMDblog(filename, containerID) {
