@@ -18,13 +18,13 @@ The paradox of it is that even in the teeth of this apocalypse, there's never be
 
 ## To err is human, to post is divine
 
-Since the year zero, learning computer-whispering has been a process of standing the shoulders of prat-fallen giants.
+Since the year [zero](https://en.wikipedia.org/wiki/January_1970#January_1), learning computer-whispering has been a process of standing on the shoulders of prat-fallen giants.
 
-It's a noble tradition, founded on the principle of mining the mistakes of others for the knowledge you need, scouring long-dead Stackoverflow/Reddit/message-board threads to find the poor sod who had the *identical* error code to you, but back in April 2004 on a computer that looked like a [cow](https://www.pinterest.com/pin/old-gateway-computers--496310821445158621/).
+It's a noble tradition, founded on the principle of mining the mistakes of others for the knowledge you need, scouring long-dead Stackoverflow/ Reddit/ message-board threads to find the poor sod who had the *identical* error code to you, but back in April 2004 on a computer that looked like a [cow](https://www.pinterest.com/pin/old-gateway-computers--496310821445158621/).
 
 I cannot count the number of times - callow-eyed youth as I was - that I almost bricked my Eee PC, blindly copying and pasting console commands from some poorly-translated Estonian Xandros forum, only to have its 7-inch display splutter back into life thanks to the garbled incantations on page 94 of *another* obscure Estonian distro forum.
 
-And this is by design! [This is how computing works](https://en.wikipedia.org/wiki/History_of_programming_languages)! Piece by obscure piece, the corpus, the Canon, has been built by often-nameless men and women in computer labs and basements  and [Nebraska](https://xkcd.com/2347/). And if you want to learn it properly, sometimes you've got to go to the source.
+And this is by design! This is how [computing works](https://en.wikipedia.org/wiki/History_of_programming_languages)! Piece by obscure piece, the corpus, the Canon, has been built by often-nameless men and women in computer labs and basements  and [Nebraska](https://xkcd.com/2347/). And if you want to learn it properly, sometimes you've got to go to the source.
 
 ![The School of Athens](https://cdn.britannica.com/65/237365-138-03A2AF7F/did-you-know-The-School-of-Athens-Raphael.jpg?w=800&h=450&c=crop)
 > It's the Academy, except Plato is some anonymous Eastern European computer science student with a profile pic of Shadow the Hedgehog and whose final post before logging off forever was a withering review of 'You, Me And Dupree'.
@@ -33,7 +33,7 @@ And this is by design! [This is how computing works](https://en.wikipedia.org/wi
 
 So what's different now? Well: The Bots.
 
-Perhaps unsurprisingly - and as a clear vindication of the 'Relentless Googling' school of pedagogy - they have been doing *exactly the same thing*. Day in, day out, they've been doom-scrolling. And they've already digested every single one of those haunted forum posts, manically hoovering it all up in the name of training data before *The Man* shuts off the [API](https://techcrunch.com/2023/04/18/reddit-will-begin-charging-for-access-to-its-api/) [firehose](https://www.engadget.com/twitter-shut-off-its-free-api-and-its-breaking-a-lot-of-apps-222011637.html). 
+Perhaps unsurprisingly - and as a clear vindication of the 'Relentless Googling' school of pedagogy - they have been doing *exactly the same thing*. Day in, day out, they've been doom-scrolling. And they've already digested every single one of those haunted forum posts, manically hoovering it all up in the name of training data before *The Man* shuts off the [API](https://techcrunch.com/2023/04/18/reddit-will-begin-charging-for-access-to-its-api/) [fire-hose](https://www.engadget.com/twitter-shut-off-its-free-api-and-its-breaking-a-lot-of-apps-222011637.html). 
 
 Obviously, Bots Are Liars Sometimes. Even the [really expensive ones](https://www.theverge.com/2023/4/19/23689554/google-ai-chatbot-bard-employees-criticism-pathological-liar).  But that's only a problem if you treat it as a search engine, a machine for delivering Truth (and even then: come on, didn't you have the 'Beware of Google' lesson in Year 6 ICT?).
 
@@ -43,9 +43,9 @@ But what The Bot is capable of - what it excels at - is giving you an endless st
 
 ## 'Dig your own grave and [save](https://youtu.be/7jYPp9w-0Uk?t=5)!'
 
-Of course, the bullish case is to say the bots can [already code](https://github.com/features/copilot). And I've no doubt at all that they can do it better than me, even if their errors are more hallucinatory than mine (have *they* got a search history that includes one hundred variations of `why github not syncing please help`? I think *not*).
+Of course, the bullish case is to say the bots can [already code](https://github.com/features/copilot). And I've no doubt at all that they can do it far better than I can, even if their errors are more hallucinatory than mine (but have *they* got a rich and detailed search history that includes one hundred variations of `why async not work please help`? I think *not*).
 
-But to say that is to miss the point. I won't rehash the argument about the purpose of hand-making that which can be machine-produced: I'm about [three hundred years late](https://en.wikipedia.org/wiki/Luddite) for that one. Nor could these margins contain a worthwhile expounding on the value of creativity in the age of generative content, if only because [others have made the case](https://ianleslie.substack.com/p/the-struggle-to-be-human) far more eloquently already.
+But to say that is to miss the point. I won't rehash the argument about the purpose of hand-making that which can be machine-produced: I'm about three hundred years [late](https://en.wikipedia.org/wiki/Luddite) for that one. Nor could these margins contain a worthwhile expounding on the value of creativity in the age of generative content, if only because others have [made the case](https://ianleslie.substack.com/p/the-struggle-to-be-human) far more eloquently already.
 
 But I will happily argue that Learning Is Good, and anything that helps you learn must be good by proxy. It is my [day-job](https://mbruges.com/about), after all.
 

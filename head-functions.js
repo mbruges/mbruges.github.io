@@ -1,6 +1,6 @@
 //This whole file should be copied into the head of each new page. The functions listed here are used for the various applications on the site, such as AskGPT, notification popups, copying, downloading etc...
 
-function askGPT(openAiToken, prompt, role, maxTokens) {
+function askGPT(openAiToken, prompt, role, maxTokens,outputElement) {
     //IF statements to catch missing parameters
 
     if (openAiToken.length < 32) {
@@ -21,11 +21,12 @@ function askGPT(openAiToken, prompt, role, maxTokens) {
 
     var url = "https://api.openai.com/v1/chat/completions";
     var bearer = 'Bearer ' + openAiToken;
-    /*var loadingMessage = `Thinking as ${role}...`
+    /*var loadingMessage = `Thinking as ${role}...`*/
 
-    document.getElementById(`${outputElement}`).innerHTML = loadingMessage
+    console.log("thinking...")
 
-    showLoader();*/
+    showLoader();
+    hideResponseContainer(outputElement);
     fetch(url, {
         method: 'POST',
         headers: {
@@ -53,24 +54,29 @@ function askGPT(openAiToken, prompt, role, maxTokens) {
     return response.json()
 
 }).then(data => {
-    newresponse = data['choices'][0].message.content;
+    var newresponse = data['choices'][0].message.content;
     console.log(newresponse)
     console.log(data.usage.total_tokens)
-
+    document.getElementById(`${outputElement}`).innerHTML = newresponse
     //Token tracking
     let totaltokensused = parseInt(data.usage.total_tokens);
-    console.log(localStorage.getItem("TokensToDate"))
     if ((localStorage.getItem("TokensToDate")) == null) {
         localStorage.setItem("TokensToDate", 0)
     };
-    totaltokensused = parseInt(totaltokensused) + parseInt(localStorage.getItem("TokensToDate"));
-    console.log(`Cache says you've used ${totaltokensused} tokens so far`)
-    localStorage.setItem("TokensToDate", totaltokensused);
+    var lifetimetokensused = parseInt(totaltokensused) + parseInt(localStorage.getItem("TokensToDate"));
+    console.log(`Used ${totaltokensused} in that query. Cache says you've used ${lifetimetokensused} tokens so far`)
+    localStorage.setItem("TokensToDate", lifetimetokensused);
+    showResponseContainer(outputElement);
+    hideLoader()
     return newresponse;
+    
 })
     .catch(error => {
-        console.log('Something went wrong. This is the error: ' + error)
+        console.log('Something went wrong. This is the error -->  ' + error)
+        showResponseContainer(outputElement);
+        hideLoader()
         return `Something went wrong. This is the error: ${error}`;
+        
     });
 //END OF ASKGPT SCRIPT
 };
@@ -89,12 +95,14 @@ function showLoader() {
     let button = document.getElementById('AskGPTbutton');
     button.className = "hidden";
 }
-function showResponseContainer() {
-    let container = document.getElementById('response-container');
+function showResponseContainer(outputElement) {
+    let container = document.getElementById(outputElement);
     container.className = "";
     container.scrollIntoView();
 }
-function hideResponseContainer() {
+function hideResponseContainer(outputElement) {
+    let container = document.getElementById(outputElement);
+    container.className = "hidden"
     let button = document.getElementById('AskGPTbutton');
     button.className = "hidden";
 }
@@ -158,6 +166,14 @@ function downloadHTML(elementIDtoDownload) {
     URL.revokeObjectURL(link.href);
 };
 
+//Convert MD to HTML:
+function convertMD(elementIDtoConvert) {
+    var md = document.getElementById(elementIDtoConvert).innerHTML
+    const mdRenderer = window.markdownit();
+    const html = mdRenderer.render(md);
+    document.getElementById('report').innerHTML = html;
+    console.log("Converted to Markdown")
+}
 
 //A script for prettifying code when in a zero-md container
 

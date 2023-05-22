@@ -6,7 +6,7 @@
 
 I built this website largely as a place to practice my coding and to learn new skills (the details of which I will bore you with [here](http://mbruges.com/blog)). So poke around and try some of the [experiments](/experiments.html). Feel free to download and use the [resources](/resources.html), too.
 
-I have been a teacher for a few years now - in the UK and in the Middle East - long enough to know that we can always be doing more to experiment and improve. Hopefully, what you find here will help you to do just that.
+I have been Head of English for a few years now, long enough to know that we can always be doing more to experiment and improve. Hopefully, what you find here will help you to do just that.
 
 If you'd like to chat, you can drop me an email.
 
