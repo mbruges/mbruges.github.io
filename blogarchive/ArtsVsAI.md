@@ -9,14 +9,13 @@
 Given all the problems faced by British head teachers - the yawning [gulf](https://ifs.org.uk/articles/what-has-happened-teacher-pay-england) between pay and inflation, opaque inspection [frameworks](https://www.bbc.co.uk/news/education-65013919), cratering teacher [training](https://www.theguardian.com/education/2022/dec/01/number-graduates-teacher-training-england-catastrophic-level) and [retention](https://www.theguardian.com/education/2023/jan/09/third-of-englands-teachers-who-qualified-in-last-decade-have-left-profession) rates - one could forgive them for choosing to focus on the current fire-fighting, rather than the looming pall of smoke on the horizon.
 
 Which is why it's even more salutary to see them turn their attention briefly - albeit in the form of an advisory body - to the question of AI in education. From [The Times](https://www.thetimes.co.uk/article/ai-is-clear-and-present-danger-to-education-3sk09ftlf):
-> **A coalition of leaders of some of the country's top schools have warned of the "very real and present hazards and dangers" being presented by AI [i.e. Large Language Models]…**
-
-> **Head teachers' fears go beyond AI's potential to aid cheating, encompassing the impact on children's mental and physical health and even the future of the teaching profession…**
+> A coalition of leaders of some of the country's top schools have warned of the "very real and present hazards and dangers" being presented by AI [i.e. Large Language Models]…
+> Head teachers' fears go beyond AI's potential to aid cheating, encompassing the impact on children's mental and physical health and even the future of the teaching profession…
 
 There is a lot to praise here, not least the use of the present tense. Anyone who thinks that ChatGPT isn't already being used by students in their classroom is either naive or in denial; it's gratifying that even the grand old man of education Sir Anthony Seldon recognises that this is something happening *now*, rather than something that can wait 'til the next King's Speech.
 
 But one line stood out to me (not mentioned in the coalition's original [letter](https://www.thetimes.co.uk/article/times-letters-green-belt-building-and-affordable-homes-zcmzll2tw), but elaborated in the subsequent Times article):
-> **The group will create a website *led by heads of science or digital* at 15 state and private schools. it will offer guidance on the latest developments in AI and what schools should use and avoid.**
+> The group will create a website *led by heads of science or digital* at 15 state and private schools. it will offer guidance on the latest developments in AI and what schools should use and avoid.
 
 The natural question to ask is: why these subjects specifically? I've not spoken with the coalition, and have little more to go on than a [letter](https://www.thetimes.co.uk/article/times-letters-green-belt-building-and-affordable-homes-zcmzll2tw), two [Times](https://www.thetimes.co.uk/article/ai-is-clear-and-present-danger-to-education-3sk09ftlf) [articles](https://www.thetimes.co.uk/article/the-times-view-on-ai-regulation-missing-guardrails-3hnp8znln) and some cursory Googling, but if the threat is as serious as they suggest (and it is), it is a valid question to ask.
 
@@ -35,7 +34,7 @@ I have worked with some exceptional heads of science in my career: teachers capa
 You may stand a little more luck if you're a small school, with a head of 'digital' who doubles as head of IT, but even then: do you seriously expect them to have built a working understanding of these brand new tools, whilst still trying to fend off waves of ransomware attacks on your Windows NT-powered school mainframe?
 
 ![The control room of the Chernobyl power station](/images/blog-images/chernobyl.jpg "The control room of the Chernobyl power station")
-> "Have you considered becoming an Apple-accredited school?"
+#### "Have you considered becoming an Apple-accredited school?"
 
 The truth is, these bots are so far outside our curricula that to expect anyone on your staff to have existing expertise in them is absurd, let alone your 'head of science or digital' (and let's be honest, if they were really into LLMs, do you think they'd still be hanging around on a [U1 payscale](https://www.businessinsider.com/ai-prompt-engineer-jobs-pay-salary-requirements-no-tech-background-2023-3#:~:text=%22Prompt%20engineers%22%20train%20AI%20chatbots,always%20require%20a%20tech%20degree.)? Perhaps they'd just be writing tedious [blogposts](mbruges.com/blog) instead).
 
@@ -50,7 +49,7 @@ It's hard to wrap one's head around this, because it runs contrary to the way co
 Now, for the first time, we have a technology that does the very opposite. This is not a gradually, iterative change to computing, but a radical and fundamental, paradigmatic shift. You may access ChatGPT from your browser, and type into it like you would Google, but it is a wholly different technology with a wholly different purpose.
 
 As I've put it more succinctly [here](https://www.thetimes.co.uk/article/times-letters-the-implications-of-using-ai-in-education-3f8ggnt7g):
-> **What makes these new large language models such as ChatGPT so exceptional is their ability to produce fluent and plausible prose: they are far better suited to writing essays on Coleridge than calculating covalent bonds. It is the literature student who reaches for AI first, not the chemist.**
+> What makes these new large language models such as ChatGPT so exceptional is their ability to produce fluent and plausible prose: they are far better suited to writing essays on Coleridge than calculating covalent bonds. It is the literature student who reaches for AI first, not the chemist.
 
 With all this in mind, the decision to focus on Science and Digital departments suggests a lack of understanding of the nature of the technology, or indeed the dangers posed.
 

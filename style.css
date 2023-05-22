@@ -309,6 +309,7 @@ mark {
 ol li,
 ul li {
     padding: 0.2rem 0;
+    padding-inline-start: 1ch;
 }
 
 p {
@@ -870,6 +871,10 @@ blockquote footer {
       margin-bottom: 1%;
   }
 
+  blog  {
+    text-align: center;
+  }
+
   blog h2 {
       margin-top: 5%;
       margin-bottom: 1%;
@@ -883,10 +888,23 @@ blockquote footer {
       font-weight: 350;
   }
 
+  blog h4 {
+    margin: 0;
+        padding: 0 1em;
+        color: var(--color-text-secondary);
+        font-size: 80%;
+        font-style: italic;
+        font-weight: 300;
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+        max-width: 80%;
+  }
+
   blog img {
       border-radius: var(--border-radius);
       max-width: 100%;
-      max-height: auto;
+      max-height: 40vh;
       margin-left: auto;
       margin-right: auto;
       display: block;
@@ -895,28 +913,19 @@ blockquote footer {
 
   blog blockquote {
       margin: 0;
-      padding: 0 1em;
-      color: var(--color-text-secondary);
-      border-left: 0.3em solid var(--color-accent);
-    font-size: 80%;
-    font-style: italic;
-      font-display:inherit;
-      text-align: left;
-      margin-left: auto;
-      margin-right: auto;
-      max-width: 80%;
-
-  }
-
-  blog blockquote strong {
-    font-size: 130%;
+      padding: 2px 3em;
+      color: darkslategrey;
+      border-left: 0.4em solid var(--color-accent);
+    font-size: 110%;
     font-style: normal;
-    font-weight: 350;
-  }
-
-  blog blockquote strong em {
-      font-size: 100%;
-      font-weight: 600;
+    font-family:'Times New Roman', Times, serif;
+    font-display:inherit;
+    text-align: left;
+    margin-left: auto;
+    margin-right: auto;
+    font-weight: 250;
+    max-width: 80%;
+    background-color: var(--color-accent);
   }
 
   blog code,
@@ -957,6 +966,34 @@ blockquote footer {
     display: flex;
     
   }
+
+  blog hr {
+    width: 50%;
+    height: 2px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+
+  blog ul li::marker {
+    content: "ᐷ";
+    padding-inline-start: 1ch;
+    color: var(--color-bg-secondary);
+}
+
+blog iframe {
+    border: transparent;
+    border-width: 0px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 0%;
+    padding-right: 0%;
+    width: 100%;
+    height: 600px;
+    
+}
 
   /* Auto-resize input boxes*/
   .grow-wrap {

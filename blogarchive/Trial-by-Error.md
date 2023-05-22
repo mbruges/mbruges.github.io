@@ -1,7 +1,7 @@
 # Trial by Error
 
 ![A trial by ordeal](https://www.counselmagazine.co.uk/images/uploadedfiles/cc-shutterstock_editorial_8760310a.jpg?sfvrsn=e7119442_1 "The blind-folded man is the learner, the bishop the teacher, and the monks... OFSTED? I don't know")
-> Learning the hard way, failing the right way
+*Learning the hard way, failing the right way*
 
 This website is a place *about* learning and a place *for* learning: as the [playground](https://mbruges.com/codeplayground.html) page testifies, this is as much a learning experience for me as it is a resource for anyone else.
 
@@ -19,7 +19,7 @@ Simply put: it's a wrapper for ChatGPT that gives you feedback on your code. Phi
 It invites effective feedback, sets a clear metric of success, and scaffolds its own response. Telling a student what a 'good one looks like' seems simple, but is extremely tricky to get right: end-products don't often foreground the most important thinking, and copying the model might mean the learner ends up focusing your efforts on what doesn't really matter.
 
 ![The Last Supper](/images/blog-images/last-supper.jpg "Can you pass the unleavened bread?")
-> Tracing 'The Last Supper' won't make you a master of perspective overnight - you need to understand the fundamentals
+#### Tracing 'The Last Supper' won't make you a master of perspective overnight - you need to understand the fundamentals
 
 "WAIDW", on the other hand, is simple to answer for anyone with domain knowledge one step above the questioner. If you know more than they do, you can't help but identify the gaps in knowledge, and offer the immediate remedy. Call it Weaponised Mansplaining; the Pedagogy of The Insufferable; the Art of [Ackshually](https://knowyourmeme.com/memes/ackchyually-actually-guy).
 
@@ -37,7 +37,7 @@ Of course, we don't want to fall into the trap of blind-copying the correction t
 Taking that little button out is another small nudge towards the *pause-reflect-digest* cycle that one needs to actually *learn* from a mistake.
 
 ![Me typing SUDO BASH for the first time.](/images/homer.png "Me typing SUDO BASH for the first time.")
-> Me typing SUDO BASH for the first time.
+#### Me typing SUDO BASH for the first time.
 
 [I've joked before](https://mbruges.com/blog.html#260423) about the dangers of '[bricking](https://www.howtogeek.com/126665/htg-explains-what-does-bricking-a-device-mean/)' - irreparably breaking something by copying what you don't understand - but it's a potent metaphor. Too often, as teachers, we incentivise the "do as I do" approach, and mistake mirrored compliance for actual understanding. In the worst case, our students end up building their knowledge on non-existent foundations, before some unscaffolded, unmodelled assessment suddenly [liquifies](https://www.britannica.com/video/185615/liquefaction-event-soil-particles-earthquake-combination-water) the ground and it all comes tumbling down.
 
