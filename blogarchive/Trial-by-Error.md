@@ -18,7 +18,7 @@ Simply put: it's a wrapper for ChatGPT that gives you feedback on your code. Phi
 
 It invites effective feedback, sets a clear metric of success, and scaffolds its own response. Telling a student what a 'good one looks like' seems simple, but is extremely tricky to get right: end-products don't often foreground the most important thinking, and copying the model might mean the learner ends up focusing your efforts on what doesn't really matter.
 
-![The Last Supper](https://cdn.britannica.com/04/95904-050-7EB39FC8/Last-Supper-wall-painting-restoration-Leonardo-da-1999.jpg "Can you pass the unleavened bread?")
+![The Last Supper](/images/blog-images/last-supper.jpg "Can you pass the unleavened bread?")
 > Tracing 'The Last Supper' won't make you a master of perspective overnight - you need to understand the fundamentals
 
 "WAIDW", on the other hand, is simple to answer for anyone with domain knowledge one step above the questioner. If you know more than they do, you can't help but identify the gaps in knowledge, and offer the immediate remedy. Call it Weaponised Mansplaining; the Pedagogy of The Insufferable; the Art of [Ackshually](https://knowyourmeme.com/memes/ackchyually-actually-guy).

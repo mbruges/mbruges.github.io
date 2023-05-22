@@ -61,7 +61,7 @@ And the problem is: *it will work.* The answers provided will be (already *are*)
 
 There is no value to be found - not for schools, not for students - in a tool that simply gives answers. School is not about returning the right answer. Education is not about the tick-marks. Every perfect score isn't a sign of success, it's a marker of insufficient challenge and poorly scaled learning. 
 
-![This is the future Googlers want](https://i.kym-cdn.com/entries/icons/original/000/033/117/Tabletop_Games_2-56_screenshot.png)
+![This is the future Googlers want](/images/blog-images/robot-friend.jpg)
 >"Well done! You copied and pasted the answer I gave you. Here: have a [Bachelors](https://www.themoscowtimes.com/2023/02/02/russian-student-allowed-to-keep-diploma-for-chatgpt-written-thesis-a80125)."
 
 All this new product offers is danger; the danger that comes from automating and outsourcing the most important aspect of learning: [getting things wrong](https://mbruges.com/blog.html#040523) and navigating the [pathway](https://mbruges.com/codefixer.html) to right-ness.
