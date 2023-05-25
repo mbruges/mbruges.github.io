@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="icon" href="/favicon.svg">
+    <link rel="stylesheet" href="/style.css">
+    <meta charset="utf-8">
+    <meta name="description" content="Coding on The Titanic - The Blog - thoughts on teaching, coding and AI.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="must-revalidate">
+<script>
+    function notificationAlert(notificationText) {
+    var alertelement = document.getElementById("toastAlert");
+    alertelement.innerHTML = notificationText
+    alertelement.className = "show";
+    setTimeout(function () { alertelement.className = alertelement.className.replace("show", ""); }, 3000);
+    }
+    function copy(thingToCopy) {
+        navigator.clipboard.writeText(thingToCopy);
+        notificationAlert('Copied to clipboard 📋');
+    };
+</script>
+
+    <title>Coding on The Titanic</title>
+
+<!-- Open Graph card -->
+<meta prefix="og: http://ogp.me/ns#" property="og:type" content="website" />
+<meta prefix="og: http://ogp.me/ns#" property="og:title" content="Coding on The Titanic" />
+<meta prefix="og: http://ogp.me/ns#" property="og:description" content="Another blogpost from Max Bruges."/>
+<meta prefix="og: http://ogp.me/ns#" property="og:image" content="https://mbruges.com/images/banner-square.png" />
+<meta prefix="og: http://ogp.me/ns#" property="og:url" content="https://mbruges.com/blog-archive/Coding-on-The-Titanic.html" />
+
+    <!-- TWITTER CARD-->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Coding on The Titanic">
+<meta name="twitter:site" content="@max_bruges">
+<meta name="twitter:description"
+    content="Another blogpost from Max Bruges.">
+<meta name="twitter:image"
+    content="https://mbruges.com/images/banner-square.png">
+
+</head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XQK1PEK9QX"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-XQK1PEK9QX');
+</script>
+<header>
+        <nav>
+            <div class="dropdown">
+                <a id="catNav"><img alt="miaow" src="/favicon.svg" height="40" width="40"></a>
+                <div class="dropdown-content">
+                    <a href="/experiments.html">Experiments</a>
+                    <a href="/resources.html">Resources</a>
+                    <a href="/blog.html">Blog</a>
+                </div>
+            </div>
+            <small>The Blog</small>
+            <ul>
+                <li><a href="/index.html"> Home </a></li>
+            </ul>
+        </nav>
+    </header>
+<body>
+<blog>
+    <form>
+    <div id="contentbox">
+        <small> ~~~~~~ 24 May 2023 ~~~~~~ </small> 
+ <h1>Coding on The Titanic</h1>
+<p><em>If the robots can do it better, why bother learning at all?</em> </p>
+<p><img src="https://live.staticflickr.com/8658/16652891111_f66d108985_z.jpg" alt="The Titanic goes down; women and coders first" title="The Titanic goes down; women and coders first" /></p>
+<h4>Less "rearranging the deckchairs" and more "putting on your white tie, sitting down in the flooded dining room and wondering if there'll be scallops to start."</h4>
+<p>You can't move for the doom-laden coding headlines at the moment:</p>
+<ul>
+<li><a href="https://www.businessinsider.com/software-engineer-coding-jobs-face-layoffs-this-year-2023-4">The layoffs are here for those who chose to 'learn to code'</a></li>
+<li><a href="https://www.vox.com/technology/2023/4/21/23692515/tech-workers-software-engineers-layoffs-meta-coding">Meta layoffs show how coding jobs are no longer safe</a></li>
+<li><a href="https://hackaday.com/2023/03/08/will-a-i-steal-all-the-code-and-take-all-the-jobs/">Will A.I. Steal All The Code And Take All The Jobs?</a></li>
+</ul>
+<p>(And given <a href="(https://www.theringer.com/tech/2019/1/29/18201695/learn-to-code-twitter-abuse-buzzfeed-journalists">what they've gone through</a>), one should really allow the media precariat this little crumb of <em>schadenfreude</em>.)</p>
+<p>So why on earth would you waste your precious youth learning to code <strong>now</strong>?</p>
+<p>The paradox of it is that even in the teeth of this apocalypse, there's never been an <em>easier</em> time to learn to code. Nor a time when it's been as frictionless and <em>fun</em>. And it's precisely <em>because</em> of The Bots that this is the case.</p>
+<h2>To err is human, to post is divine</h2>
+<p>Since the year <a href="https://en.wikipedia.org/wiki/January_1970#January_1">zero</a>, learning computer-whispering has been a process of standing on the shoulders of prat-fallen giants.</p>
+<p>It's a noble tradition, founded on the principle of mining the mistakes of others for the knowledge you need, scouring long-dead Stackoverflow/ Reddit/ message-board threads to find the poor sod who had the <em>identical</em> error code to you, but back in April 2004 on a computer that looked like a <a href="https://www.pinterest.com/pin/old-gateway-computers--496310821445158621/">cow</a>.</p>
+<p>I cannot count the number of times - callow-eyed youth as I was - that I almost bricked my Eee PC, blindly copying and pasting console commands from some poorly-translated Estonian Xandros forum, only to have its 7-inch display splutter back into life thanks to the garbled incantations on page 94 of <em>another</em> obscure Estonian distro forum.</p>
+<p>And this is by design! This is how <a href="https://en.wikipedia.org/wiki/History_of_programming_languages">computing works</a>! Piece by obscure piece, the corpus, the Canon, has been built by often-nameless men and women in computer labs and basements  and <a href="https://xkcd.com/2347/">Nebraska</a>. And if you want to learn it properly, sometimes you've got to go to the source.</p>
+<p><img src="https://cdn.britannica.com/65/237365-138-03A2AF7F/did-you-know-The-School-of-Athens-Raphael.jpg?w=800&h=450&c=crop" alt="The School of Athens" /></p>
+<h4>It's like the Academy, except Plato is some anonymous Eastern European computer science student with a profile pic of Shadow the Hedgehog and whose final post before logging off forever was a withering review of 'You, Me And Dupree'.</h4>
+<h2>Drinking from the hosepipe</h2>
+<p>So what's different now? Well: The Bots.</p>
+<p>Perhaps unsurprisingly - and as a clear vindication of the 'Relentless Googling' school of pedagogy - they have been doing <em>exactly the same thing</em>. Day in, day out, they've been doom-scrolling. And they've already digested every single one of those haunted forum posts, manically hoovering it all up in the name of training data before <em>The Man</em> shuts off the <a href="https://techcrunch.com/2023/04/18/reddit-will-begin-charging-for-access-to-its-api/">API</a> <a href="https://www.engadget.com/twitter-shut-off-its-free-api-and-its-breaking-a-lot-of-apps-222011637.html">fire-hose</a>. </p>
+<p>Obviously, Bots Are Liars Sometimes. Even the <a href="https://www.theverge.com/2023/4/19/23689554/google-ai-chatbot-bard-employees-criticism-pathological-liar">really expensive ones</a>.  But that's only a problem if you treat it as a search engine, a machine for delivering Truth (and even then: come on, didn't you have the 'Beware of Google' lesson in Year 6 ICT?).</p>
+<p>Instead, treat it as what it is: a hideous amalgamated chimera of every midnight scream into the digital void, and every echo - helpful and unhelpful - that came to The Poster's aid. The Forum is <em>never</em> right the first time (not unless your problem is extremely obvious, as people will <a href="https://lmgtfy.app/?q=how+do+i+switch+my+computer+on">politely remind you</a>). It is in the sifting and panning for gold that we really learn, with the latent threat of Bricking From Blind Copying providing just enough jeopardy to give you meaningful pause to reflect. Neither should we expect The Bot, then, to be an ever-reliable truth-giver.</p>
+<p>But what The Bot is capable of - what it excels at - is giving you an endless stream of vaguely helpful, possibly correct-sounding suggestions that might get you the solution to your problem. Or better yet, for our purposes: they'll nudge into thinking along the right lines.</p>
+<h2>'Dig your own grave and <a href="https://youtu.be/7jYPp9w-0Uk?t=5">save</a>!'</h2>
+<p>Of course, the bullish case is to say the bots can <a href="https://github.com/features/copilot">already code</a>. And I've no doubt at all that they can do it far better than I can, even if their errors are more hallucinatory than mine (but have <em>they</em> got a rich and detailed search history that includes one hundred variations of <code>why async not work please help</code>? I think <em>not</em>).</p>
+<p>But to say that is to miss the point. I won't rehash the argument about the purpose of hand-making that which can be machine-produced: I'm about three hundred years <a href="https://en.wikipedia.org/wiki/Luddite">late</a> for that one. Nor could these margins contain a worthwhile expounding on the value of creativity in the age of generative content, if only because others have <a href="https://ianleslie.substack.com/p/the-struggle-to-be-human">made the case</a> far more eloquently already.</p>
+<p>But I will happily argue that Learning Is Good, and anything that helps you learn must be good by proxy. It is my <a href="https://mbruges.com/about">day-job</a>, after all.</p>
+<p>Like any tool: The Bot is only as good as the purpose you put it to. And I cannot think of a better, more worthwhile exercise than learning a new skill that stretches a part of your brain that otherwise sits untouched and atrophying, bar the occasional stab of a 'Fiendish' sudoku.</p>
+<p>So use The Bots. Have no shame. Just don't brick yourself by blindly copying what they've told you.</p>
+<p>And if you do: time to learn Estonian.  🇪🇪</p> 
+ <small> ~~~~~~ END ~~~~~~ </small>
+  </div>
+    </form>
+</blog>
+<div style="text-align: center;">
+        <a onclick="copy('https://mbruges.com/blogarchive/Coding-on-The-Titanic.html')"><button> Copy link 🔗 </button></a>
+        <a href = "https://mbruges.com/blog.html"><button> Blog archive 📚 </button></a >
+</div >
+<br>
+
+<div id="toastAlert">Link copied to clipboard 📋</div>
+</body>
+<style>
+    footer {
+        text-align: center;
+        font-size: small;
+        height: 8vh;
+        }
+    footer a, i a {
+        color: black;
+    }
+</style>
+        <footer>
+            <p>© 2023 - <i> Made by <a href="/about.html" target="_blank">me
+                    </a> and Agatha </i>🐈‍⬛</p>
+            <p><i>Found this interesting? <a href="mailto:hello@mbruges.com?subject=Hello from the Internet">Drop me a line</a>
+                    or <a href='https://ko-fi.com/L4L6JR137' target='_blank'>
+                        send coffee ☕️</i>
+                </a>
+            </p>
+        </footer >
+    </body >
+</html > 

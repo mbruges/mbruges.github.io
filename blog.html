@@ -57,6 +57,27 @@ https://pagespeed.web.dev/analysis/https-mbruges-com-blog-alt/i3wmltb25l?form_fa
     gtag('js', new Date());
 
     gtag('config', 'G-XQK1PEK9QX');
+
+
+    function showArticle(thisElement) {
+        //make sure it's inside the blog div!
+        var fadeout = thisElement
+        var parent = thisElement.parentElement
+        if (parent.className == "")
+        //for if the article is already shown
+        {
+            parent.className = "collapsed"
+            fadeout.innerHTML = "<small> ↣ Click to read more ↢</small>"
+            fadeout.className = ""
+            //opening up collapsed article
+        } else {
+            parent.className = ""
+            fadeout.innerHTML = ""
+            fadeout.className = "hidden"
+            fadeout.style.display = "none"
+        }
+    }
+
 </script>
 <header>
         <nav>
@@ -150,11 +171,13 @@ https://pagespeed.web.dev/analysis/https-mbruges-com-blog-alt/i3wmltb25l?form_fa
         <script>getMDblog('tstpost.md', 'test')</script>
     </div>
     </form>
+<fadeout onclick="showArticle(this)"><small>↣ Click to read more ↢</small></fadeout>
+
 </blog>
 <br>-->
 
 <!--INSERTPOST-->
-<blog loading="lazy">
+<blog loading="" class="collapsed">
     <br>
     <form>
         <small> ~~~~~~ 22 May 2023 ~~~~~~ </small>
@@ -165,6 +188,7 @@ https://pagespeed.web.dev/analysis/https-mbruges-com-blog-alt/i3wmltb25l?form_fa
         </div>
         <small> ~~~~~~ END ~~~~~~ </small>
     </form>
+<fadeout onclick="showArticle(this)"><small>↣ Click to read more ↢</small></fadeout>
     <center>
         <a onclick="copy(`https://mbruges.com/blog.html#220523`)"><button> Copy link 🔗 </button></a>
     </center>
@@ -173,7 +197,7 @@ https://pagespeed.web.dev/analysis/https-mbruges-com-blog-alt/i3wmltb25l?form_fa
 <br>
 
 
-<blog loading="lazy">
+<blog loading="lazy" class="collapsed">
 <br>
 <form>
     <small> ~~~~~~ 13 May 2023 ~~~~~~ </small>
@@ -184,14 +208,16 @@ https://pagespeed.web.dev/analysis/https-mbruges-com-blog-alt/i3wmltb25l?form_fa
     </div>
     <small> ~~~~~~ END ~~~~~~ </small>
 </form>
+<fadeout onclick="showArticle(this)"><small>↣ Click to read more ↢</small></fadeout>
 <center>
 <a onclick="copy(`https://mbruges.com/blog.html#130523`)"><button> Copy link 🔗 </button></a>
 </center>
+
 </blog>
 <br>
 <br>
 
-<blog loading="lazy">
+<blog loading="lazy" class="collapsed">
 <br>
 <form>
     <small> ~~~~~~ 04 May 2023 ~~~~~~ </small>
@@ -202,15 +228,17 @@ https://pagespeed.web.dev/analysis/https-mbruges-com-blog-alt/i3wmltb25l?form_fa
     </div>
     <small> ~~~~~~ END ~~~~~~ </small>
 </form>
+<fadeout onclick="showArticle(this)"><small>↣ Click to read more ↢</small></fadeout>
 <center>
 <a onclick="copy(`https://mbruges.com/blog.html#040523`)"><button> Copy link 🔗 </button></a>
 </center>
+
 </blog>
 <br>
 <p></p>
 
 
-<blog loading="lazy">
+<blog loading="lazy" class="collapsed">
     <br>
     <form>
         <small> ~~~~~~ 26 April 2023 ~~~~~~ </small>
@@ -221,15 +249,17 @@ https://pagespeed.web.dev/analysis/https-mbruges-com-blog-alt/i3wmltb25l?form_fa
         </div>
         <small> ~~~~~~ END ~~~~~~ </small>
     </form>
+<fadeout onclick="showArticle(this)"><small>↣ Click to read more ↢</small></fadeout>
 <center>
     <a onclick="copy(`https://mbruges.com/blog.html#260423`)"><button> Copy link 🔗 </button></a>
     </center>
+
 </blog>
 <br>
 <br>
 
 
-<blog loading="lazy">
+<blog loading="lazy" class="collapsed">
     <br>
     <form>
             <small> ~~~~~~ 18 April 2023 ~~~~~~ </small>
@@ -240,9 +270,11 @@ https://pagespeed.web.dev/analysis/https-mbruges-com-blog-alt/i3wmltb25l?form_fa
             </div>
             <small> ~~~~~~ END ~~~~~~ </small>
     </form>
+<fadeout onclick="showArticle(this)"><small>↣ Click to read more ↢</small></fadeout>
 <center>
 <a onclick="copy(`https://mbruges.com/blog.html#180423`)"><button> Copy link 🔗 </button></a>
 </center>
+
 </blog>
 <br>
 <p></p>

@@ -2,7 +2,6 @@
 
 *And Humanities will be for pudding.*
 
-![Saturn devouring one of his sons, taking the Swiftian approach to redundancy](/images/blog-images/saturn.jpg)
 
 **TL;DR: The Times has been good enough to publish [my letter](https://www.thetimes.co.uk/article/times-letters-the-implications-of-using-ai-in-education-3f8ggnt7g) on this topic - so just read that if you want. Otherwise: given the infinite space afforded by a personal blog, I thought it worth elaborating my thinking here.**
 
