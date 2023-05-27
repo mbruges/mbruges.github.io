@@ -19,13 +19,17 @@
                     for (let index = 0; index < json.length; index++) {
                         var pageDate = json[index].published;
                         pageDate = new Date(pageDate);
+                        var todayDate = new Date();
+                        //This IF ensures we only show the WotDs that have already been published
+                        if (pageDate < todayDate) {
                             let day = pageDate.getDate()
                             let month = pageDate.getMonth() +1
                             let year = pageDate.getYear()
                         pageDate = `${day}/${month}/23`
                         var word = json[index].word
                         var path = json[index].path
-                        archiveData = archiveData + `<a ref="${path}" style="cursor:pointer">${word} - <small>${pageDate}</small> &nearr;</a></p>`
+                        archiveData = `<a href="${path}" style="cursor:pointer"><small>${pageDate}: </small> ${word} &nearr;</a></p>` + archiveData
+                        }
                     }
                     document.getElementById('archiveContainer').innerHTML = archiveData
                 })
@@ -46,7 +50,7 @@
             <!-- CONTENT STARS HERE. Copy and change file to HTML to use -->
             <h1>Word of the Day - Archive</h1>
             <h3>Here are all the past words-of-the-day.</h3>
-            <form id="archiveContainer" class="blog" style="width:fit-content">
+            <form id="archiveContainer" class="blog" style="max-width:160px;text-align: center;line-height: 60%;">
 <!--           
 <p><a href="/wotdarchive/WotD_27Apr2023.html"><i>SYNTHESIS - 27 Apr 2023 &nearr;</i></a></p>
 <p><a href="/wotdarchive/WotD_26Apr2023.html"><i>HYPERBOLE - 26 Apr 2023 &nearr;</i></a></p>
