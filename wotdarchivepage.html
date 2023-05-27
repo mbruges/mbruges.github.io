@@ -8,8 +8,29 @@
         <meta charset="utf-8">
         <meta name="description" content="Word of the Day - Archive">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>MB - Word of the Day - Archive</title>
-        <script src="dist/csv-visualizer.min.js"></script>
+        <title>Word of the Day - Archive</title>
+
+<script>
+    window.onload = () => {
+        var archiveData = ``    
+        fetch('/wotdarchive/wotd-database.json')
+                .then((response) => response.json())
+                .then((json) => {
+                    for (let index = 0; index < json.length; index++) {
+                        var pageDate = json[index].published;
+                        pageDate = new Date(pageDate);
+                            let day = pageDate.getDate()
+                            let month = pageDate.getMonth() +1
+                            let year = pageDate.getYear()
+                        pageDate = `${day}/${month}/23`
+                        var word = json[index].word
+                        var path = json[index].path
+                        archiveData = archiveData + `<a ref="${path}" style="cursor:pointer">${word} - <small>${pageDate}</small> &nearr;</a></p>`
+                    }
+                    document.getElementById('archiveContainer').innerHTML = archiveData
+                })
+        }
+</script>
 
     </head>
     <body>
@@ -25,8 +46,8 @@
             <!-- CONTENT STARS HERE. Copy and change file to HTML to use -->
             <h1>Word of the Day - Archive</h1>
             <h3>Here are all the past words-of-the-day.</h3>
-            <section>
-<!--insert-->            
+            <form id="archiveContainer" class="blog" style="width:fit-content">
+<!--           
 <p><a href="/wotdarchive/WotD_27Apr2023.html"><i>SYNTHESIS - 27 Apr 2023 &nearr;</i></a></p>
 <p><a href="/wotdarchive/WotD_26Apr2023.html"><i>HYPERBOLE - 26 Apr 2023 &nearr;</i></a></p>
 <p><a href="/wotdarchive/WotD_24Apr2023.html"><i>ONTOSIS - 24 Apr 2023 &nearr;</i></a></p>
@@ -53,7 +74,7 @@
 <p><a href="/wotdarchive/WotD_24Mar2023.html"><i>VANQUISH - 24 March 2023 &nearr;</i></a> </p>
 <p><a href="/wotdarchive/WotD_21Mar2023.html"><i>YOKE - 21 March 2023 &nearr;</i></a> </p>
 <p><a href="/wotdarchive/WotD_20Mar2023.html"><i>NEFARIOUS - 20 March 2023 &nearr;</i></a> </p>
-
+-->
             </section>
         </header>
 </body>

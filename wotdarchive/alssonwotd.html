@@ -7,12 +7,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title> Word of the Day</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
     <script>
-        $(function () {
-            $('#contentDiv').load('/wotd.html #worksheet');
+        function dateStampFunc(daysAdjust) {
+                if (daysAdjust == NaN || daysAdjust == undefined) {
+                    daysAdjust = 0
+                } else {
+                    daysAdjust = parseInt(daysAdjust)
+                };
+                var queriedDate = new Date();
+                queriedDate.setDate(queriedDate.getDate() + daysAdjust)
+                var date = queriedDate.getDate();
+                let stringdate = "" + date
+                if (stringdate.length == 1) {
+                    date = "0" + stringdate
+                }
+                var month = queriedDate.getMonth() + 1;
+                let stringmonth = "" + month
+                if (stringmonth.length == 1) {
+                    month = "0" + stringmonth
+                }
+                var year = queriedDate.getFullYear();
+                var dateString = year + '-' + month + '-' + date;
+                return dateString
+            }
 
-        });
+        window.onload = () => {
+                dateString = dateStampFunc()
+                document.getElementById("date").innerHTML = dateString;
+                fetch('/wotdarchive/wotd-database.json')
+                    .then((response) => response.json())
+                    .then((json) => {
+                        for (let index = 0; index < json.length; index++) {
+                            let pageDate = json[index].published;
+                            if (dateString == pageDate) {
+                                document.getElementById('worksheet').innerHTML = json[index].content
+                            }
+                        }
+                    })
+            }
     </script>
 </head>
 <!-- Google tag (gtag.js) -->
@@ -38,28 +70,16 @@
     </html>
     <nav>
         <b>📚 English Department</b> 
-        <button><u>DO NOW:</u> Copy down the definition and complete 3 tasks</button>
+        <button style="cursor: default;">DO NOW: Copy down the definition and complete 3 tasks</button>
         <b>Word of the Day <span id="date"></span></b>
         
-            <script>
-                var today = new Date();
-                var date = today.getDate();
-                var month = today.getMonth() + 1; // JavaScript starts counting months from 0
-                var year = today.getFullYear();
-                var dateString = date + '/' + month + '/' + year;
-
-                document.getElementById("date").innerHTML = dateString;
-            </script>
         </b>
     </nav>
 </header>
 
 
-<div id = "worksheet">
-<body>
-    <div id="contentDiv"></div>
-</body>
-</div>
+<form style="padding-top: 1px;" id = "worksheet">
+</form>
 <footer>
 <p>⚠️ Problem with page? ⚠️</p>
 <a href="mailto:mbruges+wotd@alsson.com?subject=Issue with Word of the Day" target="_blank"><p>Email Mr. Max</p></a>
