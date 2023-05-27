@@ -66,6 +66,32 @@ Prompt: Generate an HTML page entitled: The Word of The Day is SYNTHESIS. Includ
 				
 				}})
 	}
+
+	function randomise() {
+		fetch('/wotdarchive/wotd-database.json')
+			.then((response) => response.json())
+			.then((json) => {
+				let len = json.length
+				let rand = Math.floor(Math.random()*len)
+
+					let pageDate = json[rand].published;
+					let word = ""
+					document.getElementById('worksheet').innerHTML = json[rand].content
+					
+					word = "" + json[rand].word
+					
+					let desc = `Word of The Day is ${word}`
+					
+					document.querySelector('meta[name="description"]').setAttribute("content", desc);
+					
+					document.getElementById('title').innerHTML = desc
+
+					window.scrollTo({
+					top: 1,
+					left: 1,
+					behavior: "smooth",})
+					})
+				}
 </script>
 <!DOCTYPE html>
 <html lang="en">
@@ -85,15 +111,15 @@ Prompt: Generate an HTML page entitled: The Word of The Day is SYNTHESIS. Includ
 </form>
 
 </div>
-<center>
 
-	<a href=""><b onclick="printDiv('worksheet')">Print the worksheet 🖨️</b></a>
+	<button style="margin-left: auto;margin-right: auto;display: block" id="randomise" onclick="randomise()"> 🔀 New random word 🔀 </button>
 
-<br>
+<section style="max-width: 600px;margin-left: auto;margin-right: auto;text-align: center;">
 
-<a href="/wotdarchivepage.html"> <b>🗓️ View past words in the Archive</b></a>
-<section>
-	</center>
+	<a href=""><i onclick="printDiv('worksheet')">Print the worksheet 🖨️</i></a>
+
+<a href="/wotdarchivepage.html"> <i>🗓️ View past words in the Archive</i></a>
+</section>
 
 
 </html>
