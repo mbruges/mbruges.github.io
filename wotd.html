@@ -3,9 +3,8 @@
 <head>
 	<link rel="stylesheet" href="/style.css">
 	<link rel="icon" href="/favicon.svg">
-<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-<meta http-equiv="Pragma" content="no-cache">
-<meta http-equiv="Expires" content="0">
+	<title id="title">Word of the Day</title>
+
 <meta charset="utf-8">
 	<meta name="description" content="Word of The Day">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -28,8 +27,6 @@
 	<meta name="twitter:site" content="@max_bruges">
 	<meta name="twitter:description" content="Etymology & activities to help learn a new word.">
 	<meta name="twitter:image" content="https://mbruges.com/images/banner-square.png">
-
-<title id="title"></title>
 <script>
 	
 	function dateStampFunc(daysAdjust) {
@@ -81,9 +78,8 @@
 					word = "" + json[index].word		
 					//This section tweaks the meta tags
 					let desc = `Word of The Day is ${word}`
-					document.querySelector('meta[name="description"]').setAttribute("content", desc);
 					document.querySelector('meta[property="og:title"]').setAttribute("content", desc);
-					document.querySelector('meta[property="twitter:title"]').setAttribute("content", desc);
+					document.querySelector('meta[name="twitter:title"]').setAttribute("content", desc);
 					document.getElementById('title').innerHTML = desc		
 				}
 				
