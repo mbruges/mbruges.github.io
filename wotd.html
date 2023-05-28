@@ -88,9 +88,10 @@
 
 					var styles = `
     p:first-of-type {
-    highlight:yellow;
+    font-size:25px;
+	font-weight:500;
+	color:#485cf5;
 }
-
 `
 					var styleSheet = document.createElement("style")
 					styleSheet.innerText = styles
@@ -130,14 +131,19 @@
 </head>
 <header>
 	<nav>
-		<a href=""><img alt="miaow" src="/favicon.svg" height="40" width="40"></a>
+		<div class="dropdown">
+                <a id="catNav"><img alt="miaow" src="/favicon.svg" height="40" width="40"></a>
+                <div class="dropdown-content">
+                    <a href="/experiments.html">Experiments</a>
+                    <a href="/resources.html">Resources</a>
+                    <a href="/blog.html">Blog</a>
+                </div>
+            </div>
 		
 		<small>Word of the Day: <span id="date"></span>
 		</small>
 
-		<ul>
-			<li><a href="/index.html"> Home </a></li>
-		</ul>
+		<a href="/index.html"> Home </a>
 	</nav>
 </header>
 <form id="worksheet" style="min-height: 480px;">
@@ -150,19 +156,22 @@
 
 <section style="max-width: 600px;margin-left: auto;margin-right: auto;text-align: center;">
 
-	<a href=""><i onclick="printDiv('worksheet')">Print the worksheet 🖨️</i></a>
+	<a href=""><i onclick="printDiv('worksheet')">🖨️  Print worksheet</i></a>
 
-<a href="/wotdarchivepage.html"> <i>🗓️ View past words in the Archive</i></a>
+	<div style="width: 20px;"></div>
+
+<a href="/wotdarchivepage.html"> <i>🗓️ View old words</i></a>
 </section>
 
 
 </html>
 </div>
 <footer>
-	<p>© 2023 - <i> Made by <a href="/about.html" target="_blank">me
-			</a> and Agatha</i> 🐈‍⬛</p>
-	<p><i>Found this interesting? <a href="mailto:hello@mbruges.com?subject=Hello from the Internet"
-				style="font-style: normal;"> Drop me a line 📮</a>
-	</p>
+	<small style="line-height: 17px;font-size: larger;">© 2023 - <i> Made by <a href="/about.html" target="_blank">me
+			</a> and Agatha</i> 🐈‍⬛
+			<br>
+<i>Found this interesting? <a href="mailto:hello@mbruges.com?subject=Hello from the Internet"
+				style="font-style: normal;"> Drop me a line 📮</a></small>
+	
 </footer>
 </html>

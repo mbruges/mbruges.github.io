@@ -25,7 +25,14 @@ Prompt: Generate a worksheet, formatted in HTML. Titled ' Word of the Day  21 Ma
 <html lang="en">
 <header>
   <nav>
-    <a href=""><img alt="miaow" src="/favicon.svg" height="40" width="40"></a>
+    <div class="dropdown">
+                <a id="catNav"><img alt="miaow" src="/favicon.svg" height="40" width="40"></a>
+                <div class="dropdown-content">
+                    <a href="/experiments.html">Experiments</a>
+                    <a href="/resources.html">Resources</a>
+                    <a href="/blog.html">Blog</a>
+                </div>
+            </div>
 
     <small>Word of the Day: <span id="date"></span></p>
 

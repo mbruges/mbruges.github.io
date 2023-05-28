@@ -6,6 +6,19 @@
     <meta name="description" content="Word of the Day">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <meta prefix="og: http://ogp.me/ns#" property="og:type" content="website" />
+    
+    <meta prefix="og: http://ogp.me/ns#" property="og:title" content="Word of the Day" />
+    
+    <meta prefix="og: http://ogp.me/ns#" property="og:description"
+        content="Etymology & activities to help learn a new word." />
+    
+    <meta prefix="og: http://ogp.me/ns#" property="og:image" content="https://mbruges.com/images/banner-square.png" />
+    <meta property="og:image:width" content="315" />
+    <meta property="og:image:height" content="315" />
+    
+    <meta prefix="og: http://ogp.me/ns#" property="og:url" content="https://mbruges.com/alssonwotd.html" />
+
     <title> Word of the Day</title>
     <script>
         function dateStampFunc(daysAdjust) {
@@ -39,9 +52,30 @@
                     .then((json) => {
                         for (let index = 0; index < json.length; index++) {
                             let pageDate = json[index].published;
+                            let word = ""
                             if (dateString == pageDate) {
                                 document.getElementById('worksheet').innerHTML = json[index].content
+                                word = "" + json[index].word
+                                //This section tweaks the meta tags
+                                let desc = `Word of The Day is ${word}`
+                                document.querySelector('meta[property="og:title"]').setAttribute("content", desc);
+                                document.querySelector('meta[name="twitter:title"]').setAttribute("content", desc);
+                                document.getElementById('title').innerHTML = desc
+
+                                //This section will now make the definition easier to read.
+
+                                var styles = `
+    p:first-of-type {
+    font-size:25px;
+	font-weight:500;
+	color:#485cf5;
+}
+`
+                                var styleSheet = document.createElement("style")
+                                styleSheet.innerText = styles
+                                document.head.appendChild(styleSheet)
                             }
+
                         }
                     })
             }
@@ -81,7 +115,7 @@
 <form style="padding-top: 1px;" id = "worksheet">
 </form>
 <footer>
-<p>⚠️ Problem with page? ⚠️</p>
-<a href="mailto:mbruges+wotd@alsson.com?subject=Issue with Word of the Day" target="_blank"><p>Email Mr. Max</p></a>
+<small>⚠️ Problem with page? ⚠️</small>
+<a href="mailto:mbruges+wotd@alsson.com?subject=Issue with Word of the Day" target="_blank">Email Mr. Max</a>
 </footer>
 
