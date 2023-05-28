@@ -8,6 +8,25 @@ Prompt: Generate an HTML page entitled: The Word of The Day is SYNTHESIS. Includ
 <meta charset="utf-8">
 	<meta name="description" content="Word of The Day">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="/style.css">
+
+	<meta prefix="og: http://ogp.me/ns#" property="og:type" content="website" />
+	
+	<meta prefix="og: http://ogp.me/ns#" property="og:title" content="Word of the Day" />
+	
+	<meta prefix="og: http://ogp.me/ns#" property="og:description"
+		content="Etymology & activities to help learn a new word." />
+	
+	<meta prefix="og: http://ogp.me/ns#" property="og:image" content="https://mbruges.com/images/banner-square.png" />
+	
+	<meta prefix="og: http://ogp.me/ns#" property="og:url" content="https://mbruges.com/wotd.html" />
+	
+	<!-- TWITTER CARD-->
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:title" content="Word of the Day">
+	<meta name="twitter:site" content="@max_bruges">
+	<meta name="twitter:description" content="Etymology & activities to help learn a new word.">
+	<meta name="twitter:image" content="https://mbruges.com/images/banner-square.png">
 
 <title id="title"></title>
 <script>
@@ -59,8 +78,11 @@ Prompt: Generate an HTML page entitled: The Word of The Day is SYNTHESIS. Includ
 				if (dateString == pageDate) {
 					document.getElementById('worksheet').innerHTML = json[index].content
 					word = "" + json[index].word		
+					//This section tweaks the meta tags
 					let desc = `Word of The Day is ${word}`
 					document.querySelector('meta[name="description"]').setAttribute("content", desc);
+					document.querySelector('meta[property="og:title"]').setAttribute("content", desc);
+					document.querySelector('meta[property="twitter:title"]').setAttribute("content", desc);
 					document.getElementById('title').innerHTML = desc		
 				}
 				
@@ -132,5 +154,3 @@ Prompt: Generate an HTML page entitled: The Word of The Day is SYNTHESIS. Includ
 	</p>
 </footer>
 </html>
-
-<link rel="stylesheet" href="/style.css">
