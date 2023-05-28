@@ -18,6 +18,8 @@
 		content="Etymology & activities to help learn a new word." />
 	
 	<meta prefix="og: http://ogp.me/ns#" property="og:image" content="https://mbruges.com/images/banner-square.png" />
+<meta property="og:image:width" content="315" />
+<meta property="og:image:height" content="315" />
 	
 	<meta prefix="og: http://ogp.me/ns#" property="og:url" content="https://mbruges.com/wotd.html" />
 	
@@ -80,11 +82,23 @@
 					let desc = `Word of The Day is ${word}`
 					document.querySelector('meta[property="og:title"]').setAttribute("content", desc);
 					document.querySelector('meta[name="twitter:title"]').setAttribute("content", desc);
-					document.getElementById('title').innerHTML = desc		
+					document.getElementById('title').innerHTML = desc	
+					
+					//This section will now make the definition easier to read.
+
+					var styles = `
+    p:first-of-type {
+    highlight:yellow;
+}
+
+`
+					var styleSheet = document.createElement("style")
+					styleSheet.innerText = styles
+					document.head.appendChild(styleSheet)
 				}
 				
 				}})
-	}
+			}
 
 	function randomise() {
 		fetch('/wotdarchive/wotd-database.json')
@@ -111,13 +125,14 @@
 					behavior: "smooth",})
 					})
 				}
+
 </script>
 </head>
 <header>
 	<nav>
 		<a href=""><img alt="miaow" src="/favicon.svg" height="40" width="40"></a>
 		
-		<small>Word of the Day: <span id="date"></span></p>
+		<small>Word of the Day: <span id="date"></span>
 		</small>
 
 		<ul>
@@ -125,7 +140,8 @@
 		</ul>
 	</nav>
 </header>
-<form id="worksheet">
+<form id="worksheet" style="min-height: 480px;">
+	<code style="display:block;background:none;text-align: center;">Loading...</code>
 </form>
 
 </div>

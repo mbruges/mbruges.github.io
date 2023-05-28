@@ -5,16 +5,29 @@
     <link rel="icon" href="/favicon.svg">
     <link rel="stylesheet" href="/style.css">
     <meta charset="utf-8">
-    <meta name="description" content="MB - Code Showcase">
+    <meta name="description" content="MB ">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MB - TITLE</title>
 
-    <script id="all-scripts" type="module">
+<!--SHARE TAGS-->
+	<meta prefix="og: http://ogp.me/ns#" property="og:type" content="website" />
+	<meta prefix="og: http://ogp.me/ns#" property="og:title" content="MBruges.com" />
+	<meta prefix="og: http://ogp.me/ns#" property="og:description" content=" " />
+	<meta prefix="og: http://ogp.me/ns#" property="og:image" content="https://mbruges.com/images/banner-square.png" />
+	<meta prefix="og: http://ogp.me/ns#" property="og:url" content="https://mbruges.com/" />
+	
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:title" content="MBruges.com">
+	<meta name="twitter:site" content="@max_bruges">
+	<meta name="twitter:description" content=" ">
+	<meta name="twitter:image" content="https://mbruges.com/images/banner-square.png">
+
+    <!--<script id="all-scripts" type="module">
         import { prettifyCode, askGPT, hideLoader, showLoader, showResponseContainer, hideResponseContainer, saveThing, loadThing, downloadHTML, copy, notificationAlert, tokenToDollar } from "/head-functions.js";
 
     /* ALL SCRIPTS GO HERE*/
 
-    </script>
+    </script>-->
 
 <div id="toastAlert"></div>
 </head>
@@ -35,25 +48,17 @@
             </ul>
     </nav>
 
+
+        <h1>NEWPAGE</h1>
+        <h2>Description</h2>
+    </header>
+
         <!--
 
 CONTENT STARS HERE. Copy and change file to HTML to use
 
 -->
 
-
-        <h1>NEWPAGE</h1>
-        <h2>Description</h2>
-    </header>
-        <section>
-            <article>
-                <p>There's nothing here yet. Check back later.</p>
-                <br>
-                <img alt="under construction" src="/images/building.svg" height=200 style="margin-left:auto;margin-right:auto;display: flex;">
-            </article>
-        </section>
-
-    </header>
 
 <footer>
     <p>© 2023 - <i> Made by <a href="/about.html" target="_blank">me
