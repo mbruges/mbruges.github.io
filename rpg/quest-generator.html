@@ -83,7 +83,7 @@ window.onload = () => {
     }, baseTime + 100);
 
      setTimeout(() => {
-        fadeIn('intro2', 'The innkeeper catches your eye, and passes a pint of ale.')
+        fadeIn('intro2', 'The innkeeper catches your eye and pours a pint of ale.')
     }, baseTime + 2500);
     
     setTimeout(() => {
@@ -157,15 +157,15 @@ function questGenerator(param) {
 function scrollUp() {
     document.getElementById('userButton').innerHTML = "Interesting, but not our style. \n Any other rumours?"
     document.getElementById('questlog').className = "hidden"
-    document.getElementById('quest-plan').className = "hidden"
 
     document.getElementById('quest-plan').innerHTML = "Time to plan a new quest..."
-
     document.getElementById('rumour-response').className = "hidden"
 
     document.getElementById('catNav').scrollIntoView({
         behavior: 'smooth'
+
     })  
+    questGenerator('rumour')
 
     
 }
