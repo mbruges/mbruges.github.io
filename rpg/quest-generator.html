@@ -5,21 +5,21 @@
     <link rel="icon" href="/favicon.svg">
     <link rel="stylesheet" href="/style.css">
     <meta charset="utf-8">
-    <meta name="description" content="Automatically generated questlines for tabletop RPGs. Seeking a new adventure? Pull up a a seat by the fire, and ask the innkeeper if he's heard any rumours...">
+    <meta name="description" content="Seeking a new adventure? Pull up a a seat by the fire, and ask the innkeeper if he's heard any rumours... Automatically generated questlines for tabletop RPGs">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quest Generator</title>
 
     <!--SHARE TAGS-->
     <meta prefix="og: http://ogp.me/ns#" property="og:type" content="website" />
-    <meta prefix="og: http://ogp.me/ns#" property="og:title" content="MBruges.com" />
-    <meta prefix="og: http://ogp.me/ns#" property="og:description" content="Seeking a new quest? Pull up a a seat by the fire, and ask the innkeeper if he's heard any rumours... Automatically generated questlines for tabletop RPGs" />
-    <meta prefix="og: http://ogp.me/ns#" property="og:image" content="https://mbruges.com/images/banner-square.png" />
+    <meta prefix="og: http://ogp.me/ns#" property="og:title" content="Quest Generator" />
+    <meta prefix="og: http://ogp.me/ns#" property="og:description" content="Seeking a new adventure? Pull up a a seat by the fire, and ask the innkeeper if he's heard any rumours..." />
+    <meta prefix="og: http://ogp.me/ns#" property="og:image" content="https://mbruges.com/images/beer-square.png" />
     <meta prefix="og: http://ogp.me/ns#" property="og:url" content="https://mbruges.com/rpg/quest-generator.html" />
 
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="Quest Generator">
     <meta name="twitter:site" content="@max_bruges">
-    <meta name="twitter:description" content="Automatically generated questlines for tabletop RPGs. Seeking a new adventure? Pull up a a seat by the fire, and ask the innkeeper if he's heard any rumours...">
+    <meta name="twitter:description" content="Seeking a new adventure? Pull up a a seat by the fire, and ask the innkeeper if he's heard any rumours...">
     <meta name="twitter:image" content="https://mbruges.com/images/banner-square.png">
 
 <script src="/markdown-it.min.js">
@@ -34,7 +34,7 @@
 
 <script>
 
-const rhubarbArray = ["hubbub...","rhubarb...","mutter...","mutter...","grumble...","Hey!","Now then...","What's that?","Who're they?","*clink*","*crash*","Wheey!","rhubarb...","Cheers!","*clink*","Another, please landlord!","Yeah, yeah","Mumble..."]
+const rhubarbArray = ["hubbub...","rhubarb...","mutter...","mutter...","grumble...","Hey!","Now then...","What's that?","Who're they?","*clink*","*crash*","Wheey!","rhubarb...","Cheers!","*clink*","Another, please landlord!","Yeah, yeah","Mumble...","Where's my pint?","Oi!","hubbub..."]
     function rhubarb(container) {
         if (document.getElementById('quest-plan').className == 'hidden') {
             
@@ -66,28 +66,40 @@ function fadeOut(div) {
 
 
 window.onload = () => {
+    fadeIn('intro1', ' ')
+    fadeIn('intro2', ' ')
+    fadeOut('intro1')
+    fadeOut('intro2')
+    var baseTime = 1000
+    
+    setTimeout(() => {
+        
+    }, baseTime );
+    
+    
+
     setTimeout(() => {
     fadeIn('intro1', 'Your party arrives at the crowded tavern.') 
-    }, 100);
+    }, baseTime + 100);
 
      setTimeout(() => {
         fadeIn('intro2', 'The innkeeper catches your eye, and passes a pint of ale.')
-    }, 2500);
+    }, baseTime + 2500);
     
     setTimeout(() => {
         fadeOut('intro1')
-    }, 3000);
+    }, baseTime + 3000);
     setTimeout(() => {
         fadeOut('intro2')
-    }, 4500);
+    }, baseTime + 4500);
     setTimeout(() => {
         document.getElementById('intro1').innerHTML = ''
         document.getElementById('intro2').innerHTML = ''
-    }, 6000);
+    }, baseTime + 6000);
     
     setTimeout(() => {
-        fadeIn('userButton','Heard any new rumours lately?')
-    }, 6200);
+        fadeIn('userButton','Heard any rumours lately?')
+    }, baseTime + 6200);
     
 
     setInterval(() => {
@@ -105,9 +117,7 @@ var rand = 0
 
 function questGenerator(param) {
     document.getElementById('rumour-response').className = "fade-in"
-   
     document.getElementById('questlog').className = "hidden"
-    console.log(param)
     fetch('/rpg/quests.json')
     .then((response) => response.json())
     .then((json) => { 
@@ -135,12 +145,29 @@ function questGenerator(param) {
 <br>
 <center>
 <a href="/rpg/dnd.html" target="_blank"><b>Recruit adventurers ⚔️</b></a>
+<a style="cursor:pointer;" onclick="scrollUp()" target="_blank"><i>Maybe some other time ↩</i></a>
 </center>`
             document.getElementById('questlog').scrollIntoView({
                 behavior: 'smooth'
             })        }
         
 })
+}
+
+function scrollUp() {
+    document.getElementById('userButton').innerHTML = "Interesting, but not our style. \n Any other rumours?"
+    document.getElementById('questlog').className = "hidden"
+    document.getElementById('quest-plan').className = "hidden"
+
+    document.getElementById('quest-plan').innerHTML = "Time to plan a new quest..."
+
+    document.getElementById('rumour-response').className = "hidden"
+
+    document.getElementById('catNav').scrollIntoView({
+        behavior: 'smooth'
+    })  
+
+    
 }
 
 </script>
@@ -224,7 +251,7 @@ background-position: center;">
 <h3 class="hidden" id="intro1" style="color:white; font-size: 110%;"></h3>
 <h3 class="hidden" id="intro2" style="color:white; font-size: 110%;"></h3>
 <button id="userButton" 
-style="z-index: 1;padding: 5px;width: 170px;height:70px;margin-left: auto;margin-right: 90%; font-family:Georgia, 'Times New Roman', Times, serif;border-color: beige;"
+style="z-index: 1;padding: 5px;width: 170px;height:90px;margin-left: auto;margin-right: 90%; font-family:Georgia, 'Times New Roman', Times, serif;border-color: beige;"
 onclick="questGenerator(this.value)"
 value="rumour"
 class="hidden"
