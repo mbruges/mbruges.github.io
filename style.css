@@ -502,7 +502,7 @@ form {
 }
 
 .hidden {
-    display: none;
+    display: none !important;
     height: 1px;
     width: 1px;
     font-size: 0px;
@@ -765,26 +765,17 @@ blockquote footer {
     border-radius: var(--border-radius);
     /* Hidden by default. Visible on click */
     min-width: 20vw;
-    /* Set a default minimum width */
-    /* Divide value of min-width by 2 */
     background-color: #333;
-    /* Black background color */
     color: #fff;
-    /* White text color */
     text-align: center;
-    /* Centered text */
     padding: 16px;
-    /* Padding */
     position: fixed;
     /* Sit on top of the screen */
     z-index: 1;
-    /* Add a z-index if needed */
     left: 33vw;
     right: 33vw;
-    /* Center the toastAlert */
     bottom: 32px;
     font-family: var(--font-family);
-    /* 30px from the bottom */
 }
 
 /* Show the toastAlert when clicking on a button (class added with JavaScript) */
@@ -867,10 +858,6 @@ blockquote footer {
      overflow-wrap: break-word;
   }
 
-  blog p {
-    word-wrap: normal;
-  }
-
   blog h1 {
       margin-bottom: 1%;
   }
@@ -919,15 +906,14 @@ blockquote footer {
       padding: 2px 3em;
       color: darkslategrey;
       border-left: 0.4em solid var(--color-accent);
-    font-size: 110%;
     font-style: normal;
-    font-family:'Times New Roman', Times, serif;
     font-display:inherit;
     text-align: left;
     margin-left: auto;
     margin-right: auto;
-    font-weight: 250;
+    font-weight: 300;
     max-width: 80%;
+    font-size: 85%;
     background-color: var(--color-accent);
   }
 
@@ -998,43 +984,6 @@ blog iframe {
     
 }
 
-  /* Auto-resize input boxes*/
-  .grow-wrap {
-      /* easy way to plop the elements on top of each other and have them both sized based on the tallest one's height */
-      display: grid;
-  }
-
-  .grow-wrap::after {
-      /* Note the weird space! Needed to prevent jumpy behavior */
-      content: attr(data-replicated-value) " ";
-
-      /* This is how textarea text behaves */
-      white-space: pre-wrap;
-
-      /* Hidden from view, clicks, and screen readers */
-      visibility: hidden;
-  }
-
-  .grow-wrap>textarea {
-      /* You could leave this, but after a user resizes, then it ruins the auto sizing */
-      resize: none;
-
-      /* Firefox shows scrollbar on growth, you can hide like this. */
-      overflow: hidden;
-  }
-
-  .grow-wrap>textarea,
-  .grow-wrap::after {
-      /* Identical styling to textarea is required!! */
-    border: 1px solid var(--color-bg-secondary);
-    border-radius: var(--border-radius);
-    margin-bottom: 1rem;
-    padding: 0.4rem 0.8rem;
-    font: inherit;
-
-      /* Place on top of each other */
-      grid-area: 1 / 1 / 2 / 2;
-  }
 .row {
     display: flex;
 }
@@ -1119,7 +1068,7 @@ Make sure you give it the onclick function 'showArticle(this)' */
 fadeout {
     margin-top: -50px;
     height: 90px;
-    background-image: linear-gradient(to bottom,rgba(245, 245, 245, 0.256),whitesmoke, var(--color-bg));
+    background-image: linear-gradient(to bottom,rgba(245, 245, 245, 0.256),whitesmoke,whitesmoke, var(--color-bg));
     text-align: center;
     cursor: pointer;
     padding-top: 9%;
@@ -1140,69 +1089,37 @@ fadeout small {
     color: #000;
 }
 
-/* This version seems to be buggering up scrolling... so scrapping for now
-fadeout {
-    margin-top: -50px;
-    height: 90px;
-    z-index: 1;
-    background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0),whitesmoke, whitesmoke, var(--color-bg));
-    text-align: middle;
-    cursor: pointer;
-    padding-left: 5%;
-    padding-top: 9%;
-    padding-right: 5%;
-    display:block;
-    position: absolute;
-    float: none;
-    width: var(--width-card-wide);
-    min-width: (var(--width-card));
-    padding: 1%;
-    text-align: center;
-    margin-left: auto;
-    margin-right: auto;
-    right: 0;
-    left: 0;
-    line-height: 90px;
-}*/
-
-/*
- can't quite work this one out...
-
-fadeout.clickToCollapse {
-    margin-top: -10px;
-    font-size: ;
-        height: 10px;
-        background: transparent;
-        background-image: none;
-        text-align: middle;
-        cursor: pointer;
-        display: block;
-        position:relative;
-        width: var(--width-card-wide);
-        min-width: (var(--width-card));
-        padding: 1%;
-        text-align: center;
-        margin-left: auto;
-        margin-right: auto;
-        line-height: 10px;
-}*/
-/* Use <fold> to indicate where the 'click to read more' cut off should be*/
-
 .collapsed > * {
     max-height: 600px;
     overflow-y:hidden;
 }
-/*
-fold {
-    height: 0px;
-    width: 0px;
-    display: none;
+
+/* This experimental class will change the font and layout to be more readable for dyslexic readers - based on guidance from the BDA (https: //www.bdadyslexia.org.uk/advice/employers/creating-a-dyslexia-friendly-workplace/dyslexia-friendly-style-guide) */
+
+.dyslexic
+{
+    font-family: 'Comic Sans', sans-serif;
+    font-size: 120%;
+    letter-spacing: 0.06em;
+    word-spacing: 1.2em;
+    line-height: 108%;
+    font-style: normal;
+    background-color: rgb(215, 245, 255);
+    margin-bottom: 10px;
+
 }
 
-blog fold~* {
-    display: none;
+.dyslexic h1, h2, h3, h4 {
+    font-size: 150%;
+    font-style: normal;
 }
 
-blog fold~small {
-    display: none;
-}*/
+.dyslexic p {
+    margin-bottom: 2.6em;
+}
+
+.dyslexic i, em {
+    font-style: normal;
+    font-weight: 650;
+}
+
