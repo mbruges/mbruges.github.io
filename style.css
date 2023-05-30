@@ -518,14 +518,16 @@ form {
 .loader
 {
     margin: auto;
-        border: 5px solid #EAF0F6;
+        border: 5px solid lightblue;
         border-radius: 50%;
-        border-top: 5px solid var(--color-table);
+        border-top: 5px solid var(--color-bg-secondary);
         width: 30px;
         height: 30px;
-        animation: spinner 1.5s linear infinite;
+        animation: spinner 1s linear infinite;
         margin-bottom: 10px;
         z-index:2;
+        background-color: transparent;
+        pointer-events: none;
 }
 .loader.show {
     visibility: show;

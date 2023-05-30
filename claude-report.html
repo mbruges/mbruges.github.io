@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<!--
+
+    I want to build a site that will use Claude (quicker, cheaper, can take more context) to write reports for a whole class of students.
+
+    Ideas:
+
+    - Present sliders, variables etc in the form of a table, one row for each student
+
+    - An input box for student names, splitting them out by \n, then automatically populating these to the table
+
+    Single button press to generate
+
+
+-->
+
+<head>
+    <link rel="icon" href="/favicon.svg">
+    <link rel="stylesheet" href="/style.css">
+    <meta charset="utf-8">
+    <meta name="description" content="A page for generating school reports">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MB - Report Maker</title>
+<div id="toastAlert"></div>
+<script src="/markdown-it.min.js"></script>
+<script>
+    function convertMD() {
+        var md = document.getElementById('report').innerHTML
+        const mdRenderer = window.markdownit();
+        const html = mdRenderer.render(md);
+        document.getElementById('report').innerHTML = html;
+        console.log("Converted to Markdown")
+    }
+</script>
+<script type="module">
+    import {
+        prettifyCode, askGPT, hideLoader, showLoader, showResponseContainer, hideResponseContainer, saveThing, loadThing, downloadHTML, copy, notificationAlert, tokenToDollar
+    } from "/head-functions.js";
+
+    function displayStudent(studentCode, elementToDisplay, whereToDisplay) {
+        let student = window.localStorage.getItem(`${studentCode}`);
+        student = JSON.parse(student)
+        console.log(student.name)
+        document.getElementById(`${whereToDisplay}`).innerHTML = student.name
+    }
+
+   function saveStudent(inputName, inputYear, inputRFL, inputBFL, inputReport, studentCode) {
+
+
+        const student = {
+            name: `${inputName}`,
+            year: `${inputYear}`,
+            rfl: `${inputRFL}`,
+            bfl: `${inputBFL}`,
+            report: `${inputReport}`,
+            code: `${studentCode}`
+        }
+
+        window.localStorage.setItem(`${studentCode}`, JSON.stringify(student));
+        console.log(`Saved student ${inputName}`)
+    }
+
+/*
+        var name = document.getElementById('name').value;
+        var year = document.getElementById('year').value;
+        var RfL = document.getElementById('RfL').value;
+        var BfL = document.getElementById('BfL').value;
+        var progress = document.getElementById('progress').value;
+        var length = document.getElementById('length').value;
+        var subject = document.getElementById('subject').value;
+        var tone = document.getElementById("tone").value
+        var comments = document.getElementById('comments').value;
+        var report = document.getElementById('report').innerHTML
+        var topics = document.getElementById('topics').value
+        console.log("inputs updated")
+
+        if (comments.length > 2) {
+           comments = `Also mention: ${comments}` 
+        } else {comments = " "};
+
+        var api = document.getElementById('api-input').value
+        if (api < 32) {
+            notificationAlert("Please enter API key"); return;
+        }
+        let prompt = `You are a teacher at a British school, writing end of year reports on students. Comment on progress and behaviour of the student in the subject, with reference to topics covered (${topics}). Provide 2 positive comments 2 suggested actions to improve. You must respond only with the body of the report itself, no other preamble. Do not write a letter.\n Produce a school report for the following student:
+        \n Name: ${name}. Year-group: ${year}. \n Subject: ${subject}.\n  Behavior is ${BfL}. \n Academic progress: ${progress}.\n${comments}. Limit length to ${length} characters. Tone should be ${tone}`
+        const role = ''
+        console.log(`Asking GPT: ${prompt}`);
+        let tokens = (length/2)*/
+
+    //Save API key
+    document.getElementById('saveKey').onclick = () => {
+        saveThing('api-input', 'claude-API-key'),
+        notificationAlert("Anthropic API Key saved successfully 🔑")
+    }
+
+    //Load API key
+    window.onload = () => {
+        loadThing('api-input','claude-API-key');
+        let api = document.getElementById('api-input').value
+        if (api.length > 31) {
+            notificationAlert("Welcome back. Anthropic API key loaded successfully 🔑")
+        }
+    }
+</script>
+
+<script>
+    function notificationAlert(notificationText) {
+        var alertelement = document.getElementById("toastAlert");
+        alertelement.innerHTML = notificationText
+        alertelement.className = "show";
+        setTimeout(function () { alertelement.className = alertelement.className.replace("show", ""); }, 3000);
+    }
+
+    function logInputs(parentID) {
+            var parent = document.getElementById(parentID)
+
+            var inputsArray = []
+            var inputs = parent.querySelectorAll("input")
+            inputs.forEach((item) => {
+                if (item.value.length < 2){console.log("missing value: " + item)}
+                inputsArray.push(item.value)
+            })
+            inputs = parent.querySelectorAll("select")
+            inputs.forEach((item) => {
+                inputsArray.push(item.value)
+            })
+//Output looks like: ['name', 'academicProgress', 'comment', 'rfl', 'bfl']
+            console.log(inputsArray)
+            return inputsArray
+        }
+
+function reportClaude(parentID) {
+    var parent = document.getElementById(parentID)
+    var generateButton = parent.querySelector('button[name="generateButton"]')
+    var viewResponseButton = parent.querySelector('button[name="viewResponseButton"]')
+
+    var inputs = logInputs(parentID)
+        var name = "" + inputs[0]
+        var progress = inputs[1]
+        var comments = 'Additional points to consider: ' + inputs[2]
+        var rfl = "" + inputs[3]
+        var bfl = "" + inputs[4]
+        var apiKey = document.getElementById('api-input').value
+        var subject = document.getElementById('subject').value
+        var yearGroup = document.getElementById('yearGroup').value
+    
+    if (name.length < 2) { notificationAlert("please enter a name and try again."); return }
+    if (subject.length < 2) { notificationAlert("please enter a subject and try again."); return }
+    if (rfl.length < 1){rfl = "OK"}
+    if (bfl.length < 1) { bfl = "OK" }
+
+    var userQuestion = 
+    `You are a teacher at a British school. You are writing end of year reports for students. Reports must comment on students' behaviour, academic progress and general comments. Reports must be written in the first person. 
+    Write a report about this student:
+    Name: ${rfl}
+    Subject: ${subject}
+    Year Group: ${yearGroup}
+    Behaviour: ${bfl}
+    Organisation skills: ${rfl} 
+    Academic progress: ${progress}
+    ${comments}
+    `
+    console.log(apiKey)
+    let length = document.getElementById('length').value
+    let max_tokens = length / 2
+    let url = 'https://api.anthropic.com/v1/complete/';    
+    generateButton.className = 'hidden'
+    viewResponseButton.className = 'loader'
+
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            'X-API-Key': apiKey,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            prompt: `\n\nHuman: QUESTION - ${userQuestion}. \n Limit your response to ${length} characters in length. Do not include any additional introduction or commentary \n\nAssistant:`,
+            model: `claude-instant-v1-100k`,
+            max_tokens_to_sample: max_tokens,
+            stop_sequences: ["\n\nHuman:"],
+            temperature: 1
+        })
+    }).then(response => {
+        return response.json()
+    }).then(data => {
+        newresponse = data.completion
+        console.log(newresponse)
+        let date = new Date()
+        date = date.toLocaleDateString('en-GB')
+
+        `<small>~~~~~Generated by Claude~~~~</small>
+        <small>~~~~~${date}~~~~</small>
+        <h2>${subject} Report for ${name}</h2>
+        <p>${newresponse}</p>
+        <br>
+        <small>~~~~~END~~~~</small>
+        `
+
+        let currentReport = document.getElementById('report').innerHTML
+        document.getElementById('report').innerHTML = currentReport
+        document.getElementById('report').className = "show"
+        generateButton.className = ""
+        viewResponseButton.className = "hidden"
+
+    }).catch(error => {
+        console.log(error);
+        generateButton.className = ""
+        viewResponseButton.className = "hidden"
+       
+    });
+}
+</script>
+
+
+<script>
+    
+
+</script>
+</head>
+
+<body>
+    <header>
+       <nav>
+            <div class="dropdown">
+            <a id="catNav"><img alt="miaow" src="/favicon.svg" height="40" width="40"></a>
+            <div class="dropdown-content">
+                    <a href="/experiments.html">Experiments</a>
+                    <a href="/resources.html">Resources</a>
+                    <a href="/blog.html">Blog</a>
+                </div>
+            </div>
+            <ul>
+                <li><a href="/index.html"> Home </a></li>
+            </ul>
+    </nav>
+
+        <!--
+
+This page will generate reports. First we need to set up a way for it to store JSONs for each student.-->
+
+        <h1>Report Writer</h1>
+        <h3>Claude to the rescue</h3>
+
+    <div id="apikey">
+        <details style="padding: 0px; margin: 3px;">
+            <summary style="font-size: smaller; color:grey">API key 🔑</summary><input type="text" id="api-input" style="font-size: 10px;
+                                font-family: monospace; text-align: center; max-width: 318px; background-color:lightgrey"
+                placeholder="sk-someth1ng....."><a id="saveKey"><sup style="cursor: pointer";>Save to cache 💾
+                </sup></a><br>
+            <small>Key is saved to your local browser cache. It can only be accessed by you and OpenAI.<br> Total tokens
+                used are also tracked in the cache.</small>
+
+            <code>Rough spend so far: <b id="spendTrackerDisplay">$0.00</b></code>
+            <br><p></p>
+            <div style="display: block; margin-left: auto; margin-right: auto;text-align: center;">
+               
+                <input style="margin-top: 1px;padding: 0px;" type="range" id="length" value="1000" min="100" max="4000" step="100">
+                <code style="text-align: center;margin-bottom: 0px;" id="lengthTracker"></code>
+                <script>
+                    //This script updates the count as the slider is moved
+                    document.getElementById("lengthTracker").innerHTML = document.getElementById("length").value + " characters long";
+                    document.getElementById("length").oninput = function () {
+                        document.getElementById("lengthTracker").innerHTML = `Comments limited to: ${document.getElementById("length").value} characters`;
+                    };
+                </script>
+        </details>
+        <div id="toastAlert"></div>
+    </div>
+<br>
+    <input type="text" style="text-align: center;min-width:100px;max-width: fit-content;font-size: large;display: block;margin-left: auto;margin-right: auto;" id="className"
+        placeholder="Enter class name" value="">
+        </header>
+        
+   
+
+    <div id="autocompleteDisplay"></div>
+    <input id="displaystudentcode" placeholder="code?" value="" class="hidden">
+<style>
+    select {
+        min-width: 70px;
+        width: 70px;
+        max-width: fit-content;
+        padding:1px;
+        background-color:rgb(215, 245, 255);
+        font-weight: 600;
+        margin-right: 5px;
+    }
+
+    input {
+        max-width: 150px;
+        text-align: center;
+        min-width: 50px;
+        margin-right: 5px;
+
+    }
+
+    small {
+        width: 50px;
+        font-size: 12px;
+    }
+
+    button{
+    padding: 1px;
+    font-size: 160%;
+    margin:0px;
+    height:fit-content;
+    width:fit-content;
+    }
+
+    .inputRow{
+    border-width: 2px;
+    margin-left: auto;
+    margin-right:auto;
+    max-width: 1000px;
+    display:flex;
+    height:50px;
+    padding:5px;
+    font-size: 15px;
+    text-align: left;
+    padding-bottom: 0;
+    vertical-align: middle;
+    }
+</style>
+<div class="inputRow" style="margin-left: auto;margin-right: auto;width:400px;">
+    <input id="subject" type="text" placeholder="Subject?" value="English">
+    <input id="yearGroup" type="number" Placeholder="Year?" value="9">
+</div>
+
+<br>
+<div class="inputRow" id="student1">
+        <input type="name"placeholder="Name?" value="John">
+        <select type="rfl">
+            <option value="" disabled selected>RfL</option>
+            <option value="poor">Poor</option>
+            <option value="requires-improvement">Req Improvement</option>
+            <option value="good">Good</option>
+            <option value="outstanding">Outstanding</option>
+        </select>
+        <select type="bfl">
+            <option value="" disabled selected>BfL</option>
+            <option value="poor">Poor</option>
+            <option value="requires-improvement">Req Improvement</option>
+            <option value="good">Good</option>
+            <option value="outstanding">Outstanding</option>
+        </select>
+    
+        <div type="academicSlider" style="width:100px;margin-right: 5px;">
+            <input style="width: 100px;padding: 0px;margin-bottom: 0px;" type="range" id="progressSlider" value="neutral"
+                min="0" max="4" step="1" style="margin-bottom: 1px;">
+            <small style="position: absolute;width: 100px;padding: 0px;margin: 0px;text-align: center;" id="progress">Progress?</small>
+        </div>
+
+        <input type="comments" style="min-width:30vw"placeholder="Any specific comments?" value = "Never does homework on-time">
+    <button onclick="reportClaude(this.parentElement.id)" name="generateButton" class="">🤖</button>
+    <button name="viewResponseButton" style="margin-top: 0px;min-height:30px;min-width: 30px;" class="hidden"></button>
+</div>
+<div id="response-container">
+    <form id="report" class="hidden" style="max-width: 100;color: aliceblue;background-color: black;font-family: monospace;font-size: larger;" placeholder="Report will appear here"></form>
+    
+</div>
+<sup class="hidden" style="display:block;margin-left:auto;margin-right:auto;cursor: pointer;text-align: center;max-width: fit-content;" id="copyReport">Copy text 📋</sup>
+<script>
+    document.getElementById('report').onchange = () => {
+        document.getElementById('copyReport').className = "show"
+    };
+</script>
+<script>
+    // This script updates the count as the slider is moved
+
+    var progressRating = ["Concerning", "A bit behind", "On-track", "Good", "Excellent"]
+    document.getElementById("progressSlider").oninput = function () {
+        document.getElementById("progress").innerHTML = progressRating[document.getElementById("progressSlider").value];
+        document.getElementById("progress").value = progressRating[document.getElementById("progressSlider").value]
+    };
+</script>
+
+<footer>
+    <p>© 2023 - <i> Made by <a href="/about.html" target="_blank">me
+            </a> and Agatha</i> 🐈‍⬛</p>
+    <p><i>Found this interesting? <a href="mailto:hello@mbruges.com?subject=Hello from the Internet"
+                style="font-style: normal;"> Drop me a line 📮</a>
+    </p>
+</footer>
+</body>
+</html>
