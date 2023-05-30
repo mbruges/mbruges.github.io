@@ -11,12 +11,27 @@
         <title>Word of the Day - Archive</title>
 
 <script>
-    window.onload = () => {
-        var archiveData = ``    
+    var jsonConst = []
+    var jsonRef = [{}]
+        var archiveData = ``
+        var wordListConst = []
+        
+    window.onload = () => {  
+        
         fetch('/wotdarchive/wotd-database.json')
                 .then((response) => response.json())
                 .then((json) => {
+                    
+                    jsonConst = json
+                    jsonRef = jsonConst
+
+                    //This very nifty little function sorts the entries by publishing date, most recent first. I don't really understand HOW it works, but it does!
+
+                    json.sort(function (a, b) {
+                        return new Date(a.published) - new Date(b.published);
+                    })
                     for (let index = 0; index < json.length; index++) {
+                         
                         var pageDate = json[index].published;
                         pageDate = new Date(pageDate);
                         var todayDate = new Date();
@@ -27,13 +42,65 @@
                             let year = pageDate.getYear()
                         pageDate = `${day}/${month}/23`
                         var word = json[index].word
+                        wordListConst.push(word)
                         var path = json[index].path
                         archiveData = `<a href="${path}" style="cursor:pointer"><small>${pageDate}: </small> ${word} &nearr;</a></p>` + archiveData
                         }
                     }
                     document.getElementById('archiveContainer').innerHTML = archiveData
                 })
+            }
+    
+            //This function works for the first couple of searches, but then breaks. For some reason, the index keeps ticking up!
+    function search() {
+        const wordListLength = wordListConst.length
+        wordList = wordListConst
+        jsonRef = jsonConst
+        var wordListShort = ""
+        
+        //A script that should return all the elements in an array that match the string
+        console.log("search is running")
+
+        let searchString = "" + document.getElementById("autocompleteInput").value
+        
+        let len = searchString.length;
+        if (len == 0) {
+            document.getElementById("archiveContainer").innerHTML = archiveData;
+            return;
         }
+        searchString = searchString.toUpperCase()
+       // console.log(`Searching for "${searchString}"`)
+        for (let index = 0; index < (wordListLength); index++) {
+            console.log('index is= ' + index)
+            let word = wordList[index];
+            let wordShort = ""
+                for (let charCount = 0; charCount < len; charCount++) {
+                    wordShort += word.charAt(charCount)
+                }
+                console.log('word count: ' + wordList.length)
+            if (wordShort == searchString) {
+                //console.log('index is= '+index)
+               // console.log(jsonRef[index].word)
+                let pageDate = jsonRef[index].published;
+                pageDate = new Date(pageDate);
+                let todayDate = new Date();
+                //This IF ensures we only show the WotDs that have already been published
+                if (pageDate < todayDate) {
+                    let day = pageDate.getDate()
+                    let month = pageDate.getMonth() + 1
+                    let year = pageDate.getYear()
+                    pageDate = `${day}/${month}/23`
+                    let word = jsonRef[index].word
+                    wordList.push(word)
+                    let path = jsonRef[index].path
+                    searchList = `<a href="${path}" style="cursor:pointer"><small>${pageDate}: </small> ${word} &nearr;</a></p>`
+                    wordListShort += searchList
+                    }     
+                }
+            }
+        document.getElementById("archiveContainer").innerHTML = `${wordListShort}`
+    }
+    
 </script>
 
     </head>
@@ -51,6 +118,7 @@
             <h1>Word of the Day - Archive</h1>
             <h3>Here are all the past words-of-the-day.</h3>
             <form id="archiveContainer" class="blog" style="max-width:160px;text-align: center;line-height: 60%;">
+                
 <!--           
 <p><a href="/wotdarchive/WotD_27Apr2023.html"><i>SYNTHESIS - 27 Apr 2023 &nearr;</i></a></p>
 <p><a href="/wotdarchive/WotD_26Apr2023.html"><i>HYPERBOLE - 26 Apr 2023 &nearr;</i></a></p>
@@ -78,10 +146,15 @@
 <p><a href="/wotdarchive/WotD_24Mar2023.html"><i>VANQUISH - 24 March 2023 &nearr;</i></a> </p>
 <p><a href="/wotdarchive/WotD_21Mar2023.html"><i>YOKE - 21 March 2023 &nearr;</i></a> </p>
 <p><a href="/wotdarchive/WotD_20Mar2023.html"><i>NEFARIOUS - 20 March 2023 &nearr;</i></a> </p>
--->
-            </section>
-        </header>
-</body>
+--></form>
+<div id="autocomplete">
+    <input oninput="search()" on name="entryBox" id="autocompleteInput"
+        placeholder="Search for a word...">
+    <p id="autocompleteDisplay"></p>
+
+</header>
+
+
 <footer>
     <p>© 2023 - <i> Made by <a href="/about.html" target="_blank">me
             </a> and Agatha</i> 🐈‍⬛</p>
@@ -89,5 +162,6 @@
                 style="font-style: normal;"> Drop me a line 📮</a>
     </p>
 </footer>
+</body>
 </html>
 <link rel="stylesheet" href="/style.css">
