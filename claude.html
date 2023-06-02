@@ -18,7 +18,14 @@
 
 
 <script>
+
+function roleplayInput() {
+    document.getElementById('roleplayInput').value = window.prompt(`Enter the details of the role you'd like Claude to perform. Keep instructions concise.`, "A pirate");
+    console.log(document.getElementById('roleplayInput').value)
+    
+}
 window.onload = () => {
+    document.getElementById('fileUploadDialog').close()
 
     document.getElementById('apiStore').value = localStorage.getItem('apiKey')
     let api = "" + document.getElementById('apiStore').value
@@ -92,7 +99,16 @@ function insertText(inputElement,idToChange) {
 }
 
 function askClaude() {
+    let role = 'Be concise in all your responses. Do not reference this instruction in our conversation.'
+
+    let roleplayInput = document.getElementById('roleplayInput').value
     
+    if (roleplayInput) {
+        role = `Roleplay as: ${roleplayInput}. Respond to all questions as this character. Do not break out of this roleplay for any reason. If asked something you cannot answer, make an excuse in-character. Do not reference the fact you are in a roleplay. Do not use any asterisked comments to reference physical actions, for example: *in deep voice*.`
+    }
+    
+    //'You are a studious 15-year-old, living in the UK in 2009. You are chatting with a friend on MSN Messenger. You are nervous about exams. \n Respond to all questions as this character. Do not break out of this roleplay for any reason. If asked something you cannot answer, make an excuse in-character. Do not reference the fact you are in a roleplay. Use emoji and suitable cultural references where applicable.'
+
     //Building convo history
 
     let convoHistory = document.getElementById('monitor').innerHTML
@@ -104,8 +120,8 @@ function askClaude() {
      let fileContent = document.getElementById('fileContainer').innerText
 
      if (fileContent.length > 2) {
-        fileContent = `Human: Be concise in all your responses. In this conversation I will be asking questions about this file:\n FILE START \n ${fileContent} \nFILE END \n\n Assistant: I understand. I will answer questions about this file.`;
-    } else { fileContent = `Human: Be concise in all your responses. Do not reference this instruction in our conversation. \n\n Assistant: I understand. I will answer questions in a concise manner and not reference this instruction about being concise.` }
+        fileContent = `Human: ${role}. In this conversation I will be asking questions about this file:\n FILE START \n ${fileContent} \nFILE END \n\n Assistant: I understand. I will answer questions about this file.`;
+    } else { fileContent = `Human: ${role} \n\n Assistant: I understand. I will answer questions in a concise manner and not reference this instruction about being concise.` }
 
     console.log("history is: "+ convoHistory)
     let api = document.getElementById('apiStore')
@@ -132,7 +148,7 @@ function askClaude() {
         }).then(response => {
             return response.json()
         }).then(data => {
-            console.log(`FULL INPUT: ${fileContent} ${convoHistory} \n\nHuman: ${userQuery} Be concise. \n\nAssistant:`)
+            console.log(`FULL INPUT: ${fileContent} ${convoHistory} \n\nHuman: ${userQuery}. \n\nAssistant:`)
             newResponse = data.completion
             
             let monitor = document.getElementById('monitor')
@@ -189,6 +205,10 @@ window.addEventListener("keydown", (event) => {
         }})
 
     function submitInput() {
+        if (document.getElementById('input').value == "") {
+            return;
+        }
+        
         askClaude()
         let target = document.getElementById('input')
         let input = target.value
@@ -248,7 +268,7 @@ window.addEventListener("keydown", (event) => {
                     <a href="/blog.html">Blog</a>
                 </div>
             </div>
-            <i id="fileBarDisplay" style="color: greenyellow;font-size: 12px;"> > Bonjour <a style="color: greenyellow;" href="https://www.anthropic.com/index/introducing-claude" target="_blank">CLAUDE</a> </i>
+            <i id="fileBarDisplay" style="color:midnightblue;font-size: 12px;"> > Bonjour <a style="color: midnightblue;" href="https://www.anthropic.com/index/introducing-claude" target="_blank">CLAUDE</a> </i>
             <ul>
                 <li><a href="/index.html"> Home </a></li>
             </ul>
@@ -256,9 +276,9 @@ window.addEventListener("keydown", (event) => {
     </header>
 
 <!--File upload dialog-->
-<dialog id="fileUploadDialog" class="code" style="background-color: black;height: 80px;text-align: center;color: white;width: 200px;margin:1px" open>
+<dialog id="fileUploadDialog" class="code" style="align-self:auto; background-color: black;height: 80px;text-align: center;color: white;width: 200px;margin:1px;position:absolute;top:20dvh;" open>
     <p>Would you like to upload a file to the chat?</p>
-    <label style="display: inline;" for="fileInput"><code style="color: black;background-color: white;cursor: pointer;">Yes</code></label>
+    <label style="display: inline;" for="fileInput"><code id="yesbutton" style="color: black;background-color: white;cursor: pointer;">Yes</code></label>
 <code onclick="this.parentElement.close()" style="display: inline;color: black;background-color: white;cursor: pointer;">No</code>
 <input id="fileInput" class="hidden" type="file" accept=".doc,.xml,.rtf,.txt,.csv,.eml,.odt,.ods" onchange="uploadFile(); this.parentElement.close(); showname()" placeholder="Hello">
 <p class="hidden" id="fileContainer"> </p>
@@ -267,15 +287,15 @@ window.addEventListener("keydown", (event) => {
     <code id="xCorsKeyStore" value="" class="hidden"></code>
     <code id="inputContainer" class="hidden" value=""></code>
 
-<form id="monitor" class="code" style="overflow-x: scroll;padding-bottom: 20px;margin-bottom: 1px;height:60dvh;max-width: 80vw;width: 500px;bottom:0;vertical-align: bottom;margin-top:1px;padding-top: 1px;"></form>
+<form id="monitor" class="code" style="overflow-x: scroll;padding-bottom: 20px;margin-bottom: 1px;max-height:60dvh;max-width: 80vw;width: 500px;bottom:0;vertical-align: bottom;margin-top:1px;padding-top: 1px;height: fit-content;min-height: 40dvh;background-color: midnightblue;color: white;"></form>
 
 
 </div>
 <div id="input-container" style="display: block;margin-left: auto;margin-right: auto;text-align: center;max-width: 90vw;">
     
-    <input class="code" style="max-height:30px;display: inline;margin: 0px; width:490px;max-width: 75vw;" type="text" placeholder="Enter your query" id="input">
+    <input class="code" style="max-height:30px;display: inline;margin: 0px; width:490px;max-width: 75vw;color: midnightblue;background-color: rgb(212, 224, 250)" type="text" placeholder="Enter your query" id="input">
     
-    <button id="submit" class="code" style="display: inline;padding:1px;font-size: 22px;max-height:50px;margin: 0px;margin-top: 1px;background: transparent;border-width: 0px;font-size: 18px;font-weight: 900;" onclick="submitInput() ">⮐</button>
+    <button id="submit" class="code" style="display: inline;padding:1px;font-size: 22px;max-height:50px;margin: 0px;margin-top: 1px;background: transparent;border-width: 0px;font-size: 18px;font-weight: 900;" onclick="submitInput() ">➡️</button>
 
 </div>
 
@@ -293,9 +313,13 @@ window.addEventListener("keydown", (event) => {
 </div>
 <div id="options-container" style="text-align: center;">
 
-    <code style="color:white;cursor: pointer;background-color: black;padding: 6px;"
-        onclick="location.reload()">Reset chat ⚠️</code><code style="color:white;cursor: pointer;background-color: black;padding: 6px;margin-top: 4px;" onclick="downloadTxt('monitor')"> Download transcript 📝</code><code style="color:white;cursor: pointer;background-color: black;padding: 6px;"
-            onclick="document.getElementById('fileUploadDialog').open = true"> Upload file 📂</code>
+    <code style="color:white;cursor: pointer;background-color: black;padding: 6px;" onclick="location.reload()">Reset ⚠️</code>
+    <code style="color:white;cursor: pointer;background-color: black;padding: 6px;" onclick="document.getElementById('fileUploadDialog').open = true;"> Upload file 📂</code>
+    <code style="color:white;cursor: pointer;background-color: black;padding: 6px;" onclick="roleplayInput(this)"> Roleplay 🎭</code>
+    <code style="color:white;cursor: pointer;background-color: black;padding: 6px;margin-top: 4px;"
+        onclick="downloadTxt('monitor')"> Get transcript 📝</code>
+
+    <span id="roleplayInput" value="" class="hidden"></span>
     
     
 </div>
