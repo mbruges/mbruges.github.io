@@ -238,8 +238,8 @@ window.addEventListener("keydown", (event) => {
 <body style="background-color: rgb(162, 161, 161); font-family: monospace;">
     <div id="toastAlert"></div>
     
-    <header style="max-height: 8vh;padding-top: 1%;margin-top: 1px;">
-        <nav>
+    <header style="max-height: 8dvh;padding-top: 1%;margin-top: 1px;margin-bottom: 1px;">
+        <nav style="background-color: rgb(162, 161, 161);">
             <div class="dropdown">
                 <a id="catNav"><img alt="miaow" src="/favicon.svg" height="40" width="40"></a>
                 <div class="dropdown-content">
@@ -267,9 +267,10 @@ window.addEventListener("keydown", (event) => {
     <code id="xCorsKeyStore" value="" class="hidden"></code>
     <code id="inputContainer" class="hidden" value=""></code>
 
-<form id="monitor" class="code" style="overflow-x: scroll;padding-bottom: 20px;margin-bottom: 1px;height:60vh;max-width: 80vw;width: 500px;"></form>
+<form id="monitor" class="code" style="overflow-x: scroll;padding-bottom: 20px;margin-bottom: 1px;height:60dvh;max-width: 80vw;width: 500px;bottom:0;vertical-align: bottom;margin-top:1px;padding-top: 1px;"></form>
 
 
+</div>
 <div id="input-container" style="display: block;margin-left: auto;margin-right: auto;text-align: center;max-width: 90vw;">
     
     <input class="code" style="max-height:30px;display: inline;margin: 0px; width:490px;max-width: 75vw;" type="text" placeholder="Enter your query" id="input">
@@ -300,7 +301,7 @@ window.addEventListener("keydown", (event) => {
 </div>
     <footer>
         
-        <div style="height:1vh"></div>
+        <div style="height:1dvh"></div>
         <p>© 2023 - <i> Made by <a href="/about.html" target="_blank">me
                 </a> and Agatha</i> 🐈‍⬛</p>
         <p><i>Found this interesting? <a href="mailto:hello@mbruges.com?subject=Hello from the Internet"
