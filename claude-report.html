@@ -12,7 +12,7 @@
 
     - An input box for student names, splitting them out by \n, then automatically populating these to the table
 
-    Single button press to generate
+    - Single button press to generate
 
 
 -->
@@ -37,77 +37,61 @@
 </script>
 <script type="module">
     import {
-        prettifyCode, askGPT, hideLoader, showLoader, showResponseContainer, hideResponseContainer, saveThing, loadThing, downloadHTML, copy, notificationAlert, tokenToDollar
+        saveThing, loadThing, downloadHTML, copy, notificationAlert, 
     } from "/head-functions.js";
 
-    function displayStudent(studentCode, elementToDisplay, whereToDisplay) {
-        let student = window.localStorage.getItem(`${studentCode}`);
-        student = JSON.parse(student)
-        console.log(student.name)
-        document.getElementById(`${whereToDisplay}`).innerHTML = student.name
-    }
 
-   function saveStudent(inputName, inputYear, inputRFL, inputBFL, inputReport, studentCode) {
-
-
-        const student = {
-            name: `${inputName}`,
-            year: `${inputYear}`,
-            rfl: `${inputRFL}`,
-            bfl: `${inputBFL}`,
-            report: `${inputReport}`,
-            code: `${studentCode}`
-        }
-
-        window.localStorage.setItem(`${studentCode}`, JSON.stringify(student));
-        console.log(`Saved student ${inputName}`)
-    }
-
-/*
-        var name = document.getElementById('name').value;
-        var year = document.getElementById('year').value;
-        var RfL = document.getElementById('RfL').value;
-        var BfL = document.getElementById('BfL').value;
-        var progress = document.getElementById('progress').value;
-        var length = document.getElementById('length').value;
-        var subject = document.getElementById('subject').value;
-        var tone = document.getElementById("tone").value
-        var comments = document.getElementById('comments').value;
-        var report = document.getElementById('report').innerHTML
-        var topics = document.getElementById('topics').value
-        console.log("inputs updated")
-
-        if (comments.length > 2) {
-           comments = `Also mention: ${comments}` 
-        } else {comments = " "};
-
-        var api = document.getElementById('api-input').value
-        if (api < 32) {
-            notificationAlert("Please enter API key"); return;
-        }
-        let prompt = `You are a teacher at a British school, writing end of year reports on students. Comment on progress and behaviour of the student in the subject, with reference to topics covered (${topics}). Provide 2 positive comments 2 suggested actions to improve. You must respond only with the body of the report itself, no other preamble. Do not write a letter.\n Produce a school report for the following student:
-        \n Name: ${name}. Year-group: ${year}. \n Subject: ${subject}.\n  Behavior is ${BfL}. \n Academic progress: ${progress}.\n${comments}. Limit length to ${length} characters. Tone should be ${tone}`
-        const role = ''
-        console.log(`Asking GPT: ${prompt}`);
-        let tokens = (length/2)*/
-
-    //Save API key
-    document.getElementById('saveKey').onclick = () => {
-        saveThing('api-input', 'claude-API-key'),
-        notificationAlert("Anthropic API Key saved successfully 🔑")
-    }
-
-    //Load API key
     window.onload = () => {
+        //Reloading the report archive
+        loadReportArchive()
+        addRow()
+        document.getElementById('report').innerHTML = 
         loadThing('api-input','claude-API-key');
-        let api = document.getElementById('api-input').value
-        if (api.length > 31) {
-            notificationAlert("Welcome back. Anthropic API key loaded successfully 🔑")
+        let api = "" + document.getElementById('api-input').value
+        console.log(api)
+        if (api.length < 31) {
+            api = window.prompt("Please enter your Anthropic API key.\n(Don't worry, it only gets saved to your local browser cache)", "sk-someth1ng.....");
+        }
+        api += ""
+        if (api.length < 31) {
+            if (alert('Missing API keys. Please refresh page and enter them')) { }
+            else {
+                
+                document.getElementById('inputTable').className = "hidden"
+                document.getElementById('errorAlert').className = "show"
+                document.getElementById('errorAlert').innerHTML =`
+            <div style='text-align:center'>
+            <br>
+            <h2>You need an Anthropic API keys to access this page. Use the link below to generate it.</h2>
+            <h3 
+            <br>
+            <a target="_blank" href="https://console.anthropic.com/account/keys">🔑 Anthropic Key</a>
+            
+            <h2>...then, refresh the page to enter the key.
+                </div>`
+        }
+        document.getElementById('api-input').value = api
+        saveThing('api-input', 'claude-API-key')
+        notificationAlert("Anthropic API Key saved successfully 🔑") 
+        document.getElementById('apikey').className = 'hidden'
         }
     }
+
+
 </script>
 
 <script>
+   
+//Saving the report to the archive        
+function saveReport() {
+    let storedItem = "" + document.getElementById('report').innerHTML
+    if (storedItem.length == 0) {
+        return
+    }
+    localStorage.setItem('reportArchive', storedItem)
+    console.log(`reportArchive has updated to` + storedItem);
+}
+
     function notificationAlert(notificationText) {
         var alertelement = document.getElementById("toastAlert");
         alertelement.innerHTML = notificationText
@@ -115,9 +99,54 @@
         setTimeout(function () { alertelement.className = alertelement.className.replace("show", ""); }, 3000);
     }
 
+    function loadReportArchive(params) {
+        let savedThing = "" + localStorage.getItem('reportArchive')
+        if (savedThing.length < 10) {
+            return
+        }
+        console.log(`Report Archive has loaded successfully: ` + savedThing)
+        document.getElementById('report').className = 'show'
+        document.getElementById('report').innerHTML = savedThing
+    }
+
+function cycleRows() {
+//Each row is generated with a unique idea, and a data-value of 'false'. This value should be changed to true when the row generates has a report generated for it.
+
+//In theory, this function will trigger ONCE instead of looping, it'll be launched by two triggers: the button is pressed (first instance) and then subsequently when the 'report' container changes - singalling that the fetch() request has been successfully completed. 
+
+//In the first instance, we log the number of rows.
+
+    var parent = document.getElementById('inputTable')
+    var rowDatabase = {}
+    var rows = parent.querySelectorAll("div")
+    rows.forEach((item) => {
+        if (item.id.length < 1) 
+        { console.log("missing value: " + item.id) } 
+        else {
+            let id = item.id
+            let rep = item.getAttribute('data-value')
+            let newRow = [id,rep]
+            rowArray.push(newRow)
+            }
+        console.log(rowArray)
+    })
+    //All the rows are now stored in an array, as [id,reportedBool]. We can access these as we see fit. Let's see if we can loop through to get their inputs...
+var inputs = []
+    for (let index = 0; index < rowArray.length; index++) {
+        let id = rowArray[index][0];
+        let content = logInputs(id)
+        let newInputs = [id]
+        newInputs.push(content)
+        inputs.push(newInputs)
+    }
+    console.log(inputs)
+
+        
+    }
+
+
     function logInputs(parentID) {
             var parent = document.getElementById(parentID)
-
             var inputsArray = []
             var inputs = parent.querySelectorAll("input")
             inputs.forEach((item) => {
@@ -133,6 +162,23 @@
             return inputsArray
         }
 
+    
+
+        //This is designed to fix common typos in Claude's response.
+function addSpaces(str) {
+  let result = '';
+  let i = 0;
+  while (i < str.length) {
+    const char = str[i];
+    result += char;
+    if ((char === '.' || char === ',' || char === ':' || char === ';') && i < str.length - 1 && str[i+1] !== ' ') {
+      result += ' ';
+    }
+    i++;
+  }
+  return result;
+}
+
 function reportClaude(parentID) {
     var parent = document.getElementById(parentID)
     var generateButton = parent.querySelector('button[name="generateButton"]')
@@ -140,7 +186,8 @@ function reportClaude(parentID) {
 
     var inputs = logInputs(parentID)
         var name = "" + inputs[0]
-        var progress = inputs[1]
+            var progressRating = ["Concerning", "A bit behind", "On-track", "Good", "Excellent"]
+        var progress = progressRating[Number.parseInt(inputs[1])]
         var comments = 'Additional points to consider: ' + inputs[2]
         var rfl = "" + inputs[3]
         var bfl = "" + inputs[4]
@@ -152,33 +199,39 @@ function reportClaude(parentID) {
     if (subject.length < 2) { notificationAlert("please enter a subject and try again."); return }
     if (rfl.length < 1){rfl = "OK"}
     if (bfl.length < 1) { bfl = "OK" }
+    let timestamp = new Date().toLocaleDateString('en-GB')
+    console.log(timestamp)
 
-    var userQuestion = 
-    `You are a teacher at a British school. You are writing end of year reports for students. Reports must comment on students' behaviour, academic progress and general comments. Reports must be written in the first person. 
-    Write a report about this student:
-    Name: ${rfl}
-    Subject: ${subject}
-    Year Group: ${yearGroup}
-    Behaviour: ${bfl}
-    Organisation skills: ${rfl} 
-    Academic progress: ${progress}
-    ${comments}
-    `
-    console.log(apiKey)
+    console.log('Requesting report for ' + name)
     let length = document.getElementById('length').value
-    let max_tokens = length / 2
-    let url = 'https://api.anthropic.com/v1/complete/';    
+    let max_tokens = length 
+    let url = 'https://proxy.cors.sh/https://api.anthropic.com/v1/complete/';    
     generateButton.className = 'hidden'
     viewResponseButton.className = 'loader'
 
     fetch(url, {
         method: 'POST',
         headers: {
+            'x-cors-api-key': 'temp_3057a811314fb7e97865af181a37b5e4',
             'X-API-Key': apiKey,
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            
         },
         body: JSON.stringify({
-            prompt: `\n\nHuman: QUESTION - ${userQuestion}. \n Limit your response to ${length} characters in length. Do not include any additional introduction or commentary \n\nAssistant:`,
+            prompt: `\n\nHuman: You are a teacher at a British school.You are writing end of year reports for students.Reports must comment on students' behaviour, academic performance and general comments. Do not mention specific grades or assessments, unless that information is specified below. Do not write a letter, only produce a paragraph of prose. Do not start with 'Dear...'. Check your response for spelling and grammar errors.
+            \n\nAssistant: OK, I understand. I will write a report about a student, when requested. Can I see some examples?
+            \n\nHuman: Yes, here are some examples. \nEXAMPLE 1: "Omar’s performance in Physics was outstanding this term. He displays an excellent understanding of the required knowledge and skills and the ability to apply them in a wide variety of situations. He usually completes his homework on time to a high standard. Omar generally demonstrates originality and also interacts well with his classmates. He can use scientific ideas, make predictions and develop scientific relationships to solve the problem appropriately. He participates enthusiastically in his IGCSE Physics lessons and seeks information independently, proving that he is a mature and responsible student. I wish him the very best for his external examinations." \nEXAMPLE2: "Adam is a confident and enthusiastic student who has made very good progress in MYP Digital Design this year. He was new to the school this year and had limited access to computers in his former school but he has shown himself to be a risk taker and resilient learner as he developed his computing skills. He was particularly strong in  web design but found coding difficult. I hope Adam will ask for help in future and continue developing his understanding of coding. I wish him the very best. "
+            \n\nAssistant: Thank you, I understand. I am ready to write a school report.
+            \n\nHuman: Write a report about this student:
+            Name: ${ name}
+            Subject: ${subject}
+            Year Group: ${yearGroup}
+            Behaviour: ${bfl}
+            Organisation skills: ${rfl} 
+            Academic progress: ${progress}
+            ${comments}
+    \n Limit your response to ${ length } characters in length. Do not include any additional introduction or commentary. 
+    \n\nAssistant: End of Year ${subject} Report for ${name}:`,
             model: `claude-instant-v1-100k`,
             max_tokens_to_sample: max_tokens,
             stop_sequences: ["\n\nHuman:"],
@@ -187,31 +240,70 @@ function reportClaude(parentID) {
     }).then(response => {
         return response.json()
     }).then(data => {
-        newresponse = data.completion
-        console.log(newresponse)
-        let date = new Date()
-        date = date.toLocaleDateString('en-GB')
+        console.log(data)
+        newResponse = data.completion
 
-        `<small>~~~~~Generated by Claude~~~~</small>
-        <small>~~~~~${date}~~~~</small>
-        <h2>${subject} Report for ${name}</h2>
-        <p>${newresponse}</p>
+        newResponse = addSpaces(newResponse)
+        
+        var newReport =
+        `<small>~~~~~Generated by Claude, ${timestamp}~~~~</small>
+        <h2>${subject} Report for ${name}, Year ${yearGroup}</h2>
+        <p type="claudeContent">${newResponse}</p>
         <br>
-        <small>~~~~~END~~~~</small>
+        <sup style="text-align:center;display:block;margin-left:auto;margin-right:auto;cursor: pointer;text-align: center;max-width: fit-content;"
+        onclick="copyResponse(this.parentElement.id)">Copy text 📋</sup>
+
+         <small>~~~~~END~~~~</small><br>
         `
 
         let currentReport = document.getElementById('report').innerHTML
-        document.getElementById('report').innerHTML = currentReport
+        document.getElementById('report').innerHTML = newReport + currentReport
         document.getElementById('report').className = "show"
         generateButton.className = ""
         viewResponseButton.className = "hidden"
 
     }).catch(error => {
-        console.log(error);
+        console.log(error)
         generateButton.className = ""
         viewResponseButton.className = "hidden"
        
     });
+}
+
+function addRow(){
+    let uniqueID = 100 + Math.floor(Math.random()*100)
+    var newRow = `
+    <div class="inputRow" id="${uniqueID}" data-value="false">
+        <input type="name" placeholder="Name?">
+        <select type="rfl">
+            <option value="" disabled selected>Organisation</option>
+            <option value="poor">Poor</option>
+            <option value="requires-improvement">Req Improvement</option>
+            <option value="good">Good</option>
+            <option value="outstanding">Outstanding</option>
+        </select>
+        <select type="bfl">
+            <option value="" disabled selected>Behaviour</option>
+            <option value="poor">Poor</option>
+            <option value="requires-improvement">Req Improvement</option>
+            <option value="good">Good</option>
+            <option value="outstanding">Outstanding</option>
+        </select>
+        <select type="progress">
+            <option value="" disabled selected>Progress</option>
+            <option value="concerning">Concerning</option>
+            <option value="a little behind">A bit behind</option>
+            <option value="On track">On track</option>
+            <option value="Good">Good</option>
+            <option value="Exceeding">Excellent</option>
+        </select>
+        <input type="comments" style="min-width:20vw" placeholder="Any specific comments?">
+        <button style="font-size:18px;" onclick="reportClaude(this.parentElement.id)" name="generateButton"
+            class="">🤖</button>
+        <button name="viewResponseButton" style="margin-top: 0px;min-height:30px;min-width: 30px;" class="hidden"></button>
+    </div>`
+    let currentTable = document.getElementById('inputTable').innerHTML
+    document.getElementById('inputTable').innerHTML = currentTable + newRow
 }
 </script>
 
@@ -243,22 +335,20 @@ function reportClaude(parentID) {
 This page will generate reports. First we need to set up a way for it to store JSONs for each student.-->
 
         <h1>Report Writer</h1>
-        <h3>Claude to the rescue</h3>
 
-    <div id="apikey">
+        <div id="errorAlert">
+
+        </div>
+
+    <div id="apikey" class="hidden">
         <details style="padding: 0px; margin: 3px;">
-            <summary style="font-size: smaller; color:grey">API key 🔑</summary><input type="text" id="api-input" style="font-size: 10px;
+            <summary style="font-size: smaller; color:grey;width: fit-content;margin-left: auto;margin-right: auto;">API key 🔑</summary><input type="text" id="api-input" style="font-size: smaller; color:grey;width: fit-content;margin-left: auto;margin-right: auto;font-size: 10px;
                                 font-family: monospace; text-align: center; max-width: 318px; background-color:lightgrey"
                 placeholder="sk-someth1ng....."><a id="saveKey"><sup style="cursor: pointer";>Save to cache 💾
                 </sup></a><br>
-            <small>Key is saved to your local browser cache. It can only be accessed by you and OpenAI.<br> Total tokens
-                used are also tracked in the cache.</small>
-
-            <code>Rough spend so far: <b id="spendTrackerDisplay">$0.00</b></code>
-            <br><p></p>
-            <div style="display: block; margin-left: auto; margin-right: auto;text-align: center;">
+            <small>Key is saved to your local browser cache. It can only be accessed by you and OpenAI.<br> Total tokens used are also tracked in the cache.</small>
                
-                <input style="margin-top: 1px;padding: 0px;" type="range" id="length" value="1000" min="100" max="4000" step="100">
+                <input style="margin-top: 1px;padding: 0px;font-size: smaller; color:grey;width: fit-content;margin-left: auto;margin-right: auto; display: block;" type="range" id="length" value="1000" min="100" max="9000" step="100">
                 <code style="text-align: center;margin-bottom: 0px;" id="lengthTracker"></code>
                 <script>
                     //This script updates the count as the slider is moved
@@ -270,9 +360,9 @@ This page will generate reports. First we need to set up a way for it to store J
         </details>
         <div id="toastAlert"></div>
     </div>
-<br>
+<!--<br>
     <input type="text" style="text-align: center;min-width:100px;max-width: fit-content;font-size: large;display: block;margin-left: auto;margin-right: auto;" id="className"
-        placeholder="Enter class name" value="">
+        placeholder="Enter class name" value="">-->
         </header>
         
    
@@ -280,21 +370,30 @@ This page will generate reports. First we need to set up a way for it to store J
     <div id="autocompleteDisplay"></div>
     <input id="displaystudentcode" placeholder="code?" value="" class="hidden">
 <style>
+    input, select {
+        border-radius: 1%;
+    }
     select {
-        min-width: 70px;
-        width: 70px;
+        min-width: 90px;
+        font-size: 80%;
+        width: 100px;
         max-width: fit-content;
         padding:1px;
         background-color:rgb(215, 245, 255);
         font-weight: 600;
         margin-right: 5px;
+        margin-bottom: 2px;
+        text-align: center;
     }
 
     input {
         max-width: 150px;
+        height: 15px;
         text-align: center;
         min-width: 50px;
         margin-right: 5px;
+        margin-bottom: 2px;
+        height: fit-content;
 
     }
 
@@ -312,70 +411,126 @@ This page will generate reports. First we need to set up a way for it to store J
     }
 
     .inputRow{
-    border-width: 2px;
     margin-left: auto;
     margin-right:auto;
-    max-width: 1000px;
+    margin-bottom: 3px;
+    max-width: 750px;
     display:flex;
-    height:50px;
+    height: 35px;
     padding:5px;
     font-size: 15px;
     text-align: left;
-    padding-bottom: 0;
+    padding-bottom: 5;
     vertical-align: middle;
+    border-color: none;
+    background-color: azure;
     }
 </style>
-<div class="inputRow" style="margin-left: auto;margin-right: auto;width:400px;">
-    <input id="subject" type="text" placeholder="Subject?" value="English">
-    <input id="yearGroup" type="number" Placeholder="Year?" value="9">
+<div class="inputRow" id="classInfo" style="margin-left: auto;margin-right: auto;width:200px;border: 0px;background-color:transparent;">
+    <input id="subject" style="font-weight: bold;" type="text" placeholder="Subject?" value="English">
+    <input id="yearGroup" style="font-weight: bold;width: 10px;padding-right:0px" type="number" Placeholder="Year?" value="9">
 </div>
+<hr style="margin-bottom: 1px;">
+<div id="" class="hidden" style="background-color: transparent;height:20px;text-align: center;margin-bottom: 9px;width: 750px;font-family: monospace;font-size: 12px;">
+<p>---------- Name ----------- Organisation --- Behaviour ----- Progress ------------- Comments ----------- </p></div>
 
-<br>
-<div class="inputRow" id="student1">
-        <input type="name"placeholder="Name?" value="John">
+<div id="inputTable">
+    <div class="inputRow" id="${uniqueID}" data-value="false">
+        <input type="name" placeholder="Name?">
         <select type="rfl">
-            <option value="" disabled selected>RfL</option>
+            <option value="" disabled selected>Organisation</option>
             <option value="poor">Poor</option>
             <option value="requires-improvement">Req Improvement</option>
             <option value="good">Good</option>
             <option value="outstanding">Outstanding</option>
         </select>
         <select type="bfl">
-            <option value="" disabled selected>BfL</option>
+            <option value="" disabled selected>Behaviour</option>
             <option value="poor">Poor</option>
             <option value="requires-improvement">Req Improvement</option>
             <option value="good">Good</option>
             <option value="outstanding">Outstanding</option>
         </select>
-    
-        <div type="academicSlider" style="width:100px;margin-right: 5px;">
-            <input style="width: 100px;padding: 0px;margin-bottom: 0px;" type="range" id="progressSlider" value="neutral"
-                min="0" max="4" step="1" style="margin-bottom: 1px;">
-            <small style="position: absolute;width: 100px;padding: 0px;margin: 0px;text-align: center;" id="progress">Progress?</small>
-        </div>
+        <select type="progress">
+            <option value="" disabled selected>Progress</option>
+            <option value="concerning">Concerning</option>
+            <option value="a little behind">A bit behind</option>
+            <option value="On track">On track</option>
+            <option value="Good">Good</option>
+            <option value="Exceeding">Excellent</option>
+        </select>
+        <input type="comments" style="min-width:20vw" placeholder="Any specific comments?">
+        <button style="font-size:18px;" onclick="reportClaude(this.parentElement.id)" name="generateButton"
+            class="">🤖</button>
+        <button name="viewResponseButton" style="margin-top: 0px;min-height:30px;min-width: 30px;" class="hidden"></button>
+    </div>
+</div>
 
-        <input type="comments" style="min-width:30vw"placeholder="Any specific comments?" value = "Never does homework on-time">
-    <button onclick="reportClaude(this.parentElement.id)" name="generateButton" class="">🤖</button>
-    <button name="viewResponseButton" style="margin-top: 0px;min-height:30px;min-width: 30px;" class="hidden"></button>
-</div>
+
+<sup style="text-align:center;
+    margin-left: auto;
+    margin-right: auto;
+    display: block; width:fit-content;" onclick="addRow()">+ Add student +</sup>
+
+
+<br>
+<br>
+<button onclick="cycleRows()" style="text-align:center;
+    margin-left: auto;
+    margin-right: auto;
+    display: block; width:fit-content;font-size: 20px;">Log all</button>
+    
+
 <div id="response-container">
-    <form id="report" class="hidden" style="max-width: 100;color: aliceblue;background-color: black;font-family: monospace;font-size: larger;" placeholder="Report will appear here"></form>
+    <style>
+    small {
+    text-align:center;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 12px;
+    display: block;
+    width:fit-content;
+    max-width: fit-content;
+    }
+    </style>
+    <form id="report"  placeholder="Report will appear here" class="hidden"></form>
     
 </div>
-<sup class="hidden" style="display:block;margin-left:auto;margin-right:auto;cursor: pointer;text-align: center;max-width: fit-content;" id="copyReport">Copy text 📋</sup>
+
 <script>
     document.getElementById('report').onchange = () => {
-        document.getElementById('copyReport').className = "show"
+        document.getElementById('report').className = "show";
+        saveReport()
     };
-</script>
-<script>
+
+    function copyResponse(parentID) {
+        
+        var parent = document.getElementById(parentID)
+        var thingToCopy= parent.querySelector("p")
+        thingToCopy = thingToCopy.innerHTML
+        navigator.clipboard.writeText(thingToCopy);
+        notificationAlert('Copied to clipboard 📋');
+    }
+
     // This script updates the count as the slider is moved
+
+
+    /* maybe will reintegrate this, if I can be bothered.
+<div type="academicSlider" style="width:100px;margin-right: 5px;">
+            <input style="width: 100px;padding: 0px;margin-bottom: 0px;margin-top: -1px;" type="range"
+                id="progressSlider${uniqueID}" value="neutral" min="0" max="4" step="1" style="margin-bottom: 1px;">
+            <small
+                style="position: relative;width: 100px;padding: 0px;margin-left: auto;margin-right:auto;margin-top:-4px;text-align: center;"
+                id="progressDisplay${uniqueID}">Progress?</small>
+        </div>
+
 
     var progressRating = ["Concerning", "A bit behind", "On-track", "Good", "Excellent"]
     document.getElementById("progressSlider").oninput = function () {
         document.getElementById("progress").innerHTML = progressRating[document.getElementById("progressSlider").value];
         document.getElementById("progress").value = progressRating[document.getElementById("progressSlider").value]
     };
+    */
 </script>
 
 <footer>

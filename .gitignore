@@ -16,3 +16,6 @@ strapdown.html
 texteditor.html
 blogarchive/.tmp.drivedownload
 askGPT-async.js
+cert.pem
+key.pem
+claude-report.html

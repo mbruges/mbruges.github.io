@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="icon" href="/favicon.svg">
+    <link rel="stylesheet" href="/style.css">
+    <meta charset="utf-8">
+    <meta name="description" content="MB ">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MB - Claude</title>
+
+    <!--SHARE TAGS-->
+    <meta prefix="og: http://ogp.me/ns#" property="og:type" content="website" />
+    <meta prefix="og: http://ogp.me/ns#" property="og:title" content="MBruges.com" />
+    <meta prefix="og: http://ogp.me/ns#" property="og:description" content=" " />
+    <meta prefix="og: http://ogp.me/ns#" property="og:image" content="https://mbruges.com/images/banner-square.png" />
+    <meta prefix="og: http://ogp.me/ns#" property="og:url" content="https://mbruges.com/" />
+
+
+<script>
+window.onload = () => {
+
+    document.getElementById('apiStore').value = localStorage.getItem('apiKey')
+    let api = "" + document.getElementById('apiStore').value
+
+    document.getElementById('xCorsKeyStore').value = localStorage.getItem('xCorsKey')
+    let xCorsKey = "" + document.getElementById('xCorsKeyStore').value
+    
+    console.log(api)
+    if (api.length < 31) {
+        api = window.prompt(`Please enter your Anthropic API key.\n(Don't worry, it only gets saved to your local browser cache)`, "sk-someth1ng.....");
+        document.getElementById('apiStore').value = api
+        console.log(document.getElementById('apiStore').value)
+
+        let storedItem = api
+        localStorage.setItem('apiKey', storedItem)
+
+    }
+
+    if (xCorsKey.length < 31) {
+        xCorsKey = window.prompt(`Please enter your CORS.SH API key.\n(Don't worry, it only gets saved to your local browser cache)`, "key here...");
+        document.getElementById('xCorsKeyStore').value = xCorsKey
+        console.log(document.getElementById('xCorsKeyStore').value)
+
+        let storedItem = "" + xCorsKey
+        localStorage.setItem('xCorsKey', storedItem)
+    }
+    xCorsKey += ""
+    api += ""
+    if (api.length < 31 || xCorsKey.length < 5) {
+        if (alert('Missing API keys. Please refresh page and enter them')) { }
+        else {
+            
+            document.getElementById('input-container').className = "hidden"
+            
+            document.getElementById('options-container').className = "hidden"
+            document.getElementById('monitor').innerHTML = `
+            <br>
+            <h2>You need two API keys to access this page. Use the links below to generate them.</h2>
+            <h3 
+            <br>
+            <a style="color:white;" target="_blank" href="https://console.anthropic.com/account/keys">🔑 Anthropic Key</a>
+            <br>
+            <a style="color:white;"target="_blank" href="https://cors.sh/">🔑 CORS.SH Key</a></h3>
+            <br>
+            <h2>...then, refresh the page to enter the keys.`
+            document.getElementById('fileUploadDialog').close()
+}
+        }
+}
+
+
+    function downloadTxt(elementIDtoDownload) {
+        const link = document.createElement("a");
+        var content = "" + document.getElementById(elementIDtoDownload).innerHTML + `\n\n Generated on mbruges.com 🐈‍⬛`
+        content = content.replaceAll('<br>','\n')
+        const file = new Blob([content], { type: 'text/plain' });
+        link.href = URL.createObjectURL(file);
+        let date = new Date()
+        date = date.toLocaleDateString("en-GB")
+        let fileName = `ClaudeTranscript-${date}.txt`
+        link.download = fileName;
+        link.click();
+        URL.revokeObjectURL(link.href);
+    };
+
+function insertText(inputElement,idToChange) {
+    let input = inputElement
+    let target = document.getElementById(idToChange)
+    target.value = input.innerHTML
+    submitInput()
+}
+
+function askClaude() {
+    
+    //Building convo history
+
+    let convoHistory = document.getElementById('monitor').innerHTML
+    
+    convoHistory = convoHistory.replaceAll('<br>', '\n')
+    convoHistory = convoHistory.replaceAll('USER', 'Human')
+    convoHistory = convoHistory.replaceAll('CLAUDE', 'Assistant')
+
+     let fileContent = document.getElementById('fileContainer').innerText
+
+     if (fileContent.length > 2) {
+        fileContent = `Human: Be concise in all your responses. In this conversation I will be asking questions about this file:\n FILE START \n ${fileContent} \nFILE END \n\n Assistant: I understand. I will answer questions about this file.`;
+    } else { fileContent = `Human: Be concise in all your responses. Do not reference this instruction in our conversation. \n\n Assistant: I understand. I will answer questions in a concise manner and not reference this instruction about being concise.` }
+
+    console.log("history is: "+ convoHistory)
+    let api = document.getElementById('apiStore')
+    let userQuery = document.getElementById('input').value
+    var apiKey = document.getElementById('apiStore').value
+    var xCorsKey = document.getElementById('xCorsKeyStore').value
+    let proxy = 'https://proxy.cors.sh/'
+    let url = proxy + 'http://api.anthropic.com/v1/complete/'; 
+    fetch(url, {
+           method: 'POST',
+        headers: {
+            'x-cors-api-key': xCorsKey,
+            'X-API-Key': apiKey,
+            'Content-Type': 'application/json',
+
+        },
+            body: JSON.stringify({
+                    prompt: `${fileContent} ${convoHistory} \n\nHuman: ${userQuery} \n\nAssistant:`,
+                    model: `claude-instant-v1.1`, 
+                    max_tokens_to_sample: 5000, 
+                    stop_sequences: ["\n\nHuman:"], 
+                    temperature: 1
+                })
+        }).then(response => {
+            return response.json()
+        }).then(data => {
+            console.log(`FULL INPUT: ${fileContent} ${convoHistory} \n\nHuman: ${userQuery} Be concise. \n\nAssistant:`)
+            newResponse = data.completion
+            
+            let monitor = document.getElementById('monitor')
+            
+            let existingChat = monitor.innerHTML
+            existingChat = existingChat.replace('<br><br><i>CLAUDE is typing..</i>.','')
+
+            //Fixing presentation of listed items
+            newResponse = newResponse.replaceAll('\n', `<br>`)
+
+
+            monitor.innerHTML = existingChat + '<br><br>' + 'CLAUDE:' + newResponse
+
+            monitor.scrollTop = monitor.scrollHeight;
+
+        }).catch(error => {
+            console.log('error')
+            let monitor = document.getElementById('monitor')
+            let existingChat = monitor.innerHTML
+            existingChat = existingChat.replace('<br><br><i>CLAUDE is typing..</i>.', '')
+
+            monitor.innerHTML = existingChat + '<br><br>' + 'CLAUDE:' + error
+        });
+    }
+
+    function uploadFile() {
+        const [file] = document.querySelector("input[type=file]").files;
+        let fileUrl = URL.createObjectURL(file)
+        console.log(fileUrl)
+        const content = document.getElementById('fileContainer')
+        const reader = new FileReader();
+        reader.addEventListener(
+            "load",
+            () => {
+                content.innerText = reader.result;
+                localStorage.setItem('fileToRead', content.innerText);
+                console.log('file uploaded');
+                notificationAlert(`File uploaded successfully: ${document.querySelector("input[type=file]").files.item(0).name}`)
+                document.getElementById('querySuggestions').className="show"
+            },
+            false
+        );
+        if (file) {
+            reader.readAsText(file);
+        }
+    }
+    
+
+    // Execute a function when the user presses a key on the keyboard
+window.addEventListener("keydown", (event) => {
+    let focus = document.activeElement.id
+        if (event.keyCode === 13 && focus == 'input') {
+          submitInput()  
+        }})
+
+    function submitInput() {
+        askClaude()
+        let target = document.getElementById('input')
+        let input = target.value
+
+        let monitor = document.getElementById('monitor')
+
+        let fileContent = document.getElementById('fileContainer').innerText
+
+        let existingChat =  monitor.innerHTML
+
+        let newEntry = input
+
+        monitor.innerHTML = existingChat + '<br><br>' + 'USER: ' + input 
+
+        monitor.scrollTop = monitor.scrollHeight;
+
+        if (target.value.length !== "") {
+            target.value = "";
+        }
+
+        setTimeout(() => {
+            monitor.innerHTML = monitor.innerHTML + '<br><br><i>CLAUDE is typing..</i>.'
+        ;
+     monitor.scrollTop = monitor.scrollHeight;
+}, 200);
+
+        
+    }
+
+    function showname() {
+            var name = document.getElementById('fileInput');
+            document.getElementById('fileBarDisplay').innerHTML =  'Selected file: ' + name.files.item(0).name;
+            
+        };
+
+    function notificationAlert(notificationText) {
+            var alertelement = document.getElementById("toastAlert");
+            alertelement.innerHTML = notificationText
+            alertelement.className = "show";
+            setTimeout(function () { alertelement.className = alertelement.className.replace("show", ""); }, 3000);
+        }
+</script>
+
+    
+</head>
+
+<body style="background-color: rgb(162, 161, 161); font-family: monospace;">
+    <div id="toastAlert"></div>
+    
+    <header style="max-height: 8vh;padding-top: 1%;margin-top: 1px;">
+        <nav>
+            <div class="dropdown">
+                <a id="catNav"><img alt="miaow" src="/favicon.svg" height="40" width="40"></a>
+                <div class="dropdown-content">
+                    <a href="/experiments.html">Experiments</a>
+                    <a href="/resources.html">Resources</a>
+                    <a href="/blog.html">Blog</a>
+                </div>
+            </div>
+            <i id="fileBarDisplay" style="color: greenyellow;font-size: 12px;"> > Bonjour <a style="color: greenyellow;" href="https://www.anthropic.com/index/introducing-claude" target="_blank">CLAUDE</a> </i>
+            <ul>
+                <li><a href="/index.html"> Home </a></li>
+            </ul>
+        </nav>
+    </header>
+
+<!--File upload dialog-->
+<dialog id="fileUploadDialog" class="code" style="background-color: black;height: 80px;text-align: center;color: white;width: 200px;margin:1px" open>
+    <p>Would you like to upload a file to the chat?</p>
+    <label style="display: inline;" for="fileInput"><code style="color: black;background-color: white;cursor: pointer;">Yes</code></label>
+<code onclick="this.parentElement.close()" style="display: inline;color: black;background-color: white;cursor: pointer;">No</code>
+<input id="fileInput" class="hidden" type="file" accept=".doc,.xml,.rtf,.txt,.csv,.eml,.odt,.ods" onchange="uploadFile(); this.parentElement.close(); showname()" placeholder="Hello">
+<p class="hidden" id="fileContainer"> </p>
+</dialog>
+    <code id="apiStore" value="" class="hidden"></code>
+    <code id="xCorsKeyStore" value="" class="hidden"></code>
+    <code id="inputContainer" class="hidden" value=""></code>
+
+<form id="monitor" class="code" style="overflow-x: scroll;padding-bottom: 20px;margin-bottom: 1px;height:60vh;max-width: 80vw;width: 500px;"></form>
+
+
+<div id="input-container" style="display: block;margin-left: auto;margin-right: auto;text-align: center;max-width: 90vw;">
+    
+    <input class="code" style="max-height:30px;display: inline;margin: 0px; width:490px;max-width: 75vw;" type="text" placeholder="Enter your query" id="input">
+    
+    <button id="submit" class="code" style="display: inline;padding:1px;font-size: 22px;max-height:50px;margin: 0px;margin-top: 1px;background: transparent;border-width: 0px;font-size: 18px;font-weight: 900;" onclick="submitInput() ">⮐</button>
+
+</div>
+
+<div id="querySuggestions"
+    style="display: block;margin-left: auto;margin-right: auto;text-align: center;max-width: 90vw" class="hidden">
+    <style>
+        a i {
+            padding:5px;
+            cursor:pointer
+        }
+    </style>
+    <a><i onclick="insertText(this,'input')">Summarise this file</i></a>
+    <a><i onclick="insertText(this,'input')">How could this be improved?</i></a>
+    <a><i onclick="insertText(this,'input')">How many words in the file?</i></a>
+</div>
+<div id="options-container" style="text-align: center;">
+
+    <code style="color:white;cursor: pointer;background-color: black;padding: 6px;"
+        onclick="location.reload()">Reset chat ⚠️</code><code style="color:white;cursor: pointer;background-color: black;padding: 6px;margin-top: 4px;" onclick="downloadTxt('monitor')"> Download transcript 📝</code><code style="color:white;cursor: pointer;background-color: black;padding: 6px;"
+            onclick="document.getElementById('fileUploadDialog').open = true"> Upload file 📂</code>
+    
+    
+</div>
+    <footer>
+        
+        <div style="height:1vh"></div>
+        <p>© 2023 - <i> Made by <a href="/about.html" target="_blank">me
+                </a> and Agatha</i> 🐈‍⬛</p>
+        <p><i>Found this interesting? <a href="mailto:hello@mbruges.com?subject=Hello from the Internet"
+                    style="font-style: normal;"> Drop me a line 📮</a>
+        </p>
+    </footer>
+</body>
+
+</html>
+

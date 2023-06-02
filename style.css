@@ -80,8 +80,10 @@ hr {
     background-color: var(--color-bg-secondary);
     border: none;
     height: 1px;
-    margin: 2rem;
-    width: 100%;
+    width: 90%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 section {
