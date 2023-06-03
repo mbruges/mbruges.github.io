@@ -7,7 +7,7 @@
     <meta charset="utf-8">
     <meta name="description" content="MB ">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MB - Claude</title>
+    <title>Claude Portal</title>
 
     <!--SHARE TAGS-->
     <meta prefix="og: http://ogp.me/ns#" property="og:type" content="website" />
@@ -24,9 +24,26 @@ function roleplayInput() {
     console.log(document.getElementById('roleplayInput').value)
     
 }
-window.onload = () => {
-    document.getElementById('fileUploadDialog').close()
 
+function APIkeyInput() {
+   const dialog = document.getElementById('keyInputDialog')
+    let claudeAPI = document.getElementById('apiStore').value 
+    let corsAPI = document.getElementById('xCorsKeyStore').value
+    if ((claudeAPI.length < 10) || (corsAPI.length < 10)) {
+        dialog.showModal()
+        return
+    } else { dialog.close() 
+    localStorage.setItem('apiKey',claudeAPI)
+    localStorage.setItem('xCorsKey', corsAPI)
+    }
+}
+window.onload = () => {
+    // Retrieve values from cache on load
+    document.getElementById('apiStore').value = localStorage.getItem('apiKey')
+    document.getElementById('xCorsKeyStore').value = localStorage.getItem('xCorsKey')
+    //document.getElementById('fileUploadDialog').close()
+    APIkeyInput()
+    function oldKeyEntry(){
     document.getElementById('apiStore').value = localStorage.getItem('apiKey')
     let api = "" + document.getElementById('apiStore').value
 
@@ -73,7 +90,7 @@ window.onload = () => {
             <h2>...then, refresh the page to enter the keys.`
             document.getElementById('fileUploadDialog').close()
 }
-        }
+        }}
 }
 
 
@@ -104,11 +121,8 @@ function askClaude() {
     let roleplayInput = document.getElementById('roleplayInput').value
     
     if (roleplayInput) {
-        role = `Roleplay as: ${roleplayInput}. Respond to all questions as this character. Do not break out of this roleplay for any reason. If asked something you cannot answer, make an excuse in-character. Do not reference the fact you are in a roleplay. Do not use any asterisked comments to reference physical actions, for example: *in deep voice*.`
+        role = `You are a ${roleplayInput}. Respond to all questions in this role. Do not break out of this roleplay for any reason. If asked something you cannot answer, make an excuse in-character. Do not reference the fact you are in a roleplay. Do NOT use any asterisked comments, for example: *in deep voice*.`
     }
-    
-    //'You are a studious 15-year-old, living in the UK in 2009. You are chatting with a friend on MSN Messenger. You are nervous about exams. \n Respond to all questions as this character. Do not break out of this roleplay for any reason. If asked something you cannot answer, make an excuse in-character. Do not reference the fact you are in a roleplay. Use emoji and suitable cultural references where applicable.'
-
     //Building convo history
 
     let convoHistory = document.getElementById('monitor').innerHTML
@@ -116,6 +130,8 @@ function askClaude() {
     convoHistory = convoHistory.replaceAll('<br>', '\n')
     convoHistory = convoHistory.replaceAll('USER', 'Human')
     convoHistory = convoHistory.replaceAll('CLAUDE', 'Assistant')
+    convoHistory = convoHistory.replaceAll('<b>', '')
+    convoHistory = convoHistory.replaceAll('</b>', '')
 
      let fileContent = document.getElementById('fileContainer').innerText
 
@@ -130,6 +146,7 @@ function askClaude() {
     var xCorsKey = document.getElementById('xCorsKeyStore').value
     let proxy = 'https://proxy.cors.sh/'
     let url = proxy + 'http://api.anthropic.com/v1/complete/'; 
+    console.log(`FULL INPUT: ${fileContent} ${convoHistory} \n\nHuman: ${userQuery}. \n\nAssistant:`)
     fetch(url, {
            method: 'POST',
         headers: {
@@ -194,6 +211,7 @@ function askClaude() {
         if (file) {
             reader.readAsText(file);
         }
+        showname()
     }
     
 
@@ -221,7 +239,7 @@ window.addEventListener("keydown", (event) => {
 
         let newEntry = input
 
-        monitor.innerHTML = existingChat + '<br><br>' + 'USER: ' + input 
+        monitor.innerHTML = existingChat + '<br><br><b>' + 'USER: ' + input +'</b>'
 
         monitor.scrollTop = monitor.scrollHeight;
 
@@ -255,11 +273,11 @@ window.addEventListener("keydown", (event) => {
     
 </head>
 
-<body style="background-color: rgb(162, 161, 161); font-family: monospace;">
+<body style=>
     <div id="toastAlert"></div>
     
     <header style="max-height: 8dvh;padding-top: 1%;margin-top: 1px;margin-bottom: 1px;">
-        <nav style="background-color: rgb(162, 161, 161);">
+        <nav>
             <div class="dropdown">
                 <a id="catNav"><img alt="miaow" src="/favicon.svg" height="40" width="40"></a>
                 <div class="dropdown-content">
@@ -268,37 +286,67 @@ window.addEventListener("keydown", (event) => {
                     <a href="/blog.html">Blog</a>
                 </div>
             </div>
-            <i id="fileBarDisplay" style="color:midnightblue;font-size: 12px;"> > Bonjour <a style="color: midnightblue;" href="https://www.anthropic.com/index/introducing-claude" target="_blank">CLAUDE</a> </i>
+            <i id="fileBarDisplay" style="color:midnightblue;font-size: 12px;font-family: monospace;"> > Bonjour <a style="color: midnightblue;" href="https://www.anthropic.com/index/introducing-claude" target="_blank">CLAUDE</a> </i>
             <ul>
                 <li><a href="/index.html"> Home </a></li>
             </ul>
         </nav>
     </header>
 
-<!--File upload dialog-->
-<dialog id="fileUploadDialog" class="code" style="align-self:auto; background-color: black;height: 80px;text-align: center;color: white;width: 200px;margin:1px;position:absolute;top:20dvh;" open>
-    <p>Would you like to upload a file to the chat?</p>
-    <label style="display: inline;" for="fileInput"><code id="yesbutton" style="color: black;background-color: white;cursor: pointer;">Yes</code></label>
-<code onclick="this.parentElement.close()" style="display: inline;color: black;background-color: white;cursor: pointer;">No</code>
-<input id="fileInput" class="hidden" type="file" accept=".doc,.xml,.rtf,.txt,.csv,.eml,.odt,.ods" onchange="uploadFile(); this.parentElement.close(); showname()" placeholder="Hello">
-<p class="hidden" id="fileContainer"> </p>
+
+<dialog id="keyInputDialog" style="text-align: center;">
+    <style>
+    </style>
+        <p style="text-align: center;">
+            <label id="keyWarning">Please enter the required API keys:
+                <input id="apiStore" placeholder="Anthropic API key" value="" class="" style="margin-top: 5px;background-color: black;
+height: fit-content;
+text-align: center;
+color: white;
+width: 200px;
+margin:1px;
+margin-left: auto;
+margin-right: auto;
+display: block;
+font-size: 10px;
+font-family: monospace;">
+                <input id="xCorsKeyStore" placeholder="CORS.SH API key" value="" class="" style="margin-top: 5px;background-color: black;
+height: fit-content;
+text-align: center;
+color: white;
+width: 200px;
+margin:1px;
+margin-left: auto;
+margin-right: auto;
+display: block;
+font-size: 10px;
+font-family: monospace;">
+            </label>
+        </p>
+        
+            <code onclick="this.parentElement.close();setTimeout(() => {
+                APIkeyInput()
+            }, 10);"
+                style="display: inline;color: white;background-color:midnightblue;cursor: pointer;border-radius: 1px;padding: 6px;">Save keys</code><br><br>
+                <small>(Don't worry, these only get saved to your local browser cache)</small>
 </dialog>
-    <code id="apiStore" value="" class="hidden"></code>
-    <code id="xCorsKeyStore" value="" class="hidden"></code>
+
     <code id="inputContainer" class="hidden" value=""></code>
 
-<form id="monitor" class="code" style="overflow-x: scroll;padding-bottom: 20px;margin-bottom: 1px;max-height:60dvh;max-width: 80vw;width: 500px;bottom:0;vertical-align: bottom;margin-top:1px;padding-top: 1px;height: fit-content;min-height: 40dvh;background-color: midnightblue;color: white;"></form>
+<form id="monitor"  style="overflow-x: scroll;
+padding:10px;padding-bottom: 20px;margin-bottom: 1px;
+max-height:60dvh;width: 80vw;max-width:600px;
+vertical-align:bottom;margin-top:1px;padding-top: 1px;height: fit-content;min-height: 40dvh;background-color: midnightblue;color: white;border-color: midnightblue;"></form>
 
 
 </div>
-<div id="input-container" style="display: block;margin-left: auto;margin-right: auto;text-align: center;max-width: 90vw;">
+<div id="input-container" style="display: block;margin-left: auto;margin-right: auto;text-align: center;width: 80vw;max-width:600px">
     
-    <input class="code" style="max-height:30px;display: inline;margin: 0px; width:490px;max-width: 75vw;color: midnightblue;background-color: rgb(212, 224, 250)" type="text" placeholder="Enter your query" id="input">
+    <input  style="border-width:6px; border-color: midnightblue; border-radius: 0px;max-height:30px;display: inline;margin: 0px; width:490px;width: 80%;color: midnightblue;background-color: rgb(212, 224, 250);margin-top:-3px" type="text" placeholder="Enter your query" id="input">
     
-    <button id="submit" class="code" style="display: inline;padding:1px;font-size: 22px;max-height:50px;margin: 0px;margin-top: 1px;background: transparent;border-width: 0px;font-size: 18px;font-weight: 900;" onclick="submitInput() ">➡️</button>
+    <button id="submit"  style="width:7%;display: inline;padding:1px;max-height:50px;margin: 0px;margin-right:-5%;margin-bottom: -20px;background: transparent;border-width: 0px;font-size: 20px;font-weight: 900;color:midnightblue" onclick="submitInput() ">&#8629;</button>
 
 </div>
-
 <div id="querySuggestions"
     style="display: block;margin-left: auto;margin-right: auto;text-align: center;max-width: 90vw" class="hidden">
     <style>
@@ -314,13 +362,13 @@ window.addEventListener("keydown", (event) => {
 <div id="options-container" style="text-align: center;">
 
     <code style="color:white;cursor: pointer;background-color: black;padding: 6px;" onclick="location.reload()">Reset ⚠️</code>
-    <code style="color:white;cursor: pointer;background-color: black;padding: 6px;" onclick="document.getElementById('fileUploadDialog').open = true;"> Upload file 📂</code>
+    <code style="color:white;cursor: pointer;background-color: black;padding: 6px;" onclick="document.getElementById('fileInput').click()"> Upload file 📂</code>
     <code style="color:white;cursor: pointer;background-color: black;padding: 6px;" onclick="roleplayInput(this)"> Roleplay 🎭</code>
     <code style="color:white;cursor: pointer;background-color: black;padding: 6px;margin-top: 4px;"
         onclick="downloadTxt('monitor')"> Get transcript 📝</code>
 
     <span id="roleplayInput" value="" class="hidden"></span>
-    
+    <span id="fileContainer" value="" class="hidden"></span>
     
 </div>
     <footer>
@@ -333,6 +381,4 @@ window.addEventListener("keydown", (event) => {
         </p>
     </footer>
 </body>
-
 </html>
-
