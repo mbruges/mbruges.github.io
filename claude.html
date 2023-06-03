@@ -19,6 +19,25 @@
 
 <script>
 
+    const starterText = `<br>
+                <p>CLAUDE: <i>Bonjour!</i> I am Claude, a chatbot created by Anthropic, and put onto this webpage by <a style="color:var(--color-darkblue);" href="/about.html" target="_blank">Max Bruges</a>.</p>
+                <p>I can do lots of things with text, including reading files and taking on roles. </p>
+                <p> Click one of the buttons below, or simply type a question to start.</p>
+                <center>
+                    <code style="color:white;cursor: pointer;background-color: var(--color-darkblue);padding: 6px;"
+                        onclick="document.getElementById('fileInput').click()"> Upload file 📂</code>
+                    <code style="color:white;cursor: pointer;background-color: var(--color-darkblue);padding: 6px;"
+                        onclick="roleplayInput(this)"> Roleplay 🎭</code>
+                    <code style="color:white;cursor: pointer;background-color: var(--color-darkblue);padding: 6px;"
+                        onclick="document.getElementById('input').value = 'Hi there!'; submitInput()">Say hi 👋</code>
+                </center>`
+
+function scrollUp(){
+    let monitor = document.getElementById('monitor')
+    
+    monitor.scrollTo({ top: 0, behavior: 'smooth' })
+}
+
 function roleplayInput() {
     document.getElementById('roleplayInput').value = window.prompt(`Enter the details of the role you'd like Claude to perform. Keep instructions concise.`, "A pirate");
     console.log(document.getElementById('roleplayInput').value)
@@ -43,56 +62,15 @@ window.onload = () => {
     document.getElementById('xCorsKeyStore').value = localStorage.getItem('xCorsKey')
     //document.getElementById('fileUploadDialog').close()
     APIkeyInput()
-    function oldKeyEntry(){
-    document.getElementById('apiStore').value = localStorage.getItem('apiKey')
-    let api = "" + document.getElementById('apiStore').value
 
-    document.getElementById('xCorsKeyStore').value = localStorage.getItem('xCorsKey')
-    let xCorsKey = "" + document.getElementById('xCorsKeyStore').value
-    
-    console.log(api)
-    if (api.length < 31) {
-        api = window.prompt(`Please enter your Anthropic API key.\n(Don't worry, it only gets saved to your local browser cache)`, "sk-someth1ng.....");
-        document.getElementById('apiStore').value = api
-        console.log(document.getElementById('apiStore').value)
+    setTimeout(() => {
+         if (document.getElementById('keyInputDialog').show != true) {
+            document.getElementById('monitor').innerHTML = starterText;
+            notifySound()
+        }
+    }, 500);
 
-        let storedItem = api
-        localStorage.setItem('apiKey', storedItem)
-
-    }
-
-    if (xCorsKey.length < 31) {
-        xCorsKey = window.prompt(`Please enter your CORS.SH API key.\n(Don't worry, it only gets saved to your local browser cache)`, "key here...");
-        document.getElementById('xCorsKeyStore').value = xCorsKey
-        console.log(document.getElementById('xCorsKeyStore').value)
-
-        let storedItem = "" + xCorsKey
-        localStorage.setItem('xCorsKey', storedItem)
-    }
-    xCorsKey += ""
-    api += ""
-    if (api.length < 31 || xCorsKey.length < 5) {
-        if (alert('Missing API keys. Please refresh page and enter them')) { }
-        else {
-            
-            document.getElementById('input-container').className = "hidden"
-            
-            document.getElementById('options-container').className = "hidden"
-            document.getElementById('monitor').innerHTML = `
-            <br>
-            <h2>You need two API keys to access this page. Use the links below to generate them.</h2>
-            <h3 
-            <br>
-            <a style="color:white;" target="_blank" href="https://console.anthropic.com/account/keys">🔑 Anthropic Key</a>
-            <br>
-            <a style="color:white;"target="_blank" href="https://cors.sh/">🔑 CORS.SH Key</a></h3>
-            <br>
-            <h2>...then, refresh the page to enter the keys.`
-            document.getElementById('fileUploadDialog').close()
 }
-        }}
-}
-
 
     function downloadTxt(elementIDtoDownload) {
         const link = document.createElement("a");
@@ -115,6 +93,11 @@ function insertText(inputElement,idToChange) {
     submitInput()
 }
 
+    function notifySound() {
+        var audio = document.getElementById("audio");
+        audio.play();
+    }
+
 function askClaude() {
     let role = 'Be concise in all your responses. Do not reference this instruction in our conversation.'
 
@@ -126,8 +109,10 @@ function askClaude() {
     //Building convo history
 
     let convoHistory = document.getElementById('monitor').innerHTML
+
+    convoHistory = convoHistory.replaceAll(starterText, '')
     
-    convoHistory = convoHistory.replaceAll('<br>', '\n')
+    convoHistory = convoHistory.replaceAll('<br>', '\n') 
     convoHistory = convoHistory.replaceAll('USER', 'Human')
     convoHistory = convoHistory.replaceAll('CLAUDE', 'Assistant')
     convoHistory = convoHistory.replaceAll('<b>', '')
@@ -180,6 +165,7 @@ function askClaude() {
             monitor.innerHTML = existingChat + '<br><br>' + 'CLAUDE:' + newResponse
 
             monitor.scrollTop = monitor.scrollHeight;
+            notifySound();
 
         }).catch(error => {
             console.log('error')
@@ -258,7 +244,7 @@ window.addEventListener("keydown", (event) => {
 
     function showname() {
             var name = document.getElementById('fileInput');
-            document.getElementById('fileBarDisplay').innerHTML =  'Selected file: ' + name.files.item(0).name;
+            document.getElementById('fileBarDisplay').innerHTML =  'Discussing file: ' + name.files.item(0).name;
             
         };
 
@@ -273,7 +259,37 @@ window.addEventListener("keydown", (event) => {
     
 </head>
 
-<body style=>
+<body>
+    <style> 
+    input:focus,
+select:focus,
+textarea:focus,
+button:focus 
+    {outline: none;}
+
+.monitor {
+    overflow-x: scroll;
+padding:10px;
+padding-bottom: 20px;
+margin-bottom: 1px;
+margin-top:-10px;
+background-color:transparent;
+max-height:50dvh;
+width: 95%;
+margin-top:1px;
+padding-top: 1px;
+height: fit-content;
+min-height: 40dvh;
+background-color:transparent;
+color: var(--color-darkblue);
+border-color: var(--color-darkblue);
+text-align: left;
+display: block;
+margin-left: auto;
+margin-right: auto;
+}
+</style>
+</body>
     <div id="toastAlert"></div>
     
     <header style="max-height: 8dvh;padding-top: 1%;margin-top: 1px;margin-bottom: 1px;">
@@ -286,7 +302,7 @@ window.addEventListener("keydown", (event) => {
                     <a href="/blog.html">Blog</a>
                 </div>
             </div>
-            <i id="fileBarDisplay" style="color:midnightblue;font-size: 12px;font-family: monospace;"> > Bonjour <a style="color: midnightblue;" href="https://www.anthropic.com/index/introducing-claude" target="_blank">CLAUDE</a> </i>
+            <i id="fileBarDisplay" style="color:var(--color-darkblue);font-size: 12px;font-family: monospace;"> > Bonjour <a style="color: var(--color-darkblue);" href="https://www.anthropic.com/index/introducing-claude" target="_blank">CLAUDE</a> </i>
             <ul>
                 <li><a href="/index.html"> Home </a></li>
             </ul>
@@ -299,7 +315,7 @@ window.addEventListener("keydown", (event) => {
     </style>
         <p style="text-align: center;">
             <label id="keyWarning">Please enter the required API keys:
-                <input id="apiStore" placeholder="Anthropic API key" value="" class="" style="margin-top: 5px;background-color: black;
+                <input id="apiStore" placeholder="Anthropic API key" value="" class="" style="margin-top: 5px;background-color: var(--color-darkblue);
 height: fit-content;
 text-align: center;
 color: white;
@@ -310,7 +326,7 @@ margin-right: auto;
 display: block;
 font-size: 10px;
 font-family: monospace;">
-                <input id="xCorsKeyStore" placeholder="CORS.SH API key" value="" class="" style="margin-top: 5px;background-color: black;
+                <input id="xCorsKeyStore" placeholder="CORS.SH API key" value="" class="" style="margin-top: 5px;background-color: var(--color-darkblue);
 height: fit-content;
 text-align: center;
 color: white;
@@ -327,25 +343,42 @@ font-family: monospace;">
             <code onclick="this.parentElement.close();setTimeout(() => {
                 APIkeyInput()
             }, 10);"
-                style="display: inline;color: white;background-color:midnightblue;cursor: pointer;border-radius: 1px;padding: 6px;">Save keys</code><br><br>
+                style="display: inline;color: white;background-color:var(--color-darkblue);cursor: pointer;border-radius: 1px;padding: 6px;">Save keys</code><br><br>
                 <small>(Don't worry, these only get saved to your local browser cache)</small>
 </dialog>
 
-    <code id="inputContainer" class="hidden" value=""></code>
+<p style="font-size:20px;color:white;display: block;margin-left: auto;margin-right:auto;padding: 0;margin-bottom:-40px;margin-top: 1px;border-radius: 0px;background:transparent;width: 84vw;max-width:590px;color:var(--color-darkblue);display:absolute;text-align: center;height:25px"
+    id="scrollUp" onclick="scrollUp()" class="hidden">☝</p>
 
-<form id="monitor"  style="overflow-x: scroll;
-padding:10px;padding-bottom: 20px;margin-bottom: 1px;
-max-height:60dvh;width: 80vw;max-width:600px;
-vertical-align:bottom;margin-top:1px;padding-top: 1px;height: fit-content;min-height: 40dvh;background-color: midnightblue;color: white;border-color: midnightblue;"></form>
+<div style="
+padding:20px;
+padding-bottom: 10px;
+border-radius: var(--border-radius);
+background-color:rgb(240, 248, 255);
+border-color: var(--color-darkblue);
+border-width: 10px;
+border: 10px;
+margin: 10px;
+max-width:600px;
+display: block;
+margin-left: auto;
+margin-right: auto;
+width: 85vw;
+text-align: center;">
 
 
+
+<div id="monitor" class="monitor"  onscroll="document.getElementById('scrollUp').className='show';document.getElementById('options-container').className='show'">
 </div>
-<div id="input-container" style="display: block;margin-left: auto;margin-right: auto;text-align: center;width: 80vw;max-width:600px">
-    
-    <input  style="border-width:6px; border-color: midnightblue; border-radius: 0px;max-height:30px;display: inline;margin: 0px; width:490px;width: 80%;color: midnightblue;background-color: rgb(212, 224, 250);margin-top:-3px" type="text" placeholder="Enter your query" id="input">
-    
-    <button id="submit"  style="width:7%;display: inline;padding:1px;max-height:50px;margin: 0px;margin-right:-5%;margin-bottom: -20px;background: transparent;border-width: 0px;font-size: 20px;font-weight: 900;color:midnightblue" onclick="submitInput() ">&#8629;</button>
 
+<hr style="background-color: var(--color-darkblue);height:4px;width: 86%;display: block;margin-left: auto;margin-right: auto;">
+
+<div id="input-container" style="display: block;margin-left: auto;margin-right: auto;text-align: center;width: 80vw;max-width:600px">
+    <p style="font-size:16px;margin:-10px;padding:-10px;color:var(--color-darkblue);display: inline;">></p>
+    <input  style="border-width:0px; border-color: transparent; border-radius: 0px;max-height:30px;display: inline;margin: 0px; width:490px;width: 80%;color: var(--color-darkblue);font-weight:600;background-color:transparent;margin-top:-3px" type="text" placeholder="Enter your query" id="input">
+    <p id="submit"  style="font-size:18px;margin:-10px;padding:-10px;color:var(--color-darkblue);display: inline;font-weight: 1000;cursor: pointer;" onclick="submitInput() ">&#8629;</p>
+</div>
+</div>
 </div>
 <div id="querySuggestions"
     style="display: block;margin-left: auto;margin-right: auto;text-align: center;max-width: 90vw" class="hidden">
@@ -359,18 +392,21 @@ vertical-align:bottom;margin-top:1px;padding-top: 1px;height: fit-content;min-he
     <a><i onclick="insertText(this,'input')">How could this be improved?</i></a>
     <a><i onclick="insertText(this,'input')">How many words in the file?</i></a>
 </div>
-<div id="options-container" style="text-align: center;">
+<div id="options-container" style="text-align: center;" class="hidden">
 
-    <code style="color:white;cursor: pointer;background-color: black;padding: 6px;" onclick="location.reload()">Reset ⚠️</code>
-    <code style="color:white;cursor: pointer;background-color: black;padding: 6px;" onclick="document.getElementById('fileInput').click()"> Upload file 📂</code>
-    <code style="color:white;cursor: pointer;background-color: black;padding: 6px;" onclick="roleplayInput(this)"> Roleplay 🎭</code>
-    <code style="color:white;cursor: pointer;background-color: black;padding: 6px;margin-top: 4px;"
+    <code style="color:white;cursor: pointer;background-color: var(--color-darkblue);padding: 6px;" onclick="location.reload()">Reset ⚠️</code>
+    <code style="color:white;cursor: pointer;background-color: var(--color-darkblue);padding: 6px;" onclick="document.getElementById('fileInput').click()"> Upload file 📂</code>
+    <code style="color:white;cursor: pointer;background-color: var(--color-darkblue);padding: 6px;" onclick="roleplayInput(this)"> Roleplay 🎭</code>
+    <code style="color:white;cursor: pointer;background-color: var(--color-darkblue);padding: 6px;margin-top: 4px;"
         onclick="downloadTxt('monitor')"> Get transcript 📝</code>
-
+    <input id="fileInput" class="hidden" type="file" accept=".doc,.xml,.rtf,.txt,.csv,.eml,.odt,.ods"
+        onchange="uploadFile(); showname()">
     <span id="roleplayInput" value="" class="hidden"></span>
     <span id="fileContainer" value="" class="hidden"></span>
     
 </div>
+    <audio id="audio" src="/images/pop.wav" ></audio>
+
     <footer>
         
         <div style="height:1dvh"></div>

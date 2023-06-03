@@ -5,6 +5,7 @@
     --border-radius: 20px;
     --box-shadow: 2px 2px 10px;
     --color-accent: #118bee15;
+    --color-darkblue: #043898;
     --color-bg: #fbf5cc;
     --color-bg-secondary: #485cf5;
     --color-link: #000000;
@@ -345,6 +346,12 @@ pre samp {
     margin-right: auto;
     padding-left: 5%;
     padding-right: 5%;
+}
+
+*.monitor:-webkit-scrollbar-thumb {
+    background-color: var(--color-darkblue);
+    border-radius: 20px;
+    border: 3px solid transparent;
 }
 
 /*A subclass for rendering code in a cool Matrix style 😎 */
