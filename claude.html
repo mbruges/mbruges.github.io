@@ -1,54 +1,194 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" color-mode="">
 
 <head>
     <link rel="icon" href="/favicon.svg">
     <link rel="stylesheet" href="/style.css">
     <meta charset="utf-8">
-    <meta name="description" content="MB ">
+    <meta name="description" content="A simple chat interface, powered by Claude. Capable of conversation and reading files.">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Claude Portal</title>
 
     <!--SHARE TAGS-->
     <meta prefix="og: http://ogp.me/ns#" property="og:type" content="website" />
-    <meta prefix="og: http://ogp.me/ns#" property="og:title" content="MBruges.com" />
+    <meta prefix="og: http://ogp.me/ns#" property="og:title" content="Claude Portal" />
     <meta prefix="og: http://ogp.me/ns#" property="og:description" content=" " />
     <meta prefix="og: http://ogp.me/ns#" property="og:image" content="https://mbruges.com/images/banner-square.png" />
-    <meta prefix="og: http://ogp.me/ns#" property="og:url" content="https://mbruges.com/" />
+    <meta prefix="og: http://ogp.me/ns#" property="og:url" content="https://mbruges.com/claude.html" />
 
+<!--Trying to add PDF functionality-->
+<script src="https://mozilla.github.io/pdf.js/build/pdf.js"></script>
+<script>
+    pdfjsLib.GlobalWorkerOptions.workerSrc =
+            'https://mozilla.github.io/pdf.js/build/pdf.worker.js';
+
+    function extractText(pdfUrl) {
+            var pdf = pdfjsLib.getDocument(pdfUrl);
+            return pdf.promise.then(function (pdf) {
+                var totalPageCount = pdf.numPages;
+                var countPromises = [];
+                for (
+                    var currentPage = 1;
+                    currentPage <= totalPageCount;
+                    currentPage++
+                ) {
+                    var page = pdf.getPage(currentPage);
+                    countPromises.push(
+                        page.then(function (page) {
+                            var textContent = page.getTextContent();
+                            return textContent.then(function (text) {
+                                return text.items
+                                    .map(function (s) {
+                                        return s.str;
+                                    })
+                                    .join(' ');
+                            });
+                        }),
+                    );
+                }
+
+                return Promise.all(countPromises).then(function (texts) {
+                    return texts.join(' ');
+                });
+            });
+        }
+</script>
 
 <script>
 
-    const starterText = `<br>
-                <p>CLAUDE: <i>Bonjour!</i> I am Claude, a chatbot created by Anthropic, and put onto this webpage by <a style="color:var(--color-darkblue);" href="/about.html" target="_blank">Max Bruges</a>.</p>
-                <p>I can do lots of things with text, including reading files and taking on roles. </p>
-                <p> Click one of the buttons below, or simply type a question to start.</p>
-                <center>
-                    <code style="color:white;cursor: pointer;background-color: var(--color-darkblue);padding: 6px;"
-                        onclick="document.getElementById('fileInput').click()"> Upload file 📂</code>
-                    <code style="color:white;cursor: pointer;background-color: var(--color-darkblue);padding: 6px;"
-                        onclick="roleplayInput(this)"> Roleplay 🎭</code>
-                    <code style="color:white;cursor: pointer;background-color: var(--color-darkblue);padding: 6px;"
-                        onclick="document.getElementById('input').value = 'Hi there!'; submitInput()">Say hi 👋</code>
-                </center>`
+    Storage.prototype.setObj = function (key, obj) {
+            return this.setItem(key, JSON.stringify(obj))
+        }
+        Storage.prototype.getObj = function (key) {
+            return JSON.parse(this.getItem(key))
+        }
+
+const starterText = `
+<br>
+<p> CLAUDE: <i>Bonjour!</i> I am Claude, a chatbot created by <a href="https://www.anthropic.com/index/introducing-claude" target="_blank">Anthropic</a> and put onto this webpage by <a href="/about.html" target="_blank">Max Bruges</a>. I can do lots of things with text, including reading files and taking on roles. </p>
+<p> Click one of the buttons to start, or type a question below.</p>
+<br><br>
+    <div id='monitorButtonContainer' style="text-align:center">
+<button
+onclick="document.getElementById('fileInput').click()"> Upload file 📂</button>
+<button
+onclick="roleplayInput(this)"> Roleplay 🎭</button>
+<button
+onclick="document.getElementById('input').value = 'Hi there!'; submitInput()">Say hi 👋</button>
+ <button  id="loadConvoButton" onclick="loadConvo()">Load previous chat 💬</button>
+</div>  `
+
+
+//This function DOES work - it successfully downloads the full HTML for a site if allowed, passing it as text to the chat! - but most (all?) websites don't allow you to just randomly download their content.  Malesh. Usually yields a 405 error or similar. There may be a way round it, but feels a bit icky.
+/*
+function downloadHTML() {
+     let corsAPI = document.getElementById('xCorsKeyStore').value
+    let url = 'https://proxy.cors.sh/' +  window.prompt('Enter the website you want to discuss') + '.html'
+    console.log(url)
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            'x-cors-api-key': corsAPI
+}},).then(res => 
+    res.blob()).then(file =>{
+
+            let fileUrl = URL.createObjectURL(file)
+            console.log('file url is :' + fileUrl)
+            console.log(url)
+        
+            let fileExtension = ""
+            for (let index = (url.length - 1); index > (url.length - 4); index--) {
+                fileExtension = url[index] + fileExtension;
+            }
+
+            //This section of the script only runs if there's a PDF
+            if (fileExtension == 'pdf') {
+                console.log('running textFromPdf with ' + fileUrl);
+                extractText(fileUrl).then(
+                    function (text) {
+                        console.log('parse ' + text);
+                        document.getElementById('fileContainer').innerText = text
+                        notificationAlert(`File uploaded successfully: ${document.querySelector("input[type=file]").files.item(0).name}`)
+                        document.getElementById('querySuggestions').className = "show"
+                    },
+                    function (reason) {
+                        console.error(reason);
+                    },
+                );
+                return
+            } 
+            const content = document.getElementById('fileContainer')
+            const reader = new FileReader();
+
+            reader.addEventListener(
+                "load",
+                () => {
+                    content.innerText = reader.result;
+                    sessionStorage.setItem('fileToRead', content.innerText);
+                    console.log('file uploaded');
+                    notificationAlert(`Website accessed successfully: ${url}`)
+                    
+                    let suggestions = document.getElementById('querySuggestions').innerHTML;
+                    document.getElementById('querySuggestions').innerHTML = suggestions.replaceAll('file','webpage')
+                    document.getElementById('querySuggestions').className = "show"
+                },
+                false
+            );
+            if (file) {
+                reader.readAsText(file);
+            }
+            showname(url)
+    }).catch(() => {
+        alert("Failed to access page");
+    });
+}*/
+
+function  practiceArrayAdd() {
+    let array = localStorage.getItem('array')
+    array = JSON.parse(array)
+    array = array.push(["five", "six"])
+    console.log(array)
+    array = JSON.stringify(array)
+    localStorage.setItem('array', array)
+   
+}
+
+function saveConvo() {
+    let chat = document.getElementById('monitor').innerHTML
+    localStorage.setItem('chatHistory',chat) 
+    notificationAlert('Conversation saved!')
+}
+
+function loadConvo() {
+let convo = localStorage.getItem('chatHistory')
+if (!convo){notificationAlert("No saved chats found.")}
+else {
+    document.getElementById('monitor').innerHTML = convo
+    scrollUp()
+    notificationAlert("Previous chat loaded successfully")}
+    document.getElementById('options-container').className = 'show'
+
+}
 
 function scrollUp(){
     let monitor = document.getElementById('monitor')
     
-    monitor.scrollTo({ top: 0, behavior: 'smooth' })
+    monitor.scrollTo({ top: monitor.scrollHeight, behavior: 'smooth' })
 }
 
 function roleplayInput() {
     document.getElementById('roleplayInput').value = window.prompt(`Enter the details of the role you'd like Claude to perform. Keep instructions concise.`, "A pirate");
-    console.log(document.getElementById('roleplayInput').value)
-    
+    let role = document.getElementById('roleplayInput').value
+    if (!role){
+    console.log(role)
+    document.getElementById('fileBarDisplay').innerHTML = 'Claude is... ' + role}
 }
 
 function APIkeyInput() {
    const dialog = document.getElementById('keyInputDialog')
     let claudeAPI = document.getElementById('apiStore').value 
     let corsAPI = document.getElementById('xCorsKeyStore').value
-    if ((claudeAPI.length < 10) || (corsAPI.length < 10)) {
+    if ((claudeAPI.length < 20) || (corsAPI.length < 10)) {
         dialog.showModal()
         return
     } else { dialog.close() 
@@ -56,22 +196,31 @@ function APIkeyInput() {
     localStorage.setItem('xCorsKey', corsAPI)
     }
 }
+
+        function notifySound() {
+            document.getElementById("audio").play();
+            }
+var cutoffPoint = 0
 window.onload = () => {
     // Retrieve values from cache on load
-    document.getElementById('apiStore').value = localStorage.getItem('apiKey')
-    document.getElementById('xCorsKeyStore').value = localStorage.getItem('xCorsKey')
+    cutoffPoint = Number.parseInt(document.getElementById('monitor').innerHTML.length)
+    console.log(document.getElementById('monitor').innerHTML + cutoffPoint)
+    if(localStorage.getItem('apiKey')){
+    document.getElementById('apiStore').value = localStorage.getItem('apiKey')}
+    if(localStorage.getItem('xCorsKey')){
+    document.getElementById('xCorsKeyStore').value = localStorage.getItem('xCorsKey')}
     //document.getElementById('fileUploadDialog').close()
     APIkeyInput()
 
-    setTimeout(() => {
+    /* Simpler just to have it appear automatically?
          if (document.getElementById('keyInputDialog').show != true) {
             document.getElementById('monitor').innerHTML = starterText;
-            notifySound()
-        }
-    }, 500);
+        }*/
 
+
+  
 }
-
+    
     function downloadTxt(elementIDtoDownload) {
         const link = document.createElement("a");
         var content = "" + document.getElementById(elementIDtoDownload).innerHTML + `\n\n Generated on mbruges.com 🐈‍⬛`
@@ -93,12 +242,10 @@ function insertText(inputElement,idToChange) {
     submitInput()
 }
 
-    function notifySound() {
-        var audio = document.getElementById("audio");
-        audio.play();
-    }
-
 function askClaude() {
+    document.getElementById('options-container').className = 'show'
+    let monitorContent = document.getElementById('monitor')
+
     let role = 'Be concise in all your responses. Do not reference this instruction in our conversation.'
 
     let roleplayInput = document.getElementById('roleplayInput').value
@@ -108,10 +255,11 @@ function askClaude() {
     }
     //Building convo history
 
-    let convoHistory = document.getElementById('monitor').innerHTML
+    let convoHistory = "" + document.getElementById('monitor').innerHTML
 
-    convoHistory = convoHistory.replaceAll(starterText, '')
-    
+    //This is a bit more sensible: now, the cutoff point is defined as a global variable on pageload.
+    convoHistory = convoHistory.slice(cutoffPoint)
+
     convoHistory = convoHistory.replaceAll('<br>', '\n') 
     convoHistory = convoHistory.replaceAll('USER', 'Human')
     convoHistory = convoHistory.replaceAll('CLAUDE', 'Assistant')
@@ -126,12 +274,12 @@ function askClaude() {
 
     console.log("history is: "+ convoHistory)
     let api = document.getElementById('apiStore')
-    let userQuery = document.getElementById('input').value
+    let userQuery = document.getElementById('input').innerText
     var apiKey = document.getElementById('apiStore').value
     var xCorsKey = document.getElementById('xCorsKeyStore').value
     let proxy = 'https://proxy.cors.sh/'
     let url = proxy + 'http://api.anthropic.com/v1/complete/'; 
-    console.log(`FULL INPUT: ${fileContent} ${convoHistory} \n\nHuman: ${userQuery}. \n\nAssistant:`)
+    console.log(`FULL INPUT: ${fileContent} ${convoHistory} \n\nHuman: ${userQuery} \n\nAssistant:`)
     fetch(url, {
            method: 'POST',
         headers: {
@@ -164,7 +312,7 @@ function askClaude() {
 
             monitor.innerHTML = existingChat + '<br><br>' + 'CLAUDE:' + newResponse
 
-            monitor.scrollTop = monitor.scrollHeight;
+            monitor.scrollTo({ top: 999, behavior: 'smooth' })
             notifySound();
 
         }).catch(error => {
@@ -180,17 +328,41 @@ function askClaude() {
     function uploadFile() {
         const [file] = document.querySelector("input[type=file]").files;
         let fileUrl = URL.createObjectURL(file)
-        console.log(fileUrl)
+        console.log('file url is :' + fileUrl)
+        let fileName = file.name
+        let fileExtension = ""
+        for (let index = (fileName.length-1); index > (fileName.length - 4); index--) {
+            fileExtension = fileName[index] + fileExtension;
+        }
+        
+        //This section of the script only runs if there's a PDF
+        if (fileExtension == 'pdf') {
+            console.log('running textFromPdf with ' + fileUrl);
+            extractText(fileUrl).then(
+                function (text) {
+                    console.log('parse ' + text);
+                    document.getElementById('fileContainer').innerText = text
+                    notificationAlert(`File uploaded successfully: ${document.querySelector("input[type=file]").files.item(0).name}`)
+                    document.getElementById('querySuggestions').className = "show"
+                },
+                function (reason) {
+                    console.error(reason);
+                },
+            );
+        return}  
+
         const content = document.getElementById('fileContainer')
         const reader = new FileReader();
+        
         reader.addEventListener(
             "load",
             () => {
                 content.innerText = reader.result;
-                localStorage.setItem('fileToRead', content.innerText);
+                sessionStorage.setItem('fileToRead', content.innerText);
                 console.log('file uploaded');
                 notificationAlert(`File uploaded successfully: ${document.querySelector("input[type=file]").files.item(0).name}`)
                 document.getElementById('querySuggestions').className="show"
+                document.getElementById('monitor').innerHTML = document.getElementById('monitor').innerHTML + '<br><b>Now discussing: ' + document.querySelector("input[type=file]").files.item(0).name + '</b>'
             },
             false
         );
@@ -204,18 +376,29 @@ function askClaude() {
     // Execute a function when the user presses a key on the keyboard
 window.addEventListener("keydown", (event) => {
     let focus = document.activeElement.id
-        if (event.keyCode === 13 && focus == 'input') {
-          submitInput()  
-        }})
+        if (((event.keyCode == 10 || event.keyCode == 13) && (event.ctrlKey || event.metaKey || event.shiftKey)) && focus == 'input') {
+          return;  
+        } else if ((event.keyCode == 10 || event.keyCode == 13) && !(event.ctrlKey || event.metaKey || event.shiftKey) && focus == 'input') { event.preventDefault();  submitInput() }})
+/*
+    document.getElementById('input').addEventListener('keydown', function (e) {
+        const keyCode = e.which || e.keyCode;
+        if (keyCode === 13 && !e.shiftKey) {
+            e.preventDefault();
+        }
+        else if ((keyCode === 13 && (e.shiftKey || event.ctrlKey || event.metaKey)))
+        submitInput
+    });*/
 
     function submitInput() {
-        if (document.getElementById('input').value == "") {
+        if ((document.getElementById('input').innerText == "") || (document.getElementById('input').innerText == 'Enter query here...')) {
             return;
         }
         
         askClaude()
         let target = document.getElementById('input')
-        let input = target.value
+        let input = target.innerText
+
+        input = input.replaceAll('<br>','\n')
 
         let monitor = document.getElementById('monitor')
 
@@ -229,11 +412,12 @@ window.addEventListener("keydown", (event) => {
 
         monitor.scrollTop = monitor.scrollHeight;
 
-        if (target.value.length !== "") {
-            target.value = "";
+        if (target.innerText.length !== "") {
+            target.innerText = "";
         }
 
         setTimeout(() => {
+
             monitor.innerHTML = monitor.innerHTML + '<br><br><i>CLAUDE is typing..</i>.'
         ;
      monitor.scrollTop = monitor.scrollHeight;
@@ -242,10 +426,11 @@ window.addEventListener("keydown", (event) => {
         
     }
 
-    function showname() {
-            var name = document.getElementById('fileInput');
-            document.getElementById('fileBarDisplay').innerHTML =  'Discussing file: ' + name.files.item(0).name;
-            
+    function showname(name) {
+        if (!name)  {  
+        var name = document.getElementById('fileInput');
+            document.getElementById('fileBarDisplay').innerHTML =  'Discussing file: ' + name.files.item(0).name;}
+        else {document.getElementById('fileBarDisplay').innerHTML =  'Discussing: ' + name}
         };
 
     function notificationAlert(notificationText) {
@@ -267,35 +452,49 @@ textarea:focus,
 button:focus 
     {outline: none;}
 
+a {
+    color:var(--color-darkblue)
+}
+
 .monitor {
-    overflow-x: scroll;
+overflow-x: scroll;
 padding:10px;
 padding-bottom: 20px;
 margin-bottom: 1px;
 margin-top:-10px;
 background-color:transparent;
-max-height:50dvh;
 width: 95%;
-margin-top:1px;
-padding-top: 1px;
-height: fit-content;
-min-height: 40dvh;
+margin-top:0px;
+padding-top: 0px;
 background-color:transparent;
+border-top: 0px;
 color: var(--color-darkblue);
-border-color: var(--color-darkblue);
 text-align: left;
 display: block;
 margin-left: auto;
 margin-right: auto;
+min-height:60dvh;
+max-height:60dvh
+}
+
+button {
+    color:var(--color-bg-whiteish);
+    background-color: var(--color-darkblue);
+    padding: 6px;
+    margin-right:5px;
+    font-family: monospace;
+    font-weight: 500;
+    border-width: 0px;
+    font-size: 14px;
 }
 </style>
 </body>
     <div id="toastAlert"></div>
     
-    <header style="max-height: 8dvh;padding-top: 1%;margin-top: 1px;margin-bottom: 1px;">
+    <header style="min-height:5dvh;max-height: 5dvh;padding-top: 1%;margin-top: 1px;margin-bottom: 1px;padding-bottom: 2px;">
         <nav>
             <div class="dropdown">
-                <a id="catNav"><img alt="miaow" src="/favicon.svg" height="40" width="40"></a>
+                <a id="catNav"><img alt="miaow" src="/favicon.svg" height="40" width="40" onclick="document.getRootNode().childNodes[1].setAttribute('color-mode','')" ondblclick="console.log('Dark Mode ON');document.getRootNode().childNodes[1].setAttribute('color-mode','dark')"></a>
                 <div class="dropdown-content">
                     <a href="/experiments.html">Experiments</a>
                     <a href="/resources.html">Resources</a>
@@ -308,17 +507,17 @@ margin-right: auto;
             </ul>
         </nav>
     </header>
-
-
-<dialog id="keyInputDialog" style="text-align: center;">
+<dialog id="loadConvoSelector" style="text-align: center;background-color: var(--color-bg-whiteish);margin-bottom:50vh">
+</dialog>
+<dialog id="keyInputDialog" style="text-align: center;background-color: var(--color-bg-whiteish);margin-bottom:50vh">
     <style>
     </style>
-        <p style="text-align: center;">
+        <p style="text-align:center;">
             <label id="keyWarning">Please enter the required API keys:
-                <input id="apiStore" placeholder="Anthropic API key" value="" class="" style="margin-top: 5px;background-color: var(--color-darkblue);
+                <p> </p>
+                <input id="apiStore" placeholder="Anthropic API key" value="" class="" style="margin-top: 5px;
 height: fit-content;
 text-align: center;
-color: white;
 width: 200px;
 margin:1px;
 margin-left: auto;
@@ -326,10 +525,10 @@ margin-right: auto;
 display: block;
 font-size: 10px;
 font-family: monospace;">
-                <input id="xCorsKeyStore" placeholder="CORS.SH API key" value="" class="" style="margin-top: 5px;background-color: var(--color-darkblue);
+                <input id="xCorsKeyStore" placeholder="CORS.SH API key" value="" class="" style="margin-top: 5px;
 height: fit-content;
 text-align: center;
-color: white;
+
 width: 200px;
 margin:1px;
 margin-left: auto;
@@ -343,18 +542,22 @@ font-family: monospace;">
             <code onclick="this.parentElement.close();setTimeout(() => {
                 APIkeyInput()
             }, 10);"
-                style="display: inline;color: white;background-color:var(--color-darkblue);cursor: pointer;border-radius: 1px;padding: 6px;">Save keys</code><br><br>
-                <small>(Don't worry, these only get saved to your local browser cache)</small>
+                style="display: inline;color: var(--color-bg-whiteish);background-color:var(--color-darkblue);cursor: pointer;border-radius: 1px;padding: 6px;">Save keys</code><br><br>
+                <small>You can request these from <a target="_blank" href= "https://console.anthropic.com/login?selectAccount=&returnTo=https://console.anthropic.com/account/keys">Anthropic here</a> and <a target="_blank" href="https://cors.sh/">CORS.SH here</a>.<br>(Don't worry, the keys are only saved to your local browser cache)</small>
 </dialog>
+<!--
+<p style="font-size:20px;color:var(--color-bg-whiteish);display: block;margin-left: auto;margin-right:auto;padding: 0;margin-bottom:-40px;margin-top: 1px;border-radius: 0px;background:transparent;width: 84vw;max-width:590px;color:var(--color-darkblue);display:absolute;text-align: center;height:25px;z-index: 1;cursor: pointer;"
+    id="scrollUp" onclick="scrollUp()" class="hidden">⬆</p>
 
-<p style="font-size:20px;color:white;display: block;margin-left: auto;margin-right:auto;padding: 0;margin-bottom:-40px;margin-top: 1px;border-radius: 0px;background:transparent;width: 84vw;max-width:590px;color:var(--color-darkblue);display:absolute;text-align: center;height:25px"
-    id="scrollUp" onclick="scrollUp()" class="hidden">☝</p>
+This needs to be added to monitor if you want to bring it back  onscroll="document.getElementById('scrollUp').className='show'
+-->
 
-<div style="
+<div id="chat-window" style="
 padding:20px;
+padding-top: 9px;
 padding-bottom: 10px;
 border-radius: var(--border-radius);
-background-color:rgb(240, 248, 255);
+background-color: var(--color-bg-whiteish);
 border-color: var(--color-darkblue);
 border-width: 10px;
 border: 10px;
@@ -364,52 +567,111 @@ display: block;
 margin-left: auto;
 margin-right: auto;
 width: 85vw;
-text-align: center;">
+text-align: center;
+z-index: -1;
+height:fit-content">
 
 
+<!--If you change this, make sure you change var starterText too-->
+    <div id="monitor" class="monitor">
+        <br>
+        <p> CLAUDE: <i>Bonjour!</i> I am Claude, a chatbot created by <a
+                href="https://www.anthropic.com/index/introducing-claude" target="_blank">Anthropic</a> and put onto this
+            webpage by <a href="/about.html" target="_blank">Max Bruges</a>. I can do lots of things with text, including
+            reading files and taking on roles. </p>
+        <p> Click one of the buttons to start, or type a question below.</p>
+        <br><br>
+        <div id='monitorButtonContainer' style="text-align:center">
+            <button onclick="document.getElementById('fileInput').click()"> Upload file 📂</button>
+            <button onclick="roleplayInput(this)"> Roleplay 🎭</button>
+            <button onclick="document.getElementById('input').innerHTML = 'Hi there!'; submitInput()">Say hi 👋</button>
+            <button id="loadConvoButton" onclick="loadConvo()">Load previous chat 💬</button>
+        </div>
+    </div>
 
-<div id="monitor" class="monitor"  onscroll="document.getElementById('scrollUp').className='show';document.getElementById('options-container').className='show'">
+    <hr style="background-color: var(--color-darkblue);height:4px;width: 86%;display: block;margin-left: auto;margin-right: auto;">
+
+
+    <div id="input-container" style="display: block;margin-left: auto;margin-right: auto;text-align: center;width: 80vw;max-width:600px">
+        <p style="font-size:16px;margin:1px;padding:-10px;color:var(--color-darkblue);display: inline;max-width: 10%;">></p>
+        
+        <span contenteditable="true"  style="border-width:0px;
+         border-color: transparent; 
+         outline: none;
+         padding-right: 5%;
+         text-align: left;
+         border-radius: 0px;
+         height: fit-content;
+         max-height:30vh;
+         display: inline-block;
+         margin: 0px;
+         min-width: 79%; 
+         width: 79%; 
+         max-width: 79%;color: var(--color-darkblue);
+         font-weight:600;
+         background-color:transparent;
+         margin-top:-3px" placeholder="Enter your query" id="input" onblur="togglePlaceholder()" onclick="togglePlaceholder()" oninput="togglePlaceholder"><i style="font-weight: 250;color: grey;">Enter query here...</i></span>
+         <script>
+          
+            function togglePlaceholder() {
+                const placeholder = '<i style="font-weight: 250;color: grey;">Enter query here...</i>'
+                    let inside = document.getElementById('input').innerHTML
+                    if (inside.includes('i>')) {
+                        inside = inside.replaceAll('<i style="font-weight: 250;color: grey;">Enter query here...</i>',"")
+                        document.getElementById('input').innerHTML = inside;
+                        return
+                    } else if (!inside) {
+                        document.getElementById('input').innerHTML = placeholder
+                    }
+                }
+         </script>
+        
+        <p id="submit"  style="max-width:10%;font-size:18px;margin:1px;padding:-10px;color:var(--color-darkblue);display: inline;font-weight: 1000;cursor: pointer;" onclick="submitInput() ">&#8629;</p>
+    </div>
+
+  
+    <!--input backup
+    
+    <div id="input-container" style="display: block;margin-left: auto;margin-right: auto;text-align: center;width: 80vw;max-width:600px">
+        <p style="font-size:16px;margin:-10px;padding:-10px;color:var(--color-darkblue);display: inline;">></p>
+        <input  style="border-width:0px; border-color: transparent; border-radius: 0px;max-height:30px;display: inline;margin: 0px; width:490px;width: 80%;color: var(--color-darkblue);font-weight:600;background-color:transparent;margin-top:-3px" type="text" placeholder="Enter your query" id="input">
+        <p id="submit"  style="font-size:18px;margin:-10px;padding:-10px;color:var(--color-darkblue);display: inline;font-weight: 1000;cursor: pointer;" onclick="submitInput() ">&#8629;</p>
+    </div>
+
+-->
+
 </div>
-
-<hr style="background-color: var(--color-darkblue);height:4px;width: 86%;display: block;margin-left: auto;margin-right: auto;">
-
-<div id="input-container" style="display: block;margin-left: auto;margin-right: auto;text-align: center;width: 80vw;max-width:600px">
-    <p style="font-size:16px;margin:-10px;padding:-10px;color:var(--color-darkblue);display: inline;">></p>
-    <input  style="border-width:0px; border-color: transparent; border-radius: 0px;max-height:30px;display: inline;margin: 0px; width:490px;width: 80%;color: var(--color-darkblue);font-weight:600;background-color:transparent;margin-top:-3px" type="text" placeholder="Enter your query" id="input">
-    <p id="submit"  style="font-size:18px;margin:-10px;padding:-10px;color:var(--color-darkblue);display: inline;font-weight: 1000;cursor: pointer;" onclick="submitInput() ">&#8629;</p>
 </div>
-</div>
-</div>
+<div id="buttons" style="min-height:12dvh;max-height: 12dvh;">
 <div id="querySuggestions"
     style="display: block;margin-left: auto;margin-right: auto;text-align: center;max-width: 90vw" class="hidden">
     <style>
         a i {
-            padding:5px;
-            cursor:pointer
-        }
+            padding:4px;
+            cursor:pointer;
+            font-size: 13px;
+            margin: 4px;
+         }
     </style>
     <a><i onclick="insertText(this,'input')">Summarise this file</i></a>
-    <a><i onclick="insertText(this,'input')">How could this be improved?</i></a>
-    <a><i onclick="insertText(this,'input')">How many words in the file?</i></a>
+    <a><i onclick="insertText(this,'input')">How could this be improved?</i></a><br>
+    <a><i onclick="insertText(this,'input')">What are the key actions?</i></a>
 </div>
 <div id="options-container" style="text-align: center;" class="hidden">
-
-    <code style="color:white;cursor: pointer;background-color: var(--color-darkblue);padding: 6px;" onclick="location.reload()">Reset ⚠️</code>
-    <code style="color:white;cursor: pointer;background-color: var(--color-darkblue);padding: 6px;" onclick="document.getElementById('fileInput').click()"> Upload file 📂</code>
-    <code style="color:white;cursor: pointer;background-color: var(--color-darkblue);padding: 6px;" onclick="roleplayInput(this)"> Roleplay 🎭</code>
-    <code style="color:white;cursor: pointer;background-color: var(--color-darkblue);padding: 6px;margin-top: 4px;"
-        onclick="downloadTxt('monitor')"> Get transcript 📝</code>
-    <input id="fileInput" class="hidden" type="file" accept=".doc,.xml,.rtf,.txt,.csv,.eml,.odt,.ods"
+    <button onclick="location.reload()">Reset ⚠️</button>
+    <button onclick="document.getElementById('fileInput').click()"> Upload file 📂</button>
+    <button onclick="roleplayInput(this)"> Roleplay 🎭</button>
+    <button onclick="downloadTxt('monitor')"> Get transcript 📝</button>
+    <button onclick="saveConvo()"> Save convo 💾</button>
+    <input id="fileInput" class="hidden" type="file" accept=".pdf,.doc,.xml,.rtf,.txt,.csv,.eml,.odt,.ods"
         onchange="uploadFile(); showname()">
     <span id="roleplayInput" value="" class="hidden"></span>
-    <span id="fileContainer" value="" class="hidden"></span>
-    
+    <span id="fileContainer" value="" class="hidden"></span>    
+</div>
 </div>
     <audio id="audio" src="/images/pop.wav" ></audio>
-
-    <footer>
-        
-        <div style="height:1dvh"></div>
+    <footer style="max-height:2dvh">
+        <div></div>
         <p>© 2023 - <i> Made by <a href="/about.html" target="_blank">me
                 </a> and Agatha</i> 🐈‍⬛</p>
         <p><i>Found this interesting? <a href="mailto:hello@mbruges.com?subject=Hello from the Internet"

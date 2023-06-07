@@ -34,6 +34,23 @@
         document.getElementById('report').innerHTML = html;
         console.log("Converted to Markdown")
     }
+
+    function APIkeyInput() {
+        console.log('running APIKEY INPUT')
+            const dialog = document.getElementById('keyInputDialog')
+            let claudeAPI = document.getElementById('apiStore').value
+            let corsAPI = document.getElementById('xCorsKeyStore').value
+            if ((!claudeAPI) || (!corsAPI)) {
+                console.log('keys missing')
+                dialog.showModal()
+                return
+            } else {
+                console.log('keys OK')
+                localStorage.setItem('apiKey', claudeAPI)
+                localStorage.setItem('xCorsKey', corsAPI)
+                dialog.close()
+            }
+        }
 </script>
 <script type="module">
     import {
@@ -42,46 +59,44 @@
 
 
     window.onload = () => {
+        // Retrieve values from cache on load
+        if (localStorage.getItem('apiKey')) {
+            document.getElementById('apiStore').value = localStorage.getItem('apiKey')
+        }
+        if (localStorage.getItem('xCorsKey')) {
+            document.getElementById('xCorsKeyStore').value = localStorage.getItem('xCorsKey')
+        }
+        APIkeyInput()
+
         //Reloading the report archive
         loadReportArchive()
         addRow()
-        document.getElementById('report').innerHTML = 
-        loadThing('api-input','claude-API-key');
-        let api = "" + document.getElementById('api-input').value
-        console.log(api)
-        if (api.length < 31) {
-            api = window.prompt("Please enter your Anthropic API key.\n(Don't worry, it only gets saved to your local browser cache)", "sk-someth1ng.....");
-        }
-        api += ""
-        if (api.length < 31) {
-            if (alert('Missing API keys. Please refresh page and enter them')) { }
-            else {
-                
-                document.getElementById('inputTable').className = "hidden"
-                document.getElementById('errorAlert').className = "show"
-                document.getElementById('errorAlert').innerHTML =`
-            <div style='text-align:center'>
-            <br>
-            <h2>You need an Anthropic API keys to access this page. Use the link below to generate it.</h2>
-            <h3 
-            <br>
-            <a target="_blank" href="https://console.anthropic.com/account/keys">🔑 Anthropic Key</a>
-            
-            <h2>...then, refresh the page to enter the key.
-                </div>`
-        }
-        document.getElementById('api-input').value = api
-        saveThing('api-input', 'claude-API-key')
-        notificationAlert("Anthropic API Key saved successfully 🔑") 
-        document.getElementById('apikey').className = 'hidden'
-        }
     }
+    
 
 
 </script>
 
 <script>
-   
+var studentList = []   
+
+function processList() {
+    //This function takes the entries to the listEntryBox and converts the names into an array
+    let list = document.getElementById('listEntryBox')
+    list.className = "hidden"
+    list = list.value.replaceAll('\n',',')
+    list = list.split(",")
+    list.forEach(element => {
+        if (element) {
+            studentList.push(element)
+        }
+    });
+    studentList.forEach(element => {
+        addRow(element)
+    });
+    return
+}
+
 //Saving the report to the archive        
 function saveReport() {
     let storedItem = "" + document.getElementById('report').innerHTML
@@ -117,7 +132,7 @@ function cycleRows() {
 //In the first instance, we log the number of rows.
 
     var parent = document.getElementById('inputTable')
-    var rowDatabase = {}
+    var rowArray = []
     var rows = parent.querySelectorAll("div")
     rows.forEach((item) => {
         if (item.id.length < 1) 
@@ -141,9 +156,15 @@ var inputs = []
     }
     console.log(inputs)
 
-        
+    //The array now consist of [...[id,[input,input,input]]... ]
+
+    
     }
 
+
+    function batchUpdate(category,value){
+        
+    }
 
     function logInputs(parentID) {
             var parent = document.getElementById(parentID)
@@ -191,7 +212,8 @@ function reportClaude(parentID) {
         var comments = 'Additional points to consider: ' + inputs[2]
         var rfl = "" + inputs[3]
         var bfl = "" + inputs[4]
-        var apiKey = document.getElementById('api-input').value
+        var apiKey = document.getElementById('apiStore').value
+        var xCorsKey = document.getElementById('xCorsKeyStore').value
         var subject = document.getElementById('subject').value
         var yearGroup = document.getElementById('yearGroup').value
     
@@ -212,7 +234,7 @@ function reportClaude(parentID) {
     fetch(url, {
         method: 'POST',
         headers: {
-            'x-cors-api-key': 'temp_3057a811314fb7e97865af181a37b5e4',
+            'x-cors-api-key': xCorsKey,
             'X-API-Key': apiKey,
             'Content-Type': 'application/json',
             
@@ -269,12 +291,32 @@ function reportClaude(parentID) {
        
     });
 }
+var deleteVisible = false
+function showDelete(){
+    cancelButtons = document.querySelectorAll(`small[type="cancel"]`);
+    var newClass = "hidden"
+    if (deleteVisible == false) {
+        newClass = "show";
+    deleteVisible = true} else {deleteVisible = false}
+    cancelButtons.forEach(element => {
+        element.className = newClass
+        console.log(element)
+    });
+    
+}
 
-function addRow(){
+function addRow(name){
     let uniqueID = 100 + Math.floor(Math.random()*100)
+    let value = ""
+    if (name) {
+        value = `value = "${name}"`
+    } else {
+        value = 'value = ""'
+    }
     var newRow = `
     <div class="inputRow" id="${uniqueID}" data-value="false">
-        <input type="name" placeholder="Name?">
+        <small style="padding:0px;padding-top: 6px;" class="hidden" type="cancel" onclick="this.parentElement.remove() ">❌</small>
+        <input type="name" placeholder="Name?" ${value}>
         <select type="rfl">
             <option value="" disabled selected>Organisation</option>
             <option value="poor">Poor</option>
@@ -330,6 +372,45 @@ function addRow(){
             </ul>
     </nav>
 
+<dialog id="keyInputDialog" style="text-align: center;background-color: var(--color-bg-whiteish);margin-bottom:50vh">
+    <style>
+    </style>
+    <p style="text-align:center;">
+        <label id="keyWarning">Please enter the required API keys:
+            <p> </p>
+            <input id="apiStore" placeholder="Anthropic API key" value="" class="" style="margin-top: 5px;
+height: fit-content;
+text-align: center;
+width: 200px;
+margin:1px;
+margin-left: auto;
+margin-right: auto;
+display: block;
+font-size: 10px;
+font-family: monospace;">
+            <input id="xCorsKeyStore" placeholder="CORS.SH API key" value="" class="" style="margin-top: 5px;
+height: fit-content;
+text-align: center;
+
+width: 200px;
+margin:1px;
+margin-left: auto;
+margin-right: auto;
+display: block;
+font-size: 10px;
+font-family: monospace;">
+        </label>
+    </p>
+
+    <code onclick="this.parentElement.close();setTimeout(() => {
+                APIkeyInput()
+            }, 100);"
+        style="display: inline;color: var(--color-bg-whiteish);background-color:var(--color-darkblue);cursor: pointer;border-radius: 1px;padding: 6px;">Save keys</code><br><br>
+    <small>You can request these from <a target="_blank"
+            href="https://console.anthropic.com/login?selectAccount=&returnTo=https://console.anthropic.com/account/keys">Anthropic
+            here</a> and <a target="_blank" href="https://cors.sh/">CORS.SH here</a>.<br>(Don't worry, the keys are only
+        saved to your local browser cache)</small>
+</dialog>
         <!--
 
 This page will generate reports. First we need to set up a way for it to store JSONs for each student.-->
@@ -363,6 +444,8 @@ This page will generate reports. First we need to set up a way for it to store J
 <!--<br>
     <input type="text" style="text-align: center;min-width:100px;max-width: fit-content;font-size: large;display: block;margin-left: auto;margin-right: auto;" id="className"
         placeholder="Enter class name" value="">-->
+        <textarea id="listEntryBox" placeholder="Paste list of students here. Separate names by linebreak or commas."></textarea>
+        <button onclick="processList(); this.className='hidden'">Submit</button>
         </header>
         
    
@@ -435,43 +518,33 @@ This page will generate reports. First we need to set up a way for it to store J
 <p>---------- Name ----------- Organisation --- Behaviour ----- Progress ------------- Comments ----------- </p></div>
 
 <div id="inputTable">
-    <div class="inputRow" id="${uniqueID}" data-value="false">
-        <input type="name" placeholder="Name?">
-        <select type="rfl">
-            <option value="" disabled selected>Organisation</option>
-            <option value="poor">Poor</option>
-            <option value="requires-improvement">Req Improvement</option>
-            <option value="good">Good</option>
-            <option value="outstanding">Outstanding</option>
-        </select>
-        <select type="bfl">
-            <option value="" disabled selected>Behaviour</option>
-            <option value="poor">Poor</option>
-            <option value="requires-improvement">Req Improvement</option>
-            <option value="good">Good</option>
-            <option value="outstanding">Outstanding</option>
-        </select>
-        <select type="progress">
-            <option value="" disabled selected>Progress</option>
-            <option value="concerning">Concerning</option>
-            <option value="a little behind">A bit behind</option>
-            <option value="On track">On track</option>
-            <option value="Good">Good</option>
-            <option value="Exceeding">Excellent</option>
-        </select>
-        <input type="comments" style="min-width:20vw" placeholder="Any specific comments?">
-        <button style="font-size:18px;" onclick="reportClaude(this.parentElement.id)" name="generateButton"
-            class="">🤖</button>
-        <button name="viewResponseButton" style="margin-top: 0px;min-height:30px;min-width: 30px;" class="hidden"></button>
-    </div>
 </div>
 
+<span id="cycleCounter" value="0"></span>
 
-<sup style="text-align:center;
+<div style="text-align:center;
     margin-left: auto;
     margin-right: auto;
-    display: block; width:fit-content;" onclick="addRow()">+ Add student +</sup>
-
+    display: block;
+    cursor: pointer;">
+    <div id="batchUpdateRow" class="hidden" style="text-align: center;">
+    <select id="progress" style="cursor:pointer;background-color: lightgreen;color: black;" onchange="batchUpdate(this.id,this.value)">
+        <option value="" disabled selected>Progress</option>
+        <option value="concerning">Concerning</option>
+        <option value="a little behind">A bit behind</option>
+        <option value="On track">On track</option>
+        <option value="Good">Good</option>
+        <option value="Exceeding">Excellent</option>
+    </select>
+    <select id="progress" style="cursor:pointer;background-color: lightgreen;color: black;"
+        onchange="batchUpdate(this.id,this.value)"></select>
+    <br>
+    </div>
+    
+    <sup style="background-color: lightcoral;" onclick='showDelete()'>❌ Remove row</sup>
+    <sup onclick="addRow()">+ Add student +</sup>
+    <sup style="background-color: green;" onclick="document.getElementById('batchUpdateRow').className = 'show'">Batch update 👥</sup>
+</div>
 
 <br>
 <br>

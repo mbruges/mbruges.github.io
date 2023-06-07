@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="en" color-mode="">
 <head>
     <link rel="icon" href="/favicon.svg">
     <link rel="stylesheet" href="/style.css">
@@ -40,7 +39,7 @@
 <body>
     <header>
         <nav style="display: block;">
-                <img alt="miaow" src="/favicon.svg" height="100vh" width="100vw">
+                <img alt="miaow" src="/favicon.svg" height="100vh" width="100vw" onclick="document.getRootNode().childNodes[1].setAttribute('color-mode','')" ondblclick="document.getRootNode().childNodes[1].setAttribute('color-mode','dark')">
         </nav>
         <p></p>
         <h1>Hello. I'm <a href="/about.html" target="_blank"><u>Max Bruges</u></a></h1>    
@@ -55,11 +54,6 @@
         <br>
         <a href="/blog.html" style="margin-left:auto; margin-right:auto; text-decoration: none; line-height: 1px;"><i>Read the latest blog  <br>
         <b href="/blog.html#220523" style=" margin-top:10px; font-size: 15px;font-style: normal;">AI vs English &nbsp 🍴</i></b></a>
-
-       <!-- <a href="mailto:hello@mbruges.com?subject=Hello from the Internet">
-            <h4> Get in touch 📮</h4>
-        </a>
-        <br>-->
     </header>
 <footer>
     <p>© 2023 - <i> Made by <a href="/about.html" target="_blank">me
