@@ -63,22 +63,6 @@
             return JSON.parse(this.getItem(key))
         }
 
-const starterText = `
-<br>
-<p> CLAUDE: <i>Bonjour!</i> I am Claude, a chatbot created by <a href="https://www.anthropic.com/index/introducing-claude" target="_blank">Anthropic</a> and put onto this webpage by <a href="/about.html" target="_blank">Max Bruges</a>. I can do lots of things with text, including reading files and taking on roles. </p>
-<p> Click one of the buttons to start, or type a question below.</p>
-<br><br>
-    <div id='monitorButtonContainer' style="text-align:center">
-<button
-onclick="document.getElementById('fileInput').click()"> Upload file 📂</button>
-<button
-onclick="roleplayInput(this)"> Roleplay 🎭</button>
-<button
-onclick="document.getElementById('input').value = 'Hi there!'; submitInput()">Say hi 👋</button>
- <button  id="loadConvoButton" onclick="loadConvo()">Load previous chat 💬</button>
-</div>  `
-
-
 //This function DOES work - it successfully downloads the full HTML for a site if allowed, passing it as text to the chat! - but most (all?) websites don't allow you to just randomly download their content.  Malesh. Usually yields a 405 error or similar. There may be a way round it, but feels a bit icky.
 /*
 function downloadHTML() {
@@ -143,15 +127,21 @@ function downloadHTML() {
     });
 }*/
 
-function  practiceArrayAdd() {
-    let array = localStorage.getItem('array')
-    array = JSON.parse(array)
-    array = array.push(["five", "six"])
-    console.log(array)
-    array = JSON.stringify(array)
-    localStorage.setItem('array', array)
-   
-}
+//This ensures only plain text is inserted when pasting.
+window.addEventListener('paste', function (e) {
+        e.preventDefault();
+        var text = '';
+        if (e.clipboardData || e.originalEvent.clipboardData) {
+            text = (e.originalEvent || e).clipboardData.getData('text/plain');
+        } else if (window.clipboardData) {
+            text = window.clipboardData.getData('Text');
+        }
+        if (document.queryCommandSupported('insertText')) {
+            document.execCommand('insertText', false, text);
+        } else {
+            document.execCommand('paste', false, text);
+        }
+    });
 
 function saveConvo() {
     let chat = document.getElementById('monitor').innerHTML
@@ -166,8 +156,9 @@ else {
     document.getElementById('monitor').innerHTML = convo
     scrollUp()
     notificationAlert("Previous chat loaded successfully")}
-    document.getElementById('options-container').className = 'show'
-
+    document.getElementById('options-container').className = 'show' 
+    document.getElementById('monitorButtonContainer').className = 'hidden'
+    monitor.scrollTop = monitor.scrollHeight;
 }
 
 function scrollUp(){
@@ -204,22 +195,63 @@ var cutoffPoint = 0
 window.onload = () => {
     // Retrieve values from cache on load
     cutoffPoint = Number.parseInt(document.getElementById('monitor').innerHTML.length)
-    console.log(document.getElementById('monitor').innerHTML + cutoffPoint)
+   // console.log(document.getElementById('monitor').innerHTML + cutoffPoint)
     if(localStorage.getItem('apiKey')){
     document.getElementById('apiStore').value = localStorage.getItem('apiKey')}
     if(localStorage.getItem('xCorsKey')){
     document.getElementById('xCorsKeyStore').value = localStorage.getItem('xCorsKey')}
     //document.getElementById('fileUploadDialog').close()
     APIkeyInput()
-
-    /* Simpler just to have it appear automatically?
-         if (document.getElementById('keyInputDialog').show != true) {
-            document.getElementById('monitor').innerHTML = starterText;
-        }*/
-
-
-  
+    getWikiNews('newsContainer')
+    getRoughLocation()
 }
+
+//This function gets a rough location of user.
+    function getRoughLocation() {
+        fetch('https://ipapi.co/json/')
+            .then((response) => response.json())
+            .then((json) => {
+                let city = json.city
+                let country = json.country_name
+                var locationString = city + ", " + country
+                document.getElementById('roughLocation').innerText = locationString
+            })
+    }
+
+//This function retrieves news stories from the Wiki api and stores them in the specified element
+    function getWikiNews(outputElement) {
+        const date = new Date()
+        
+        let year = "" + date.getFullYear()
+        let month = "" + (1 + date.getMonth())
+        console.log(month.length)
+        if (month.length == 1) {
+            month = '0' + month
+        }
+        let day = "" + date.getDate()
+        if (day.length == 1) {
+            day = '0' + day
+        }
+        fetch(`https://api.wikimedia.org/feed/v1/wikipedia/en/featured/${year}/${month}/${day}`)
+            .then((response) => response.json())
+            .then((json) => {
+                let storyArray = []
+                for (let index = 0; index < json.news.length; index++) {
+                    const element = json.news[index].story;
+                    storyArray.push(`<p>${element}</p>`)
+                }
+                let htmlOutput = ''
+                storyArray.forEach(element => {
+                    htmlOutput = htmlOutput + element + '<hr>'
+                });
+                htmlOutput = htmlOutput.replaceAll('href="./', 'href="https://en.wikipedia.org/wiki/')
+                document.getElementById(outputElement).innerHTML = htmlOutput
+                
+                console.log('news is ready: ' + htmlOutput)
+            }).catch((error) => {
+                console.log(error)
+            })
+    }  
     
     function downloadTxt(elementIDtoDownload) {
         const link = document.createElement("a");
@@ -244,15 +276,24 @@ function insertText(inputElement,idToChange) {
 
 function askClaude() {
     document.getElementById('options-container').className = 'show'
+    document.getElementById('monitorButtonContainer').className = 'hidden'
     let monitorContent = document.getElementById('monitor')
 
-    let role = 'Be concise in all your responses. Do not reference this instruction in our conversation.'
+    //getting current location, date & time, for context 
+    let locationString = document.getElementById('roughLocation').innerText
+    var dateString = new Date()
+    let time = dateString.toTimeString()
+    dateString = dateString.toLocaleDateString('en-GB', { day: 'numeric', weekday: 'long', month: 'long', year: 'numeric' })
+
+    let role = `Be concise in all your responses. Do not reference this instruction in our conversation. I am currently in ${locationString}. It is currently ${time}, on ${dateString}.  ` 
+    console.log(role)
 
     let roleplayInput = document.getElementById('roleplayInput').value
     
     if (roleplayInput) {
         role = `You are a ${roleplayInput}. Respond to all questions in this role. Do not break out of this roleplay for any reason. If asked something you cannot answer, make an excuse in-character. Do not reference the fact you are in a roleplay. Do NOT use any asterisked comments, for example: *in deep voice*.`
     }
+
     //Building convo history
 
     let convoHistory = "" + document.getElementById('monitor').innerHTML
@@ -266,19 +307,25 @@ function askClaude() {
     convoHistory = convoHistory.replaceAll('<b>', '')
     convoHistory = convoHistory.replaceAll('</b>', '')
 
-     let fileContent = document.getElementById('fileContainer').innerText
-
-     if (fileContent.length > 2) {
-        fileContent = `Human: ${role}. In this conversation I will be asking questions about this file:\n FILE START \n ${fileContent} \nFILE END \n\n Assistant: I understand. I will answer questions about this file.`;
-    } else { fileContent = `Human: ${role} \n\n Assistant: I understand. I will answer questions in a concise manner and not reference this instruction about being concise.` }
-
-    console.log("history is: "+ convoHistory)
     let api = document.getElementById('apiStore')
     let userQuery = document.getElementById('input').innerText
+
+    if ((userQuery.includes('news')) || userQuery.includes('headlines') || userQuery.includes('events') || userQuery.includes('stories')){
+        console.log('news request')
+        role = role + ' Here are the top global news headlines for today: ' + document.getElementById('newsContainer').innerText
+    }
+
+    let fileContent = document.getElementById('fileContainer').innerText
+
+    if (fileContent.length > 2) {
+        fileContent = `Human: ${role}. In this conversation I will be asking questions about this file:\n FILE START \n ${fileContent} \nFILE END \n\n Assistant: I understand. I will answer questions about this file.`;
+    } else { fileContent = `Human: ${role} \n\n Assistant: I understand, thank you for sharing this information. I will answer questions in a concise manner. I will also remember the information about your location (${locationString}) and the time (${dateString}), and will reference this information when asked.` }
+
     var apiKey = document.getElementById('apiStore').value
     var xCorsKey = document.getElementById('xCorsKeyStore').value
     let proxy = 'https://proxy.cors.sh/'
     let url = proxy + 'http://api.anthropic.com/v1/complete/'; 
+    console.log('Fetching Anthropic API...')
     console.log(`FULL INPUT: ${fileContent} ${convoHistory} \n\nHuman: ${userQuery} \n\nAssistant:`)
     fetch(url, {
            method: 'POST',
@@ -296,9 +343,10 @@ function askClaude() {
                     temperature: 1
                 })
         }).then(response => {
+            console.log('Fetch successful')
             return response.json()
         }).then(data => {
-            console.log(`FULL INPUT: ${fileContent} ${convoHistory} \n\nHuman: ${userQuery}. \n\nAssistant:`)
+           // console.log(`FULL INPUT: ${fileContent} ${convoHistory} \n\nHuman: ${userQuery}. \n\nAssistant:`)
             newResponse = data.completion
             
             let monitor = document.getElementById('monitor')
@@ -314,6 +362,8 @@ function askClaude() {
 
             monitor.scrollTo({ top: 999, behavior: 'smooth' })
             notifySound();
+
+            return newResponse
 
         }).catch(error => {
             console.log('error')
@@ -340,7 +390,7 @@ function askClaude() {
             console.log('running textFromPdf with ' + fileUrl);
             extractText(fileUrl).then(
                 function (text) {
-                    console.log('parse ' + text);
+                   // console.log('parse ' + text);
                     document.getElementById('fileContainer').innerText = text
                     notificationAlert(`File uploaded successfully: ${document.querySelector("input[type=file]").files.item(0).name}`)
                     document.getElementById('querySuggestions').className = "show"
@@ -480,7 +530,8 @@ max-height:60dvh
 button {
     color:var(--color-bg-whiteish);
     background-color: var(--color-darkblue);
-    padding: 6px;
+    padding: 5px;
+    margin: 4px;
     margin-right:5px;
     font-family: monospace;
     font-weight: 500;
@@ -572,19 +623,20 @@ z-index: -1;
 height:fit-content">
 
 
-<!--If you change this, make sure you change var starterText too-->
+
     <div id="monitor" class="monitor">
         <br>
         <p> CLAUDE: <i>Bonjour!</i> I am Claude, a chatbot created by <a
                 href="https://www.anthropic.com/index/introducing-claude" target="_blank">Anthropic</a> and put onto this
             webpage by <a href="/about.html" target="_blank">Max Bruges</a>. I can do lots of things with text, including
-            reading files and taking on roles. </p>
+            reading files, taking on roles, and discussing the latest news. </p>
         <p> Click one of the buttons to start, or type a question below.</p>
         <br><br>
-        <div id='monitorButtonContainer' style="text-align:center">
-            <button onclick="document.getElementById('fileInput').click()"> Upload file 📂</button>
+        <div id='monitorButtonContainer' style="text-align:center" class="show">
+            <button onclick="document.getElementById('fileInput').click()"> Upload file 📂 </button>
             <button onclick="roleplayInput(this)"> Roleplay 🎭</button>
-            <button onclick="document.getElementById('input').innerHTML = 'Hi there!'; submitInput()">Say hi 👋</button>
+            <button onclick="document.getElementById('input').innerHTML = 'Hi there!'; submitInput()"> Say hi 👋 </button>
+            <button onclick="document.getElementById('input').innerHTML = 'Read the news'; submitInput()"> Read the news 📰 </button>
             <button id="loadConvoButton" onclick="loadConvo()">Load previous chat 💬</button>
         </div>
     </div>
@@ -593,9 +645,10 @@ height:fit-content">
 
 
     <div id="input-container" style="display: block;margin-left: auto;margin-right: auto;text-align: center;width: 80vw;max-width:600px">
-        <p style="font-size:16px;margin:1px;padding:-10px;color:var(--color-darkblue);display: inline;max-width: 10%;">></p>
+        <p style="font-size:20px;margin-right:-1px;padding:-10px;color:var(--color-darkblue);display: inline;max-width: 10%;">></p>
         
-        <span contenteditable="true"  style="border-width:0px;
+        <span contenteditable="true"  style="
+        border-width:0px;
          border-color: transparent; 
          outline: none;
          padding-right: 5%;
@@ -610,23 +663,31 @@ height:fit-content">
          max-width: 79%;color: var(--color-darkblue);
          font-weight:600;
          background-color:transparent;
-         margin-top:-3px" placeholder="Enter your query" id="input" onblur="togglePlaceholder()" onclick="togglePlaceholder()" oninput="togglePlaceholder"><i style="font-weight: 250;color: grey;">Enter query here...</i></span>
+         margin-top:-3px;
+         margin-left: 10px;
+         padding-top: 5px;
+         padding-bottom: 10px;" placeholder="Enter your query" id="input" onblur="" 
+         onclick="document.getElementById('inputPlaceholder').remove()"><i id="inputPlaceholder" contenteditable="false" style="font-weight: 250;color: grey;">Enter query here...</i></span>
+         
+         <!---->
          <script>
           
-            function togglePlaceholder() {
-                const placeholder = '<i style="font-weight: 250;color: grey;">Enter query here...</i>'
+            /*function togglePlaceholder() {
+                const placeholder = '<i id="inputPlaceholder" contenteditable="false" style="font-weight: 250;color: grey;">Enter query here...</i>'
                     let inside = document.getElementById('input').innerHTML
-                    if (inside.includes('i>')) {
-                        inside = inside.replaceAll('<i style="font-weight: 250;color: grey;">Enter query here...</i>',"")
+                    if (inside.includes('<i')) {
+                        inside = inside.replaceAll('<i id="inputPlaceholder" contenteditable="false" style="font-weight: 250;color: grey;">Enter query here...</i>',"")
+                        inside = inside.replaceAll('Enter query here...', "")
+                        inside = inside.replaceAll('<i id="inputPlaceholder" contenteditable="false" style="font-weight: 250;color: grey;">Enter query here...</i>', "")
                         document.getElementById('input').innerHTML = inside;
                         return
                     } else if (!inside) {
                         document.getElementById('input').innerHTML = placeholder
                     }
-                }
+                }*/
          </script>
         
-        <p id="submit"  style="max-width:10%;font-size:18px;margin:1px;padding:-10px;color:var(--color-darkblue);display: inline;font-weight: 1000;cursor: pointer;" onclick="submitInput() ">&#8629;</p>
+        <p id="submit"  style="max-width:10%;font-size:25px;margin:1px;padding:-10px;color:var(--color-darkblue);display: inline;font-weight: 1000;cursor: pointer;margin-left: 13px;" onclick="submitInput() ">&#8629;</p>
     </div>
 
   
@@ -662,14 +723,17 @@ height:fit-content">
     <button onclick="document.getElementById('fileInput').click()"> Upload file 📂</button>
     <button onclick="roleplayInput(this)"> Roleplay 🎭</button>
     <button onclick="downloadTxt('monitor')"> Get transcript 📝</button>
-    <button onclick="saveConvo()"> Save convo 💾</button>
+    <button id="loadConvoButton" onclick="loadConvo()">Load previous chat 💬</button>
+    <button onclick="saveConvo()"> Save this chat 💾</button>
     <input id="fileInput" class="hidden" type="file" accept=".pdf,.doc,.xml,.rtf,.txt,.csv,.eml,.odt,.ods"
         onchange="uploadFile(); showname()">
     <span id="roleplayInput" value="" class="hidden"></span>
     <span id="fileContainer" value="" class="hidden"></span>    
 </div>
 </div>
-    <audio id="audio" src="/images/pop.wav" ></audio>
+<audio id="audio" src="/images/pop.wav" ></audio>
+<div id="newsContainer" class="hidden"></div>
+<div id="roughLocation" class="hidden"></div>
     <footer style="max-height:2dvh">
         <div></div>
         <p>© 2023 - <i> Made by <a href="/about.html" target="_blank">me
