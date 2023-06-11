@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="icon" href="/AlssonTimes/alssonFavicon.png">
+    <link rel="stylesheet" href="alssonStyle.css">
+    <meta charset="utf-8">
+    <meta name="description" content="Alsson Times">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Alsson Times - Homepage</title>
+
+    <!--SHARE TAGS-->
+    <meta prefix="og: http://ogp.me/ns#" property="og:type" content="website" />
+    <meta prefix="og: http://ogp.me/ns#" property="og:title" content="The Alsson Times" />
+    <meta prefix="og: http://ogp.me/ns#" property="og:description"
+        content="Homepage of The Alsson Times: reporting on CAS Week 2023" />
+    <meta prefix="og: http://ogp.me/ns#" property="og:image" content="https://mbruges.com/images/banner-square.png" />
+    <meta prefix="og: http://ogp.me/ns#" property="og:url" content="https://mbruges.com/AlssonTimes/homepage.html" />
+
+    <script>
+        function getSheetsData(cellLocation, outputID) {
+            const url = `https://docs.google.com/spreadsheets/d/e/2PACX-1vRaIAR2QJT8R2e0yledOB_aui7p99-VDJdkDwRzsboDXf_NwbuP2y-K7imS1DgkTiADqWh5LwWXH4Xn/pub?gid=0&single=true&range=${cellLocation}&output=csv`;
+            fetch(url)
+                .then(response => response.text())
+                .then(text => {
+                    console.log("Data is: " + text)
+                    document.getElementById(outputID).innerText = text
+                    return text
+                });
+            }
+</script>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <div class="dropdown">
+                <a id="alssonNav"><img alt="miaow" src="/AlssonTimes/alssonFavicon.png" height="40" width="40"></a>
+                <div class="dropdown-content">
+                    <a href="/AlssonTimes/homepage.html">Homepage</a>
+                    <a href="/AlssonTimes/meet-the-team.html">Meet our team</a>
+                </div>
+            </div>
+            <p style="font-style: oblique;">The Alsson Times</p>
+
+            <ul>
+                <li><a href="/AlssonTimes/homepage.html"> Home </a></li>
+            </ul>
+        </nav>
+        
+        <h1>Meet our team</h1>
+<img src="team.png" width="90%" height="auto">
+    </header>
+
+
+    <footer>
+        <p>© 2023 - <i> Made by the CAS Week Media Team</i> </p>
+        <a href="https://www.alsson.com/" target="_blank">El Alsson NEWGIZA</a>
+
+    </footer>
+</body>
+
+</html>

@@ -16,6 +16,52 @@
     <meta prefix="og: http://ogp.me/ns#" property="og:image" content="https://mbruges.com/images/banner-square.png" />
     <meta prefix="og: http://ogp.me/ns#" property="og:url" content="https://mbruges.com/" />
 
+<script>
+    function getSheetsData(cellLocation,outputID) {
+            const url = `https://docs.google.com/spreadsheets/d/e/2PACX-1vRaIAR2QJT8R2e0yledOB_aui7p99-VDJdkDwRzsboDXf_NwbuP2y-K7imS1DgkTiADqWh5LwWXH4Xn/pub?gid=0&single=true&range=${cellLocation}&output=csv`;
+            fetch(url)
+                .then(response => response.text())
+                .then(text => {
+                    console.log("Data is: " + text)
+                    document.getElementById(outputID).innerText = text
+                    return text
+                });
+        }
+
+    function iframeAdjust(id) {
+
+        setTimeout(() => {
+            console.log("work")
+           // Selecting the iframe element
+            var frame = document.getElementById('articleIframe');
+
+            // Adjusting the iframe height onload event
+         
+            // function execute while load the iframe
+            
+                // set the height of the iframe as 
+                // the height of the iframe content
+                frame.style.height =
+                    frame.contentWindow.document.body.scrollHeight + 'px';
+
+
+                // set the width of the iframe as the 
+                // width of the iframe content
+                frame.style.width =
+                    frame.contentWindow.document.body.scrollWidth + 'px';
+
+            
+        }, 3000);
+
+       
+        
+    }
+
+    window.onload = () => {
+        getSheetsData('A2', 'timeIndicator')
+    }
+</script>
+
 </head>
 
 <body>
@@ -27,6 +73,9 @@
                     <a href="/AlssonTimes/homepage.html">placeholder</a>
                 </div>
             </div>
+            <p>
+            Next meeting: <i style="font-weight: 700;max-width: fit-content;text-align: left;" id="timeIndicator"></i></p>
+
             <ul>
                 <li><a href="/AlssonTimes/homepage.html"> Home </a></li>
             </ul>
@@ -47,6 +96,11 @@
         <img src="qr.png" width="100px">
     </center>
 </form>
+<br>
+<iframe style="width:100%;background-color: transparent;border: 0px;" id="articleIframe"
+    src="https://docs.google.com/document/d/e/2PACX-1vQpzwcu4s1zJuSMBk5N_jq2mLy1C7kqE324kGE31qXJuGQ8UQahDTxQuXKs-ABA_nE9U_XK59434L73/pub?embedded=true"></iframe>
+
+    <button onclick="iframeAdjust('articleIframe')"></button>
 
     <footer>
         <p>© 2023 - <i> Made by the CAS Week Media Team</i> </p>
