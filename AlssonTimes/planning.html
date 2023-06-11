@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="icon" href="/AlssonTimes/alssonFavicon.png">
+    <link rel="stylesheet" href="alssonStyle.css">
+    <meta charset="utf-8">
+    <meta name="description" content="Alsson Times">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Alsson Times - Homepage</title>
+
+    <!--SHARE TAGS-->
+    <meta prefix="og: http://ogp.me/ns#" property="og:type" content="website" />
+    <meta prefix="og: http://ogp.me/ns#" property="og:title" content="The Alsson Times" />
+    <meta prefix="og: http://ogp.me/ns#" property="og:description" content="Homepage of The Alsson Times: reporting on CAS Week 2023" />
+    <meta prefix="og: http://ogp.me/ns#" property="og:image" content="https://mbruges.com/images/banner-square.png" />
+    <meta prefix="og: http://ogp.me/ns#" property="og:url" content="https://mbruges.com/" />
+
+<script>
+    function getSheetsData(cellLocation,outputID) {
+            const url = `https://docs.google.com/spreadsheets/d/e/2PACX-1vRaIAR2QJT8R2e0yledOB_aui7p99-VDJdkDwRzsboDXf_NwbuP2y-K7imS1DgkTiADqWh5LwWXH4Xn/pub?gid=0&single=true&range=${cellLocation}&output=csv`;
+            fetch(url)
+                .then(response => response.text())
+                .then(text => {
+                    console.log("Data is: " + text)
+                    document.getElementById(outputID).innerText = text
+                    return text
+                });
+        }
+
+    function iframeAdjust(id) {
+
+        setTimeout(() => {
+            console.log("work")
+           // Selecting the iframe element
+            var frame = document.getElementById('articleIframe');
+
+            // Adjusting the iframe height onload event
+         
+            // function execute while load the iframe
+            
+                // set the height of the iframe as 
+                // the height of the iframe content
+                frame.style.height =
+                    frame.contentWindow.document.body.scrollHeight + 'px';
+
+
+                // set the width of the iframe as the 
+                // width of the iframe content
+                frame.style.width =
+                    frame.contentWindow.document.body.scrollWidth + 'px';
+
+            
+        }, 3000);
+
+       
+        
+    }
+
+    window.onload = () => {
+        getSheetsData('A2', 'timeIndicator')
+    }
+</script>
+
+</head>
+
+<body>
+    <header>
+    <nav>
+        <div class="dropdown">
+            <a id="alssonNav"><img alt="miaow" src="/AlssonTimes/alssonFavicon.png" height="40" width="40"></a>
+            <div class="dropdown-content">
+                <a href="/AlssonTimes/homepage.html">Homepage</a>
+                <a href="/AlssonTimes/planning.html"> Planning </a>
+                <a href="/AlssonTimes/team.html"> Meet the Team </a>
+            </div>
+        </div>
+        <p style="font-weight: 700;max-width: fit-content;text-align: left;" id="ticker">Planning Page</p>
+    
+        <ul>
+            <li><a href="/AlssonTimes/homepage.html"> Home </a></li>
+        </ul>
+    </nav>
+    </header>
+<section style="min-width: 95vw; margin-left: auto; margin-right: auto;">
+    <style>
+        section aside {
+            border-width: 0px;
+            border-color: transparent;
+            box-shadow: none;
+            min-width: 40vw;
+            padding: 1px;
+
+        }
+    </style>
+<aside>
+    <div class="padlet-embed"
+        style="border:1px solid rgba(0,0,0,0.1);border-radius:2px;box-sizing:border-box;overflow:hidden;position:relative;width:100%;">
+        <p style="padding:0;margin:0;"><iframe src="https://padlet.com/embed/6r1ksfrbcyr4pjzb" frameborder="0"
+                
+                style="width:100%;height:608px;display:block;padding:0;margin:0;min-height: 800px;"></iframe></p>
+            </a></div>
+    </div>
+    <center>
+        <img src="qr.png" width="100px">
+    </center>
+</aside>
+<aside>
+    <iframe style="min-height: 810px;"
+        src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQbErwKWxJDIGTihDnn-nzhVLE3CWbhkWCX5kM97pQFjLMvEijJvc_VL1HZPBYPAjthjoaXI7Kl0gUe/pubhtml?gid=0&amp;single=true&amp;widget=true&amp;headers=false"></iframe>
+</aside>
+</section>
+<br>
+
+    <footer>
+        <p>© 2023 - <i> Made by the CAS Week Media Team</i> </p>
+         <a href="https://www.alsson.com/" target="_blank">El Alsson NEWGIZA</a>
+
+    </footer>
+</body>
+
+</html>
