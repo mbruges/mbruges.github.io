@@ -24,8 +24,16 @@
 
     function extractText(pdfUrl) {
             var pdf = pdfjsLib.getDocument(pdfUrl);
+            var error = 'false'
             return pdf.promise.then(function (pdf) {
-                var totalPageCount = pdf.numPages;
+                var totalPageCount = pdf.numPages
+                if (totalPageCount > 60) {
+                    window.alert('Sorry, this document is too long to be processed by Claude. Consider copying important text directly into the chat, or delete unnecessary pages.');
+                    document.getElementById('fileError').innerText = 'error'
+                    error = 'true';
+                    return error
+                }
+                if (error == 'false') {
                 var countPromises = [];
                 for (
                     var currentPage = 1;
@@ -45,11 +53,12 @@
                             });
                         }),
                     );
-                }
+                } return Promise.all(countPromises).then(function (texts) {
+                        return texts.join(' ');
+                    });
+                } else {return error}
 
-                return Promise.all(countPromises).then(function (texts) {
-                    return texts.join(' ');
-                });
+                
             });
         }
 </script>
@@ -150,6 +159,7 @@ function saveConvo() {
 }
 
 function loadConvo() {
+document.getElementById('loadConvoButton').className = "hidden"
 let convo = localStorage.getItem('chatHistory')
 if (!convo){notificationAlert("No saved chats found.")}
 else {
@@ -162,9 +172,11 @@ else {
 }
 
 function scrollUp(){
-    let monitor = document.getElementById('monitor')
-    
-    monitor.scrollTo({ top: monitor.scrollHeight, behavior: 'smooth' })
+    setTimeout(() => {
+       let monitor = document.getElementById('monitor')
+
+        monitor.scrollTo({ top: monitor.scrollHeight, behavior: 'smooth' }) 
+    }, 300);
 }
 
 function roleplayInput() {
@@ -255,8 +267,10 @@ window.onload = () => {
     
     function downloadTxt(elementIDtoDownload) {
         const link = document.createElement("a");
-        var content = "" + document.getElementById(elementIDtoDownload).innerHTML + `\n\n Generated on mbruges.com 🐈‍⬛`
+        var content = "" + document.getElementById(elementIDtoDownload).innerText + `\n\n Generated on mbruges.com 🐈‍⬛`
         content = content.replaceAll('<br>','\n')
+        content = content.replaceAll(`CLAUDE: Bonjour! I am Claude, a chatbot created by Anthropic and put onto this webpage by Max Bruges. I can do lots of things with text, including reading files, taking on roles, and discussing the latest news.`, '')
+        content = content.replaceAll(`Click one of the buttons to start, or type a question below.`, '')
         const file = new Blob([content], { type: 'text/plain' });
         link.href = URL.createObjectURL(file);
         let date = new Date()
@@ -374,8 +388,8 @@ function askClaude() {
             monitor.innerHTML = existingChat + '<br><br>' + 'CLAUDE:' + error
         });
     }
-
     function uploadFile() {
+        var pdfError = false
         const [file] = document.querySelector("input[type=file]").files;
         let fileUrl = URL.createObjectURL(file)
         console.log('file url is :' + fileUrl)
@@ -384,16 +398,27 @@ function askClaude() {
         for (let index = (fileName.length-1); index > (fileName.length - 4); index--) {
             fileExtension = fileName[index] + fileExtension;
         }
+        console.log(fileExtension)
         
         //This section of the script only runs if there's a PDF
         if (fileExtension == 'pdf') {
-            console.log('running textFromPdf with ' + fileUrl);
+            console.log('running textFromPdf with');
             extractText(fileUrl).then(
                 function (text) {
+                    if (text == 'true') {
+                        pdfError = true
+                        return;
+                    } else {
+                        if (pdfError == false) {
+                            
+                        
                    // console.log('parse ' + text);
                     document.getElementById('fileContainer').innerText = text
                     notificationAlert(`File uploaded successfully: ${document.querySelector("input[type=file]").files.item(0).name}`)
                     document.getElementById('querySuggestions').className = "show"
+                    document.getElementById('monitor').innerHTML = document.getElementById('monitor').innerHTML + '<br><b>Now discussing: ' + document.querySelector("input[type=file]").files.item(0).name + '</b>'
+                    }
+                    }
                 },
                 function (reason) {
                     console.error(reason);
@@ -401,6 +426,10 @@ function askClaude() {
             );
         return}  
 
+        if (pdfError == true) {
+            console.log('pdfErrorTrue')
+            return;
+        } else {
         const content = document.getElementById('fileContainer')
         const reader = new FileReader();
         
@@ -420,6 +449,7 @@ function askClaude() {
             reader.readAsText(file);
         }
         showname()
+        }
     }
     
 
@@ -480,6 +510,7 @@ window.addEventListener("keydown", (event) => {
         if (!name)  {  
         var name = document.getElementById('fileInput');
             document.getElementById('fileBarDisplay').innerHTML =  'Discussing file: ' + name.files.item(0).name;}
+        else if (document.getElementById('fileError').innerText == 'error') {return}
         else {document.getElementById('fileBarDisplay').innerHTML =  'Discussing: ' + name}
         };
 
@@ -626,25 +657,26 @@ height:fit-content">
 
     <div id="monitor" class="monitor">
         <br>
+        <p></p>
         <p> CLAUDE: <i>Bonjour!</i> I am Claude, a chatbot created by <a
                 href="https://www.anthropic.com/index/introducing-claude" target="_blank">Anthropic</a> and put onto this
             webpage by <a href="/about.html" target="_blank">Max Bruges</a>. I can do lots of things with text, including
             reading files, taking on roles, and discussing the latest news. </p>
         <p> Click one of the buttons to start, or type a question below.</p>
-        <br><br>
+        <br>
         <div id='monitorButtonContainer' style="text-align:center" class="show">
             <button onclick="document.getElementById('fileInput').click()"> Upload file 📂 </button>
             <button onclick="roleplayInput(this)"> Roleplay 🎭</button>
             <button onclick="document.getElementById('input').innerHTML = 'Hi there!'; submitInput()"> Say hi 👋 </button>
-            <button onclick="document.getElementById('input').innerHTML = 'Read the news'; submitInput()"> Read the news 📰 </button>
-            <button id="loadConvoButton" onclick="loadConvo()">Load previous chat 💬</button>
+            <button onclick="document.getElementById('input').innerHTML = 'Read the news'; submitInput()"> Get news 📰 </button>
+            <button onclick="loadConvo()">Load chat 💬</button>
         </div>
     </div>
 
     <hr style="background-color: var(--color-darkblue);height:4px;width: 86%;display: block;margin-left: auto;margin-right: auto;">
 
 
-    <div id="input-container" style="display: block;margin-left: auto;margin-right: auto;text-align: center;width: 80vw;max-width:600px">
+    <div id="input-container" style="display: block;margin-left: auto;margin-right: auto;text-align: center;width: 82vw;max-width:620px">
         <p style="font-size:20px;margin-right:-1px;padding:-10px;color:var(--color-darkblue);display: inline;max-width: 10%;">></p>
         
         <span contenteditable="true"  style="
@@ -658,8 +690,8 @@ height:fit-content">
          max-height:30vh;
          display: inline-block;
          margin: 0px;
-         min-width: 79%; 
-         width: 79%; 
+         min-width: 75%; 
+         width: 75%; 
          max-width: 79%;color: var(--color-darkblue);
          font-weight:600;
          background-color:transparent;
@@ -703,7 +735,7 @@ height:fit-content">
 
 </div>
 </div>
-<div id="buttons" style="min-height:12dvh;max-height: 12dvh;">
+<div id="buttons" style="min-height:10dvh;max-height: 10dvh;">
 <div id="querySuggestions"
     style="display: block;margin-left: auto;margin-right: auto;text-align: center;max-width: 90vw" class="hidden">
     <style>
@@ -714,19 +746,19 @@ height:fit-content">
             margin: 4px;
          }
     </style>
-    <a><i onclick="insertText(this,'input')">Summarise this file</i></a>
-    <a><i onclick="insertText(this,'input')">How could this be improved?</i></a><br>
-    <a><i onclick="insertText(this,'input')">What are the key actions?</i></a>
+    <a><i onclick="insertText(this,'input')">Summarise</i></a>
+    <a><i onclick="insertText(this,'input')">Improvements</i></a>
+    <a><i onclick="insertText(this,'input')">Recommended actions</i></a>
 </div>
 <div id="options-container" style="text-align: center;" class="hidden">
-    <button onclick="location.reload()">Reset ⚠️</button>
+    <button onclick="location.reload()"> ♻️ </button>
     <button onclick="document.getElementById('fileInput').click()"> Upload file 📂</button>
     <button onclick="roleplayInput(this)"> Roleplay 🎭</button>
-    <button onclick="downloadTxt('monitor')"> Get transcript 📝</button>
-    <button id="loadConvoButton" onclick="loadConvo()">Load previous chat 💬</button>
-    <button onclick="saveConvo()"> Save this chat 💾</button>
+    <button onclick="downloadTxt('monitor')">  Transcript 📝</button><br>
+    <button id="loadConvoButton" onclick="loadConvo()">Load chat 💬</button>
+    <button onclick="saveConvo()"> Save chat  💾</button>
     <input id="fileInput" class="hidden" type="file" accept=".pdf,.doc,.xml,.rtf,.txt,.csv,.eml,.odt,.ods"
-        onchange="uploadFile(); showname()">
+        onchange="uploadFile();">
     <span id="roleplayInput" value="" class="hidden"></span>
     <span id="fileContainer" value="" class="hidden"></span>    
 </div>
@@ -734,6 +766,7 @@ height:fit-content">
 <audio id="audio" src="/images/pop.wav" ></audio>
 <div id="newsContainer" class="hidden"></div>
 <div id="roughLocation" class="hidden"></div>
+<div id="fileError" class="hidden"></div>
     <footer style="max-height:2dvh">
         <div></div>
         <p>© 2023 - <i> Made by <a href="/about.html" target="_blank">me
