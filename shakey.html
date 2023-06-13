@@ -5,21 +5,21 @@
     <link rel="icon" href="/favicon.svg">
     <link rel="stylesheet" href="/style.css">
     <meta charset="utf-8">
-    <meta name="description" content="MB ">
+    <meta name="description" content="A page for generating quotaitons from Shakespeare's complete works">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MB - TITLE</title>
+    <title>MB - Shakespeare at Random</title>
 
     <!--SHARE TAGS-->
     <meta prefix="og: http://ogp.me/ns#" property="og:type" content="website" />
-    <meta prefix="og: http://ogp.me/ns#" property="og:title" content="MBruges.com" />
-    <meta prefix="og: http://ogp.me/ns#" property="og:description" content=" " />
+    <meta prefix="og: http://ogp.me/ns#" property="og:title" content="Shakespeare at Random" />
+    <meta prefix="og: http://ogp.me/ns#" property="og:description" content="A page for generating quotations from Shakespeare's complete works " />
     <meta prefix="og: http://ogp.me/ns#" property="og:image" content="https://mbruges.com/images/banner-square.png" />
     <meta prefix="og: http://ogp.me/ns#" property="og:url" content="https://mbruges.com/" />
 
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="MBruges.com">
+    <meta name="twitter:title" content="Shakespeare at Random">
     <meta name="twitter:site" content="@max_bruges">
-    <meta name="twitter:description" content=" ">
+    <meta name="twitter:description" content="A page for generating quotations from Shakespeare's complete works">
     <meta name="twitter:image" content="https://mbruges.com/images/banner-square.png">
 
     <div id="toastAlert"></div>
@@ -28,6 +28,7 @@
 
     function shakeyScript() {
         var foundLine = "ERROR: Something's rotten in the state of this code."
+        console.log('running script with shakespeare.json')
         document.getElementById('randButton').className = 'hidden'
         document.getElementById('loader').className= 'loader'
         fetch('shakespeare.json')
@@ -38,10 +39,8 @@
 
             for (let index = rand; index < 111396; index++) {
                 let lineNum = "" + json[index].line_number
-                console.log(lineNum) 
                 if(lineNum.length < 1)
-                {console.log(json[index].text_entry)
-                rand = index
+                {rand = index
                 continue;} 
                 else {break}
             }
