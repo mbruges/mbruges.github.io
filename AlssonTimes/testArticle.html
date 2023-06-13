@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="icon" href="/AlssonTimes/alssonFavicon.png">
+    <link rel="stylesheet" href="alssonStyle.css">
+    <meta charset="utf-8">
+    <meta name="description" content="Alsson Times">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Alsson Times - Article</title>
+    <script>
+//ENTER GOOGLE SHEET PUB URL HERE:
+    var url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSVVU0YlTzUbvNTFM3ee4sHlSGfUjtEhdNiGYBZPnOa_wvwuCFDo2fqu18K4NLuoC-YEeNbQXPQn1tU/pubhtml'
+//DO NOT EDIT BELOW
+
+    function getArticle(outputElement) {
+
+     console.log('running getArticle')
+     url = url.replaceAll('edit?usp=sharing',"?&output=csv")
+        url = url.replaceAll('html', "?&output=csv")
+        url = url + '&range=B:C'
+
+        fetch(url)
+            .then(response => response.text())
+            .then(raw => {
+                var text = []
+                raw = raw.split(`↩︎`)
+                raw.forEach(element => {
+                    let len = element.length - 1
+                    if (element[len] == ",") {
+                        element = element.slice(0, -1)
+                    }
+                    text.push(element)
+                });
+                var author = text[0]
+                var title = text[1]
+                var image = text[2]
+                image = image.replace('https://drive.google.com/file/d/','https://drive.google.com/uc?id=')
+                image = image.replace(`/view?usp=drive_link`,'')
+                var body = text[3]
+                body = body.replace('\n',"")
+                body = body.slice(0, -1)
+                body = body + `\n`
+                body = body.replaceAll('\n',`</p>
+                <br>
+                <p>`)
+                body = body.replace(`"`,"")
+                
+            
+                let message = `
+        AUTHOR = ${author}
+        TITLE = ${title}
+        BODY = ${body}
+        IMAGE = ${image}`
+
+        console.log(message)
+        //places image after first paragraph
+        body = body.replace('<br>',`<br>
+        <div style="min-height: 30vh;"><img alt="Image of ${title}" src="${image}"></div
+        `)
+        let content =`
+        <h1> ${title} </h1>
+        <small> By ${author} </small>
+        <br>
+        
+        <p>${body}</p>`
+        document.getElementById(outputElement).innerHTML = content
+
+        document.getElementById('loader').className = "hidden"
+
+        document.getElementById(outputElement).className = "show"
+        document.title = 'The Alsson Times - ' + title + ' by ' + author
+            });
+    }
+
+    window.onload = () =>{
+        setTimeout(() => {
+            getArticle('fetch');
+        }, 100);
+        
+    }
+    </script>
+
+</head>
+
+<body>
+    <header>
+        <nav>
+            <div class="dropdown">
+                <a id="alssonNav"><img alt="miaow" src="/AlssonTimes/alssonFavicon.png" height="40" width="40"></a>
+                <div class="dropdown-content">
+                    <a href="/AlssonTimes/homepage.html">Homepage</a>
+                    <a href="/AlssonTimes/planning.html"> Planning </a>
+                    <a href="/AlssonTimes/team.html"> Meet the Team </a>
+                </div>
+            </div>
+            <h1 style="font-style: oblique;">The Alsson Times</h1>
+            <ul>
+                <li><a href="/AlssonTimes/homepage.html">Home</a></li>
+            </ul>
+        </nav>
+        <div id="loader">
+            <div style="max-height:20px;max-width: 20px;" class="loader"></div>
+            <small>Loading article...</small>
+        </div>
+    </header>
+    
+    <blog>
+    <form id="fetch" class="hidden">
+    </form>
+    </blog>
+
+<!--
+    <h2>Embedded article</h2>
+    <iframe style="background:white; min-height: 80dvh;"
+        src="https://docs.google.com/document/d/e/2PACX-1vQpzwcu4s1zJuSMBk5N_jq2mLy1C7kqE324kGE31qXJuGQ8UQahDTxQuXKs-ABA_nE9U_XK59434L73/pub?embedded=true"></iframe>-->
+
+    
+
+   
+    <footer>
+        <p>© 2023 - <i> Made by the CAS Week Media Team</i> </p>
+        <a href="https://www.alsson.com/" target="_blank">El Alsson NEWGIZA</a>
+
+    </footer>
+    <link rel="stylesheet" href="alssonStyle.css">
+       
+</body>
+
+</html>

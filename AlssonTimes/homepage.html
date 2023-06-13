@@ -26,7 +26,22 @@
                 return text
             });
     }
-    window.onload = () =>{getSheetsData('A2', 'ticker')}
+    window.onload = () =>{
+        getSheetsData('A2', 'ticker')
+        cms('B:B')
+    }
+
+    function cms(cellLocation) {
+       const url = `https://docs.google.com/spreadsheets/d/e/2PACX-1vRaIAR2QJT8R2e0yledOB_aui7p99-VDJdkDwRzsboDXf_NwbuP2y-K7imS1DgkTiADqWh5LwWXH4Xn/pub?gid=1897230472&single=true&range=${cellLocation}&output=csv`
+       fetch(url)
+       .then(response => response.text())
+           .then(text => {
+                
+               console.log("Data is: " + JSON.parse(text))
+               document.getElementById('blog').innerText = text
+               return text
+           });
+    }
 </script>
 
 </head>
@@ -50,9 +65,18 @@
         </nav>
         <h1 style="font-style: oblique;">The Alsson Times</h1>
  
-        <h2> Watch this space! </h2>
     </header>
 
+    <section>
+
+        <a href="testArticle.html">
+        <aside  style="text-align: center;">
+            <h1>Test Article</h1><br>
+            <img width="50" height="auto" src="https://drive.google.com/uc?id=1WxhtbxXhDwx7o6P5MkJcx6eabX7gQVRq"><br>
+        </aside>
+        </a>
+
+    </section>
 
     <footer>
         <p>© 2023 - <i> Made by the CAS Week Media Team</i> </p>

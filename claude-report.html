@@ -206,12 +206,14 @@ function reportClaude(parentID) {
     var viewResponseButton = parent.querySelector('button[name="viewResponseButton"]')
 
     var inputs = logInputs(parentID)
+    console.log('inputs = ' + inputs)
         var name = "" + inputs[0]
-            var progressRating = ["Concerning", "A bit behind", "On-track", "Good", "Excellent"]
-        var progress = progressRating[Number.parseInt(inputs[1])]
-        var comments = 'Additional points to consider: ' + inputs[2]
-        var rfl = "" + inputs[3]
-        var bfl = "" + inputs[4]
+            //var progressRating = ["Concerning", "A bit behind", "On-track", "Good", "Excellent"]
+        //var progress = progressRating[Number.parseInt(inputs[1])]
+        var progress = inputs[4]
+        var comments = 'Additional points to consider: ' + inputs[1]
+        var rfl = "" + inputs[2]
+        var bfl = "" + inputs[3]
         var apiKey = document.getElementById('apiStore').value
         var xCorsKey = document.getElementById('xCorsKeyStore').value
         var subject = document.getElementById('subject').value
@@ -224,13 +226,20 @@ function reportClaude(parentID) {
     let timestamp = new Date().toLocaleDateString('en-GB')
     console.log(timestamp)
 
-    console.log('Requesting report for ' + name)
+    
     let length = document.getElementById('length').value
-    let max_tokens = length 
+    let max_tokens = length*1.7
     let url = 'https://proxy.cors.sh/https://api.anthropic.com/v1/complete/';    
     generateButton.className = 'hidden'
     viewResponseButton.className = 'loader'
-
+console.log(`Requesting report for ${ name }
+            Subject: ${ subject }
+            Year Group: ${ yearGroup }
+            Behaviour: ${ bfl }
+            Organisation skills: ${ rfl } 
+            Academic progress: ${ progress }
+            ${ comments }
+            Length = ${length} chars`)
     fetch(url, {
         method: 'POST',
         headers: {
@@ -240,9 +249,9 @@ function reportClaude(parentID) {
             
         },
         body: JSON.stringify({
-            prompt: `\n\nHuman: You are a teacher at a British school.You are writing end of year reports for students.Reports must comment on students' behaviour, academic performance and general comments. Do not mention specific grades or assessments, unless that information is specified below. Do not write a letter, only produce a paragraph of prose. Do not start with 'Dear...'. Check your response for spelling and grammar errors.
+            prompt: `\n\nHuman: You are a teacher at a British school.You are writing end of year reports for students.Reports must comment on students' behaviour, academic performance and general comments. Do not mention specific grades or assessments, unless that information is specified below. Do not write a letter, only produce a paragraph of prose. Do not start with 'Dear...'. Check your response for spelling and grammar errors. Reports should be ${length } characters in length
             \n\nAssistant: OK, I understand. I will write a report about a student, when requested. Can I see some examples?
-            \n\nHuman: Yes, here are some examples. \nEXAMPLE 1: "Omar’s performance in Physics was outstanding this term. He displays an excellent understanding of the required knowledge and skills and the ability to apply them in a wide variety of situations. He usually completes his homework on time to a high standard. Omar generally demonstrates originality and also interacts well with his classmates. He can use scientific ideas, make predictions and develop scientific relationships to solve the problem appropriately. He participates enthusiastically in his IGCSE Physics lessons and seeks information independently, proving that he is a mature and responsible student. I wish him the very best for his external examinations." \nEXAMPLE2: "Adam is a confident and enthusiastic student who has made very good progress in MYP Digital Design this year. He was new to the school this year and had limited access to computers in his former school but he has shown himself to be a risk taker and resilient learner as he developed his computing skills. He was particularly strong in  web design but found coding difficult. I hope Adam will ask for help in future and continue developing his understanding of coding. I wish him the very best. "
+            \n\nHuman: Yes, here are some examples. \nEXAMPLE REPORT 1: "Omar’s performance in Physics was outstanding this term. He displays an excellent understanding of the required knowledge and skills and the ability to apply them in a wide variety of situations. He usually completes his homework on time to a high standard. Omar generally demonstrates originality and also interacts well with his classmates. He can use scientific ideas, make predictions and develop scientific relationships to solve the problem appropriately. He participates enthusiastically in his IGCSE Physics lessons and seeks information independently, proving that he is a mature and responsible student. I wish him the very best for his external examinations." \nEXAMPLE REPORT 2: "Adam is a confident and enthusiastic student who has made very good progress in MYP Digital Design this year. He was new to the school this year and had limited access to computers in his former school but he has shown himself to be a risk taker and resilient learner as he developed his computing skills. He was particularly strong in  web design but found coding difficult. I hope Adam will ask for help in future and continue developing his understanding of coding. I wish him the very best. "
             \n\nAssistant: Thank you, I understand. I am ready to write a school report.
             \n\nHuman: Write a report about this student:
             Name: ${ name}
@@ -252,9 +261,9 @@ function reportClaude(parentID) {
             Organisation skills: ${rfl} 
             Academic progress: ${progress}
             ${comments}
-    \n Limit your response to ${ length } characters in length. Do not include any additional introduction or commentary. 
+    \n MAXIMUM REPORT LENGTH: ${ length } characters.  
     \n\nAssistant: End of Year ${subject} Report for ${name}:`,
-            model: `claude-instant-v1-100k`,
+            model: `claude-v1.3-100k`,
             max_tokens_to_sample: max_tokens,
             stop_sequences: ["\n\nHuman:"],
             temperature: 1
@@ -266,6 +275,7 @@ function reportClaude(parentID) {
         newResponse = data.completion
 
         newResponse = addSpaces(newResponse)
+        newResponse = newResponse.replaceAll('\n\n','')
         
         var newReport =
         `<small>~~~~~Generated by Claude, ${timestamp}~~~~</small>
@@ -429,23 +439,21 @@ This page will generate reports. First we need to set up a way for it to store J
                 </sup></a><br>
             <small>Key is saved to your local browser cache. It can only be accessed by you and OpenAI.<br> Total tokens used are also tracked in the cache.</small>
                
-                <input style="margin-top: 1px;padding: 0px;font-size: smaller; color:grey;width: fit-content;margin-left: auto;margin-right: auto; display: block;" type="range" id="length" value="1000" min="100" max="9000" step="100">
-                <code style="text-align: center;margin-bottom: 0px;" id="lengthTracker"></code>
-                <script>
-                    //This script updates the count as the slider is moved
-                    document.getElementById("lengthTracker").innerHTML = document.getElementById("length").value + " characters long";
-                    document.getElementById("length").oninput = function () {
-                        document.getElementById("lengthTracker").innerHTML = `Comments limited to: ${document.getElementById("length").value} characters`;
-                    };
-                </script>
         </details>
         <div id="toastAlert"></div>
     </div>
 <!--<br>
     <input type="text" style="text-align: center;min-width:100px;max-width: fit-content;font-size: large;display: block;margin-left: auto;margin-right: auto;" id="className"
         placeholder="Enter class name" value="">-->
+        <div id="mass-input" class="hidden">
         <textarea id="listEntryBox" placeholder="Paste list of students here. Separate names by linebreak or commas."></textarea>
+        
         <button onclick="processList(); this.className='hidden'">Submit</button>
+        </div>
+        <input
+            style="margin-top: 1px;padding: 0px;font-size: smaller; color:grey;width: fit-content;margin-left: auto;margin-right: auto; display: block;"
+            type="range" id="length" value="1000" min="100" max="3000" step="100" oninput="document.getElementById('lengthTrackerCode').innerHTML = `Characters: ${this.value}`">
+        <code style="text-align: center;margin-bottom: 1px;" id="lengthTrackerCode">Characters: 1000</code>
         </header>
         
    
@@ -580,7 +588,7 @@ This page will generate reports. First we need to set up a way for it to store J
         
         var parent = document.getElementById(parentID)
         var thingToCopy= parent.querySelector("p")
-        thingToCopy = thingToCopy.innerHTML
+        thingToCopy = thingToCopy.innerText
         navigator.clipboard.writeText(thingToCopy);
         notificationAlert('Copied to clipboard 📋');
     }
