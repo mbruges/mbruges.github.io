@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="icon" href="/favicon.svg">
+    <link rel="stylesheet" href="/style.css">
+    <meta charset="utf-8">
+    <meta name="description" content="MB ">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MB - TITLE</title>
+
+    <!--SHARE TAGS-->
+    <meta prefix="og: http://ogp.me/ns#" property="og:type" content="website" />
+    <meta prefix="og: http://ogp.me/ns#" property="og:title" content="MBruges.com" />
+    <meta prefix="og: http://ogp.me/ns#" property="og:description" content=" " />
+    <meta prefix="og: http://ogp.me/ns#" property="og:image" content="https://mbruges.com/images/banner-square.png" />
+    <meta prefix="og: http://ogp.me/ns#" property="og:url" content="https://mbruges.com/" />
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="MBruges.com">
+    <meta name="twitter:site" content="@max_bruges">
+    <meta name="twitter:description" content=" ">
+    <meta name="twitter:image" content="https://mbruges.com/images/banner-square.png">
+
+    <div id="toastAlert"></div>
+
+<script>
+
+    function shakeyScript() {
+        var foundLine = "ERROR: Something's rotten in the state of this code."
+        document.getElementById('randButton').className = 'hidden'
+        document.getElementById('loader').className= 'loader'
+        fetch('shakespeare.json')
+        .then((response) => response.json())
+        .then((json) => { 
+
+            let rand = Math.floor(Math.random()* 111396)
+
+            for (let index = rand; index < 111396; index++) {
+                let lineNum = "" + json[index].line_number
+                console.log(lineNum) 
+                if(lineNum.length < 1)
+                {console.log(json[index].text_entry)
+                rand = index
+                continue;} 
+                else {break}
+            }
+            foundLine = json[rand].text_entry;
+            
+            //This gets the preceeding lines, if it's been cut off mid sentence
+            for (let index = 1; index < 7; index++) {
+                let firstChar = foundLine.charAt(0)
+                if (firstChar == firstChar.toLowerCase()) {
+                    foundLine = json[rand - index].text_entry + '<br>' + foundLine;
+                } else {break}
+                
+            }
+
+            //and this checks that it finishes with punctuation.
+            var acceptablePunc = [`.`,`,`,`!`,`?`,`;`]
+            
+            for (let index = 1; index < 7; index++) {
+                let lastChar = foundLine.charAt(foundLine.length - 1)
+                if (acceptablePunc.includes(lastChar)) {
+                   break
+                } else {  foundLine = foundLine + '<br>' + json[rand + index].text_entry; }
+
+            }
+            
+            let speaker = json[rand].speaker;
+            let play = json[rand].play_name;
+            document.getElementById('output').innerHTML = `<p>${foundLine}</p>
+            <br>
+            <small>-- ${speaker}, ${play}</small>`
+            document.getElementById('randButton').className = ''
+            document.getElementById('loader').className = 'hidden'
+            document.getElementById('output').className = 'show'
+        }) 
+    }
+</script>
+
+</head>
+
+<body>
+    <header>
+        <nav>
+            <div class="dropdown">
+                <a id="catNav"><img alt="miaow" src="/favicon.svg" height="40" width="40"></a>
+                <div class="dropdown-content">
+                    <a href="/experiments.html">Experiments</a>
+                    <a href="/resources.html">Resources</a>
+                    <a href="/blog.html">Blog</a>
+                </div>
+            </div>
+            <ul>
+                <li><a href="/index.html"> Home </a></li>
+            </ul>
+        </nav>
+
+
+        <h1>Shakespeare at Random</h1>
+        <p>JS to generate a random line from Shakespeare's complete works.</p> 
+        <small> The <a href="https://discuss.elastic.co/t/uploading-shakespeare-json-to-index-in-kibana/171554/2" target="_blank">JSON</a> seems to have stripped out all the apostrophes, so watch out for grammatical errors.</small>
+    </header>
+
+<center>
+<div style="height: 60px;">
+    <button style="padding: 12px;" id="randButton" onclick="shakeyScript()">Random 🔀</button>
+    <br>
+    <div id="loader" class="hidden"></div>
+</div>
+</center>
+
+    <style>
+        form {
+            margin-top: 10px;
+            width: fit-content;
+            min-width: 100px;
+           max-width:400px; 
+           text-align: center;
+        }
+
+        form small {
+            font-style: oblique;
+        }
+    </style>
+    
+    <form id="output" class="hidden"></form>
+
+    <footer>
+        <p>© 2023 - <i> Made by <a href="/about.html" target="_blank">me
+                </a> and Agatha</i> 🐈‍⬛</p>
+        <p><i>Found this interesting? <a href="mailto:hello@mbruges.com?subject=Hello from the Internet"
+                    style="font-style: normal;"> Drop me a line 📮</a>
+        </p>
+    </footer>
+</body>
+
+</html>
