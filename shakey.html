@@ -7,7 +7,7 @@
     <meta charset="utf-8">
     <meta name="description" content="A page for generating quotaitons from Shakespeare's complete works">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MB - Shakespeare at Random</title>
+    <title>MB - Shakespeare Data</title>
 
     <!--SHARE TAGS-->
     <meta prefix="og: http://ogp.me/ns#" property="og:type" content="website" />
@@ -19,14 +19,14 @@
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="Shakespeare at Random">
     <meta name="twitter:site" content="@max_bruges">
-    <meta name="twitter:description" content="A page for generating quotations from Shakespeare's complete works">
+    <meta name="twitter:description" content="A page for generating quotations from Shakespeare's complete works, and for finding characters">
     <meta name="twitter:image" content="https://mbruges.com/images/banner-square.png">
 
     <div id="toastAlert"></div>
 
 <script>
 
-    function shakeyScript() {
+    function randomLine() {
         var foundLine = "ERROR: Something's rotten in the state of this code."
         console.log('running script with shakespeare.json')
         document.getElementById('randButton').className = 'hidden'
@@ -68,14 +68,85 @@
             
             let speaker = json[rand].speaker;
             let play = json[rand].play_name;
-            document.getElementById('output').innerHTML = `<p>${foundLine}</p>
+            document.getElementById('randomLineContainer').innerHTML = `<p>${foundLine}</p>
             <br>
             <small>-- ${speaker}, ${play}</small>`
             document.getElementById('randButton').className = ''
             document.getElementById('loader').className = 'hidden'
-            document.getElementById('output').className = 'show'
+            document.getElementById('randomLineContainer').className = 'show'
         }) 
     }
+
+    function getPlays() {
+        var playArray = []
+
+        fetch('shakespeare.json')
+        .then((response) => response.json())
+        .then((json) => { 
+            for (let index = 0; index < json.length; index++) {
+                const element = json[index].play_name;
+                if (playArray.includes(element)){
+                    continue
+                } else {playArray.push(element); console.log(element)}
+            }
+            console.log(playArray)
+            let selector = `<select>
+                `
+            playArray.forEach(element => {
+                selector += `<option value="${element}">${element}</option>
+                `
+            })
+            selector += `</selector>`;
+            console.log(selector)
+        })
+    } 
+
+    function getCharacters(inputID) {
+        document.getElementById('randomLineContainer').innerHTML = ''
+        const play = document.getElementById(inputID).value
+        console.log(play)
+        var characterList = []
+        fetch('shakespeare.json')
+        .then((response) => response.json())
+        .then((json) => { 
+            
+        var status = false
+
+        //we start by checking for the name of each entry
+        for (let index = 0; index < json.length; index++) {
+            let elementPlay = json[index].play_name;
+
+            // if the name does NOT match, and the status is set as TRUE, the loop should stop.
+            if ((elementPlay != play) && (status == true)){console.log('stopped'); break} 
+            
+            //If the play does not match and status is FALSE, we keep going
+            else if ((elementPlay != play) && (status == false)){
+                continue}
+            
+            //If the play DOES match, then we start processing the data
+            else if (elementPlay == play){
+                status = true
+
+                let character = "" + json[index].speaker
+                
+                //Now, we check if the character is listed in the array characterList already, moving on if it is. If it isn't, it gets added.
+                    if (characterList.includes(character)) 
+                        { continue } 
+                        else {characterList.push(character)}
+
+                } 
+        }
+    let display = `<h2>${play}</h2>
+    <i>Dramatis Personae</i>
+    <ul>
+        `
+    characterList.forEach(element => {
+        display += `<li>${element}</li>
+        `
+    });
+    document.getElementById('randomLineContainer').innerHTML = display
+    document.getElementById('randomLineContainer').className = 'show'
+    })}
 </script>
 
 </head>
@@ -95,6 +166,19 @@
                 <li><a href="/index.html"> Home </a></li>
             </ul>
         </nav>
+        <style>
+            form {
+                margin-top: 10px;
+                width: fit-content;
+                min-width: 100px;
+                max-width: 400px;
+                text-align: center;
+            }
+        
+            form small {
+                font-style: oblique;
+            }
+        </style>
 
 
         <h1>Shakespeare at Random</h1>
@@ -102,31 +186,66 @@
         <small> The <a href="https://discuss.elastic.co/t/uploading-shakespeare-json-to-index-in-kibana/171554/2" target="_blank">JSON</a> seems to have stripped out all the apostrophes, so watch out for grammatical errors.</small>
     </header>
 
-<center>
+<section>
 <div style="height: 60px;">
-    <button style="padding: 12px;" id="randButton" onclick="shakeyScript()">Random 🔀</button>
+    <button style="padding: 12px;" id="randButton" onclick="randomLine()">Random 🔀</button>
     <br>
     <div id="loader" class="hidden"></div>
 </div>
-</center>
 
-    <style>
-        form {
-            margin-top: 10px;
-            width: fit-content;
-            min-width: 100px;
-           max-width:400px; 
-           text-align: center;
-        }
+<br>
+<aside>
+    <select style="max-width: 150px;" id="playSelector">
+        <option disabled selected>Select play...</option>
+        <option value="Henry IV">Henry IV</option>
+        <option value="Henry VI Part 1">Henry VI Part 1</option>
+        <option value="Henry VI Part 2">Henry VI Part 2</option>
+        <option value="Henry VI Part 3">Henry VI Part 3</option>
+        <option value="Alls well that ends well">All's Well That Ends Well</option>
+        <option value="As you like it">As you like it</option>
+        <option value="Antony and Cleopatra">Antony and Cleopatra</option>
+        <option value="A Comedy of Errors">A Comedy of Errors</option>
+        <option value="Coriolanus">Coriolanus</option>
+        <option value="Cymbeline">Cymbeline</option>
+        <option value="Hamlet">Hamlet</option>
+        <option value="Henry V">Henry V</option>
+        <option value="Henry VIII">Henry VIII</option>
+        <option value="King John">King John</option>
+        <option value="Julius Caesar">Julius Caesar</option>
+        <option value="King Lear">King Lear</option>
+        <option value="Loves Labours Lost">Love's Labours Lost</option>
+        <option value="macbeth">Macbeth</option>
+        <option value="Measure for measure">Measure for measure</option>
+        <option value="Merchant of Venice">Merchant of Venice</option>
+        <option value="Merry Wives of Windsor">Merry Wives of Windsor</option>
+        <option value="A Midsummer nights dream">A Midsummer Night's Dream</option>
+        <option value="Much Ado about nothing">Much Ado about nothing</option>
+        <option value="Othello">Othello</option>
+        <option value="Pericles">Pericles</option>
+        <option value="Richard II">Richard II</option>
+        <option value="Richard III">Richard III</option>
+        <option value="Romeo and Juliet">Romeo and Juliet</option>
+        <option value="Taming of the Shrew">Taming of the Shrew</option>
+        <option value="The Tempest">The Tempest</option>
+        <option value="Timon of Athens">Timon of Athens</option>
+        <option value="Titus Andronicus">Titus Andronicus</option>
+        <option value="Troilus and Cressida">Troilus and Cressida</option>
+        <option value="Twelfth Night">Twelfth Night</option>
+        <option value="Two Gentlemen of Verona">Two Gentlemen of Verona</option>
+        <option value="A Winters Tale">A Winter's Tale</option>
+    </select>
+    <button style="padding: 12px;" id="randButton" onclick="getCharacters('playSelector')">Get data 🗃️</button>
+    <br>
+    <div id="loader" class="hidden"></div>
+</aside>
+</section>
+    <form id="randomLineContainer" class="hidden"></form>
 
-        form small {
-            font-style: oblique;
-        }
-    </style>
+    <br>
     
-    <form id="output" class="hidden"></form>
-
-    <footer>
+<p></p>
+<p></p>
+    <footer style="display: block;margin-top: 10vh;">
         <p>© 2023 - <i> Made by <a href="/about.html" target="_blank">me
                 </a> and Agatha</i> 🐈‍⬛</p>
         <p><i>Found this interesting? <a href="mailto:hello@mbruges.com?subject=Hello from the Internet"
