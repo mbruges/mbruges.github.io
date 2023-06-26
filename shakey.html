@@ -44,13 +44,13 @@
                 continue;} 
                 else {break}
             }
-            foundLine = json[rand].text_entry;
+            foundLine = json[rand].text;
             
             //This gets the preceeding lines, if it's been cut off mid sentence
             for (let index = 1; index < 7; index++) {
                 let firstChar = foundLine.charAt(0)
                 if (firstChar == firstChar.toLowerCase()) {
-                    foundLine = json[rand - index].text_entry + '<br>' + foundLine;
+                    foundLine = json[rand - index].text + '<br>' + foundLine;
                 } else {break}
                 
             }
@@ -62,12 +62,12 @@
                 let lastChar = foundLine.charAt(foundLine.length - 1)
                 if (acceptablePunc.includes(lastChar)) {
                    break
-                } else {  foundLine = foundLine + '<br>' + json[rand + index].text_entry; }
+                } else {  foundLine = foundLine + '<br>' + json[rand + index].text; }
 
             }
             
             let speaker = json[rand].speaker;
-            let play = json[rand].play_name;
+            let play = json[rand].play;
             document.getElementById('randomLineContainer').innerHTML = `<p>${foundLine}</p>
             <br>
             <small>-- ${speaker}, ${play}</small>`
@@ -84,7 +84,7 @@
         .then((response) => response.json())
         .then((json) => { 
             for (let index = 0; index < json.length; index++) {
-                const element = json[index].play_name;
+                const element = json[index].play;
                 if (playArray.includes(element)){
                     continue
                 } else {playArray.push(element); console.log(element)}
@@ -114,7 +114,7 @@
 
         //we start by checking for the name of each entry
         for (let index = 0; index < json.length; index++) {
-            let elementPlay = json[index].play_name;
+            let elementPlay = json[index].play;
 
             // if the name does NOT match, and the status is set as TRUE, the loop should stop.
             if ((elementPlay != play) && (status == true)){console.log('stopped'); break} 
