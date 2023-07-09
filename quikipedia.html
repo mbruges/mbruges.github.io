@@ -22,6 +22,7 @@
     <meta name="twitter:description" content=" ">
     <meta name="twitter:image" content="https://mbruges.com/images/banner-square.png">
 <script>
+    //Make sure you include '&origin=*' in the URL, to get around CORS
 
     function getWiki(topic) {
         var fixedTopic = ""
@@ -32,10 +33,15 @@
             }
             fixedTopic += char
         };
-        fetch(`https://en.wikipedia.org/w/api.php?action=parse&page=${topic}&format=json`)
+
+        
+        fetch(`https://en.wikipedia.org/w/api.php?action=opensearch&format=json&origin=*&search=${fixedTopic}&formatversion=2`)
             .then((response) => response.json())
             .then((json) => {
-                console.log(json.parse)
+                urls = json[3]
+                console.log(json)
+                console.log(urls[0])
+                document.getElementById('wikiContainer').innerHTML = `<a href="${urls[0]}" target="_blank">Click to learn more!</a>`
             })
     }
 
@@ -78,6 +84,8 @@
     <div id="toastAlert"></div>
 </head>
 
+
+
 <body>
     <header>
         <nav>
@@ -98,6 +106,8 @@
         <h1>Quikipedia</h1>
         <h2>An exercise in using the Wikipedia API</h2>
     <button onclick="getWikiNews()">Get news</button>
+    <input id="searchContainer" type="text" placeholder="enter topic">
+    <button onclick="getWiki(document.getElementById('searchContainer').value)">Get wiki</button>
     </header>
 <blog style="max-width:100px;">
     <form id="wikiContainer" style="max-width: 100px;padding: 5%;">

@@ -1,4 +1,13 @@
-fetch('shakespeare.json')
+fetch('https://maxbruges.com/shakespeare.json')
 .then((response) => response.json())
 .then((json) => { 
-console.log(json[1])})
+
+for (let index = 0; index < json.length; index++) {
+    const element = json[index];
+    if (element.line_no == "" && element.type == "line"){
+        element.type = "direction"
+    } else {continue}
+}
+console.log(json)
+
+})
